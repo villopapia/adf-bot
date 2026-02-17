@@ -1,0 +1,337 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-02-17 19:37:23                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 50
+    Scanner Age      : 0d old
+    System Log       : Created
+    Error Log        : error.log
+    Strategy         : z_entry=1.5 | z_exit=0.0 | z_stop=3.5 | hold<=30d
+    Quality Gates    : WR>50.0% | PF>1.1x | P&L>$0
+  ──────────────────────────────────────────────────
+
+  Scanner skipped (candidates 0d old, refresh every 7d). Use --scan to force.
+
+  ═══ PHASE 2 — Master Signal (live + backtest) ═══
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  MASTER SIGNAL — Live + Backtest Verification Engine        ║
+║  Run : 2026-02-17 19:37:25                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+  Loaded 50 pairs from daily_candidates.csv
+  Strategy: β=60d | z=20d | Entry |z|>1.5 | Exit z→0.0 | Stop |z|>3.5 | Hold≤30d
+  Quality gates: WR>50.0% | PF>1.1x | P&L>$0
+  Slippage: 0.10% per leg | Capital: $1,000/trade
+
+  [1/50]       HWM / JCI  ⚡ z=-2.70  LONG  →  ✗ REJECTED
+  [2/50]        APD / IP  ⚡ z=-1.88  LONG  →  ★ VERIFIED  (WR 59% | PF 2.99x | P&L $+291)
+  [3/50]      CBOE / HIG  —  No signal  (|z| = 0.08)
+  [4/50]       ATO / XEL  —  No signal  (|z| = 0.38)
+  [5/50]      KLAC / STX  —  No signal  (|z| = 1.22)
+  [6/50]      ABBV / MDT  —  No signal  (|z| = 0.99)
+  [7/50]        BAC / MS  —  No signal  (|z| = 0.04)
+  [8/50]       PPL / WEC  ⚡ z=+1.76 SHORT  →  ✗ REJECTED
+  [9/50]         J / PNR  ⚡ z=+1.62 SHORT  →  ✗ REJECTED
+  [10/50]        NI / XEL  ⚡ z=-4.05  LONG  →  ✗ REJECTED
+  [11/50]       AME / LUV  ⚡ z=-1.66  LONG  →  ✗ REJECTED
+  [12/50]        KEY / RF  ⚡ z=+3.06 SHORT  →  ✗ REJECTED
+  [13/50]      BF-B / STZ  —  No signal  (|z| = 0.28)
+  [14/50]       EME / NSC  ⚡ z=-1.84  LONG  →  ✗ REJECTED
+  [15/50]       LNT / XEL  ⚡ z=-3.02  LONG  →  ✗ REJECTED
+  [16/50]       PPL / XEL  —  No signal  (|z| = 0.81)
+  [17/50]         ES / FE  —  No signal  (|z| = 1.05)
+  [18/50]       IRM / PSA  —  No signal  (|z| = 0.15)
+  [19/50]         J / URI  —  No signal  (|z| = 0.46)
+  [20/50]      BF-B / KHC  —  No signal  (|z| = 0.13)
+  [21/50]       COF / JPM  —  No signal  (|z| = 1.46)
+  [22/50]       DTE / DUK  —  No signal  (|z| = 0.68)
+  [23/50]      CBOE / TRV  —  No signal  (|z| = 0.07)
+  [24/50]       ALL / TRV  ⚡ z=+2.62 SHORT  →  ✗ REJECTED
+  [25/50]       CMI / LUV  ⚡ z=+2.30 SHORT  →  ✗ REJECTED
+  [26/50]     CDNS / MSFT  —  No signal  (|z| = 0.90)
+  [27/50]        GL / TRV  ⚡ z=-1.51  LONG  →  ★ VERIFIED  (WR 50% | PF 1.26x | P&L $+90)
+  [28/50]       CEG / XEL  ⚡ z=+3.91 SHORT  →  ★ VERIFIED  (WR 52% | PF 1.32x | P&L $+115)
+  [29/50]      LYV / META  —  No signal  (|z| = 0.26)
+  [30/50]      GOOG / WBD  ⚡ z=+2.60 SHORT  →  ✗ REJECTED
+  [31/50]      DHR / REGN  ⚡ z=+2.19 SHORT  →  ✗ REJECTED
+  [32/50]     GOOGL / WBD  ⚡ z=+2.60 SHORT  →  ✗ REJECTED
+  [33/50]       BK / CBOE  —  No signal  (|z| = 0.95)
+  [34/50]        BAC / GS  —  No signal  (|z| = 0.29)
+  [35/50]       COF / WFC  ⚡ z=+1.53 SHORT  →  ✗ REJECTED
+  [36/50]       BAX / MOH  ⚡ z=+2.14 SHORT  →  ✗ REJECTED
+  [37/50]       EQR / UDR  —  No signal  (|z| = 0.00)
+  [38/50]     AMZN / TSLA  ⚡ z=-3.46  LONG  →  ✗ REJECTED
+  [39/50]        CBOE / L  —  No signal  (|z| = 0.32)
+  [40/50]       HD / NCLH  ⚡ z=-2.51  LONG  →  ✗ REJECTED
+  [41/50]      ALL / CBOE  —  No signal  (|z| = 0.61)
+  [42/50]       AXP / BAC  ⚡ z=+1.52 SHORT  →  ✗ REJECTED
+  [43/50]    GOOGL / GOOG  ⚡ z=-2.46  LONG  →  ✗ REJECTED
+  [44/50]       IR / ODFL  ⚡ z=-1.90  LONG  →  ✗ REJECTED
+  [45/50]      CEG / EVRG  —  No signal  (|z| = 1.36)
+  [46/50]       CEG / NRG  —  No signal  (|z| = 1.45)
+  [47/50]      IBKR / WFC  ⚡ z=-1.70  LONG  →  ✗ REJECTED
+  [48/50]       HWM / ROL  —  No signal  (|z| = 0.78)
+  [49/50]      BF-B / GIS  ⚡ z=-2.89  LONG  →  ★ VERIFIED  (WR 61% | PF 3.40x | P&L $+387)
+  [50/50]       DG / DLTR  ⚡ z=+2.61 SHORT  →  ★ VERIFIED  (WR 50% | PF 1.34x | P&L $+126)
+
+
+════════════════════════════════════════════════════════════════
+  SCAN COMPLETE
+════════════════════════════════════════════════════════════════
+  Pairs scanned   : 50
+  No live signal  : 24
+  Download errors : 0
+  Signals found   : 26
+    ★ Verified    : 5
+    ✗ Rejected    : 21
+════════════════════════════════════════════════════════════════
+
+  ╔══════════════════════════════════════════════════════════╗
+  ║  ★  VERIFIED SIGNAL  ★      APD / IP                   ║
+  ╠══════════════════════════════════════════════════════════╣
+  ║  LIVE                                                    ║
+  ║    Direction    : LONG                                    ║
+  ║    Current Z    :  -1.8759                                ║
+  ║    Current β    :   0.6456                                ║
+  ║                                                          ║
+  ║  BACKTEST (2yr)                                          ║
+  ║    Trades       :    27                                   ║
+  ║    Win Rate     :  59.3 %                                 ║
+  ║    Profit Factor:  2.99x                                 ║
+  ║    Total P&L    : $  +291.46                            ║
+  ║    Sharpe       : +1.65                                  ║
+  ║    Avg Hold     :  13.1 days                               ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  ╔══════════════════════════════════════════════════════════╗
+  ║  ★  VERIFIED SIGNAL  ★       GL / TRV                  ║
+  ╠══════════════════════════════════════════════════════════╣
+  ║  LIVE                                                    ║
+  ║    Direction    : LONG                                    ║
+  ║    Current Z    :  -1.5111                                ║
+  ║    Current β    :   0.3653                                ║
+  ║                                                          ║
+  ║  BACKTEST (2yr)                                          ║
+  ║    Trades       :    30                                   ║
+  ║    Win Rate     :  50.0 %                                 ║
+  ║    Profit Factor:  1.26x                                 ║
+  ║    Total P&L    : $   +89.74                            ║
+  ║    Sharpe       : +0.26                                  ║
+  ║    Avg Hold     :  12.7 days                               ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  ╔══════════════════════════════════════════════════════════╗
+  ║  ★  VERIFIED SIGNAL  ★      CEG / XEL                  ║
+  ╠══════════════════════════════════════════════════════════╣
+  ║  LIVE                                                    ║
+  ║    Direction    : SHORT                                   ║
+  ║    Current Z    :  +3.9087                                ║
+  ║    Current β    :  -0.4126                                ║
+  ║                                                          ║
+  ║  BACKTEST (2yr)                                          ║
+  ║    Trades       :    21                                   ║
+  ║    Win Rate     :  52.4 %                                 ║
+  ║    Profit Factor:  1.32x                                 ║
+  ║    Total P&L    : $  +114.72                            ║
+  ║    Sharpe       : +0.33                                  ║
+  ║    Avg Hold     :  18.5 days                               ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  ╔══════════════════════════════════════════════════════════╗
+  ║  ★  VERIFIED SIGNAL  ★     BF-B / GIS                  ║
+  ╠══════════════════════════════════════════════════════════╣
+  ║  LIVE                                                    ║
+  ║    Direction    : LONG                                    ║
+  ║    Current Z    :  -2.8896                                ║
+  ║    Current β    :   0.9200                                ║
+  ║                                                          ║
+  ║  BACKTEST (2yr)                                          ║
+  ║    Trades       :    23                                   ║
+  ║    Win Rate     :  60.9 %                                 ║
+  ║    Profit Factor:  3.40x                                 ║
+  ║    Total P&L    : $  +386.60                            ║
+  ║    Sharpe       : +1.75                                  ║
+  ║    Avg Hold     :  16.3 days                               ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  ╔══════════════════════════════════════════════════════════╗
+  ║  ★  VERIFIED SIGNAL  ★       DG / DLTR                 ║
+  ╠══════════════════════════════════════════════════════════╣
+  ║  LIVE                                                    ║
+  ║    Direction    : SHORT                                   ║
+  ║    Current Z    :  +2.6056                                ║
+  ║    Current β    :   1.2624                                ║
+  ║                                                          ║
+  ║  BACKTEST (2yr)                                          ║
+  ║    Trades       :    22                                   ║
+  ║    Win Rate     :  50.0 %                                 ║
+  ║    Profit Factor:  1.34x                                 ║
+  ║    Total P&L    : $  +125.88                            ║
+  ║    Sharpe       : +0.43                                  ║
+  ║    Avg Hold     :  16.2 days                               ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  ── Rejected Signals (had live z, failed backtest) ──
+
+  HWM / JCI:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-2.70 LONG | BT: 25 trades, WR 28%, PF 0.38x, P&L $-369
+       Failed: WR 28.0% < 50.0% | PF 0.38x < 1.1x | P&L $-368.53 ≤ $0
+
+  PPL / WEC:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+1.76 SHORT | BT: 28 trades, WR 36%, PF 0.55x, P&L $-63
+       Failed: WR 35.7% < 50.0% | PF 0.55x < 1.1x | P&L $-63.18 ≤ $0
+
+  J / PNR:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+1.62 SHORT | BT: 18 trades, WR 44%, PF 1.08x, P&L $+22
+       Failed: WR 44.4% < 50.0% | PF 1.08x < 1.1x
+
+  NI / XEL:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-4.05 LONG | BT: 23 trades, WR 39%, PF 0.51x, P&L $-79
+       Failed: WR 39.1% < 50.0% | PF 0.51x < 1.1x | P&L $-79.29 ≤ $0
+
+  AME / LUV:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-1.66 LONG | BT: 32 trades, WR 38%, PF 0.68x, P&L $-188
+       Failed: WR 37.5% < 50.0% | PF 0.68x < 1.1x | P&L $-187.82 ≤ $0
+
+  KEY / RF:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+3.06 SHORT | BT: 33 trades, WR 27%, PF 0.30x, P&L $-135
+       Failed: WR 27.3% < 50.0% | PF 0.30x < 1.1x | P&L $-135.33 ≤ $0
+
+  EME / NSC:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-1.84 LONG | BT: 25 trades, WR 52%, PF 0.99x, P&L $-4
+       Failed: PF 0.99x < 1.1x | P&L $-4.13 ≤ $0
+
+  LNT / XEL:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-3.02 LONG | BT: 32 trades, WR 28%, PF 0.64x, P&L $-52
+       Failed: WR 28.1% < 50.0% | PF 0.64x < 1.1x | P&L $-51.52 ≤ $0
+
+  ALL / TRV:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+2.62 SHORT | BT: 29 trades, WR 38%, PF 0.50x, P&L $-116
+       Failed: WR 37.9% < 50.0% | PF 0.50x < 1.1x | P&L $-116.07 ≤ $0
+
+  CMI / LUV:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+2.30 SHORT | BT: 26 trades, WR 27%, PF 0.62x, P&L $-216
+       Failed: WR 26.9% < 50.0% | PF 0.62x < 1.1x | P&L $-215.65 ≤ $0
+
+  GOOG / WBD:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+2.60 SHORT | BT: 28 trades, WR 39%, PF 0.70x, P&L $-213
+       Failed: WR 39.3% < 50.0% | PF 0.70x < 1.1x | P&L $-213.03 ≤ $0
+
+  DHR / REGN:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+2.19 SHORT | BT: 25 trades, WR 44%, PF 1.05x, P&L $+21
+       Failed: WR 44.0% < 50.0% | PF 1.05x < 1.1x
+
+  GOOGL / WBD:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+2.60 SHORT | BT: 28 trades, WR 43%, PF 0.74x, P&L $-185
+       Failed: WR 42.9% < 50.0% | PF 0.74x < 1.1x | P&L $-184.93 ≤ $0
+
+  COF / WFC:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+1.53 SHORT | BT: 28 trades, WR 29%, PF 0.73x, P&L $-44
+       Failed: WR 28.6% < 50.0% | PF 0.73x < 1.1x | P&L $-43.51 ≤ $0
+
+  BAX / MOH:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+2.14 SHORT | BT: 23 trades, WR 43%, PF 0.89x, P&L $-48
+       Failed: WR 43.5% < 50.0% | PF 0.89x < 1.1x | P&L $-47.92 ≤ $0
+
+  AMZN / TSLA:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-3.46 LONG | BT: 28 trades, WR 36%, PF 0.56x, P&L $-374
+       Failed: WR 35.7% < 50.0% | PF 0.56x < 1.1x | P&L $-374.34 ≤ $0
+
+  HD / NCLH:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-2.51 LONG | BT: 27 trades, WR 41%, PF 0.79x, P&L $-104
+       Failed: WR 40.7% < 50.0% | PF 0.79x < 1.1x | P&L $-104.32 ≤ $0
+
+  AXP / BAC:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=+1.52 SHORT | BT: 23 trades, WR 26%, PF 0.31x, P&L $-174
+       Failed: WR 26.1% < 50.0% | PF 0.31x < 1.1x | P&L $-174.01 ≤ $0
+
+  GOOGL / GOOG:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-2.46 LONG | BT: 24 trades, WR 0%, PF 0.00x, P&L $-62
+       Failed: WR 0.0% < 50.0% | PF 0.00x < 1.1x | P&L $-61.82 ≤ $0
+
+  IR / ODFL:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-1.90 LONG | BT: 25 trades, WR 48%, PF 0.27x, P&L $-333
+       Failed: WR 48.0% < 50.0% | PF 0.27x < 1.1x | P&L $-333.34 ≤ $0
+
+  IBKR / WFC:
+    ✗  Signal Rejected: Historically Unprofitable
+       Live z=-1.70 LONG | BT: 23 trades, WR 48%, PF 0.54x, P&L $-184
+       Failed: WR 47.8% < 50.0% | PF 0.54x < 1.1x | P&L $-184.41 ≤ $0
+
+
+  ✓ system_log.csv updated (5 verified, 21 rejected)
+
+  ════════════════════════════════════════════════════════════
+    DAILY RESULTS
+  ════════════════════════════════════════════════════════════
+    Pairs scanned   : 50
+    No live signal  : 24
+    Download errors : 0
+    ★ Verified      : 5
+    ✗ Rejected      : 21
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │  ★  VERIFIED SIGNALS — Trade Candidates                               │
+  └────────────────────────────────────────────────────────────────────────┘
+
+    PAIR             DIR  Z-SCORE    WR%      PF        P&L   SHARPE   HOLD
+    ────────────── ───── ──────── ────── ─────── ────────── ──────── ──────
+  ★ APD/IP          LONG    -1.88  59.3%   2.99x $ +291.46   +1.65  13.1d
+  ★ GL/TRV          LONG    -1.51  50.0%   1.26x $  +89.74   +0.26  12.7d
+  ★ CEG/XEL        SHORT    +3.91  52.4%   1.32x $ +114.72   +0.33  18.5d
+  ★ BF-B/GIS        LONG    -2.89  60.9%   3.40x $ +386.60   +1.75  16.3d
+  ★ DG/DLTR        SHORT    +2.61  50.0%   1.34x $ +125.88   +0.43  16.2d
+
+  ── Rejected (21 pairs: had live signal, failed backtest) ──
+    ✗    HWM/JCI      LONG  z=-2.70  WR=28%  PF=0.38x  P&L=$-369
+    ✗    PPL/WEC     SHORT  z=+1.76  WR=36%  PF=0.55x  P&L=$-63
+    ✗      J/PNR     SHORT  z=+1.62  WR=44%  PF=1.08x  P&L=$+22
+    ✗     NI/XEL      LONG  z=-4.05  WR=39%  PF=0.51x  P&L=$-79
+    ✗    AME/LUV      LONG  z=-1.66  WR=38%  PF=0.68x  P&L=$-188
+    ✗    KEY/RF      SHORT  z=+3.06  WR=27%  PF=0.30x  P&L=$-135
+    ✗    EME/NSC      LONG  z=-1.84  WR=52%  PF=0.99x  P&L=$-4
+    ✗    LNT/XEL      LONG  z=-3.02  WR=28%  PF=0.64x  P&L=$-52
+    ✗    ALL/TRV     SHORT  z=+2.62  WR=38%  PF=0.50x  P&L=$-116
+    ✗    CMI/LUV     SHORT  z=+2.30  WR=27%  PF=0.62x  P&L=$-216
+    ✗   GOOG/WBD     SHORT  z=+2.60  WR=39%  PF=0.70x  P&L=$-213
+    ✗    DHR/REGN    SHORT  z=+2.19  WR=44%  PF=1.05x  P&L=$+21
+    ✗  GOOGL/WBD     SHORT  z=+2.60  WR=43%  PF=0.74x  P&L=$-185
+    ✗    COF/WFC     SHORT  z=+1.53  WR=29%  PF=0.73x  P&L=$-44
+    ✗    BAX/MOH     SHORT  z=+2.14  WR=43%  PF=0.89x  P&L=$-48
+    ✗   AMZN/TSLA     LONG  z=-3.46  WR=36%  PF=0.56x  P&L=$-374
+    ✗     HD/NCLH     LONG  z=-2.51  WR=41%  PF=0.79x  P&L=$-104
+    ✗    AXP/BAC     SHORT  z=+1.52  WR=26%  PF=0.31x  P&L=$-174
+    ✗  GOOGL/GOOG     LONG  z=-2.46  WR=0%  PF=0.00x  P&L=$-62
+    ✗     IR/ODFL     LONG  z=-1.90  WR=48%  PF=0.27x  P&L=$-333
+    ✗   IBKR/WFC      LONG  z=-1.70  WR=48%  PF=0.54x  P&L=$-184
+
+  Log     → C:\Users\User\Desktop\adf bot\logs\2026-02-17_193723.log
+  Journal → C:\Users\User\Desktop\adf bot\system_log.csv
+  Errors  → C:\Users\User\Desktop\adf bot\error.log
+
