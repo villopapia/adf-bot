@@ -34,7 +34,7 @@ MIN_TOTAL_PNL      = 0.0           # minimum total P&L ($)
 # ── Scanner ─────────────────────────────────────────────────────────────────
 SCANNER_INTERVAL_DAYS = 7          # days between auto-refresh
 CORRELATION_THRESHOLD = 0.80       # pre-filter correlation
-TOP_N_PAIRS        = 50            # pairs to export
+TOP_N_PAIRS        = 100            # pairs to export
 
 # ── Scanner — Advanced ──────────────────────────────────────────────────────
 MISSING_THRESHOLD     = 0.10        # drop tickers with > 10% NaN values
