@@ -1,7 +1,7 @@
 
   ╔══════════════════════════════════════════════════════════════╗
   ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
-  ║     2026-02-18 12:51:10                                        ║
+  ║     2026-02-18 15:45:12                                        ║
   ╚══════════════════════════════════════════════════════════════╝
 
   ── System Health ──────────────────────────────
@@ -22,7 +22,7 @@
 
 ╔══════════════════════════════════════════════════════════════╗
 ║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
-║  Run : 2026-02-18 12:51:11                                  ║
+║  Run : 2026-02-18 15:45:13                                  ║
 ╚══════════════════════════════════════════════════════════════╝
 
   Loaded 100 pairs from daily_candidates.csv
@@ -145,7 +145,7 @@
 ════════════════════════════════════════════════════════════════
 
   ╔══════════════════════════════════════════════════════════╗
-  ║  ◆ DIAMOND SIGNAL ◆     AMZN / WSM                      ║
+  ║  ◆ DIAMOND SIGNAL ◆   AMZN / WSM                         ║
   ╠══════════════════════════════════════════════════════════╣
   ║  LIVE                                                    ║
   ║    Direction    : SHORT                                  ║
@@ -162,9 +162,20 @@
   ║                                                          ║
   ║  REGIME GATES                                            ║
   ║    Half-1 P&L   : $  +260.64   ✓                         ║
-  ║    Half-2 P&L   : $   +51.98   ✓                         ║ 
+  ║    Half-2 P&L   : $   +51.98   ✓                         ║
   ║    Recent ADF   :  Stationary   ✓                        ║
   ║    Last 5 P&L   : $    +0.13   ✓                         ║
+  ║                                                          ║
+  ╠══════════════════════════════════════════════════════════╣
+  ║  ⚡ EXECUTION TICKET                                      ║
+  ║    ACTION : SHORT SPREAD (Sell A / Buy B)                ║
+  ║    ────────────────────────────────────────              ║
+  ║    Hedge Ratio (β) : -0.0134                             ║
+  ║    Leg A ( AMZN)    : SELL    2 shares  ($402)           ║
+  ║    Leg B (  WSM)    :  BUY    2 shares  ($424)           ║
+  ║    ────────────────────────────────────────              ║
+  ║    Capital / trade : $1,000                              ║
+  ║    Total notional  : $826                                ║
   ╚══════════════════════════════════════════════════════════╝
 
   ── Rejected Signals (had live z, failed backtest) ──
@@ -479,7 +490,7 @@
     ✗      A/TMO      LONG  z=-2.16  WR=42%  PF=0.47x  P&L=$-172
     ✗   BF-B/TGT      LONG  z=-3.35  WR=41%  PF=0.47x  P&L=$-247
 
-  Log     → c:\Users\User\Desktop\adf bot\logs\2026-02-18_125110.log
+  Log     → c:\Users\User\Desktop\adf bot\logs\2026-02-18_154512.log
   Journal → c:\Users\User\Desktop\adf bot\system_log.csv
   Errors  → c:\Users\User\Desktop\adf bot\error.log
 

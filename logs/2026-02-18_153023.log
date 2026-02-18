@@ -1,7 +1,7 @@
 
   ╔══════════════════════════════════════════════════════════════╗
   ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
-  ║     2026-02-18 12:51:10                                        ║
+  ║     2026-02-18 15:30:23                                        ║
   ╚══════════════════════════════════════════════════════════════╝
 
   ── System Health ──────────────────────────────
@@ -22,7 +22,7 @@
 
 ╔══════════════════════════════════════════════════════════════╗
 ║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
-║  Run : 2026-02-18 12:51:11                                  ║
+║  Run : 2026-02-18 15:30:26                                  ║
 ╚══════════════════════════════════════════════════════════════╝
 
   Loaded 100 pairs from daily_candidates.csv
@@ -145,26 +145,26 @@
 ════════════════════════════════════════════════════════════════
 
   ╔══════════════════════════════════════════════════════════╗
-  ║  ◆ DIAMOND SIGNAL ◆     AMZN / WSM                      ║
+  ║  ◆ DIAMOND SIGNAL ◆     AMZN / WSM                    ║
   ╠══════════════════════════════════════════════════════════╣
   ║  LIVE                                                    ║
-  ║    Direction    : SHORT                                  ║
-  ║    Current Z    :  +2.5601                               ║
-  ║    Current β    :  -0.0134                               ║
+  ║    Direction    : SHORT                                   ║
+  ║    Current Z    :  +2.5601                                ║
+  ║    Current β    :  -0.0134                                ║
   ║                                                          ║
   ║  BACKTEST (2yr, 1-bar delay)                             ║
-  ║    Trades       :    26                                  ║
-  ║    Win Rate     :  53.8 %                                ║
+  ║    Trades       :    26                                   ║
+  ║    Win Rate     :  53.8 %                                 ║
   ║    Profit Factor:  2.77x                                 ║
-  ║    Total P&L    : $  +312.62                             ║
+  ║    Total P&L    : $  +312.62                            ║
   ║    Sharpe       : +1.42                                  ║
-  ║    Avg Hold     :  14.2 days                             ║
+  ║    Avg Hold     :  14.2 days                               ║
   ║                                                          ║
   ║  REGIME GATES                                            ║
-  ║    Half-1 P&L   : $  +260.64   ✓                         ║
-  ║    Half-2 P&L   : $   +51.98   ✓                         ║ 
-  ║    Recent ADF   :  Stationary   ✓                        ║
-  ║    Last 5 P&L   : $    +0.13   ✓                         ║
+  ║    Half-1 P&L   : $  +260.64   ✓                       ║
+  ║    Half-2 P&L   : $   +51.98   ✓                       ║
+  ║    Recent ADF   :  Stationary   ✓                       ║
+  ║    Last 5 P&L   : $    +0.13   ✓                       ║
   ╚══════════════════════════════════════════════════════════╝
 
   ── Rejected Signals (had live z, failed backtest) ──
@@ -212,7 +212,7 @@
   HD / NCLH:
     ✗  REJECTED: Failed Split-Half
        Live z=-2.80 LONG | BT: 28 trades, WR 32%, PF 0.58x, P&L $-255
-       Gates: WR 32.1% < 50.0% | PF 0.58x < 1.1x | P&L $-255.41 ≤ $0 | Failed H1 P&L ($-43) | Failed H2 P&L ($-212) | Low Recent Momentum: last 5 trades P&L=$-143
+       Gates: WR 32.1% < 50.0% | PF 0.58x < 1.1x | P&L $-255.40 ≤ $0 | Failed H1 P&L ($-43) | Failed H2 P&L ($-212) | Low Recent Momentum: last 5 trades P&L=$-143
 
   ALL / TRV:
     ✗  REJECTED: Failed Split-Half
@@ -479,7 +479,7 @@
     ✗      A/TMO      LONG  z=-2.16  WR=42%  PF=0.47x  P&L=$-172
     ✗   BF-B/TGT      LONG  z=-3.35  WR=41%  PF=0.47x  P&L=$-247
 
-  Log     → c:\Users\User\Desktop\adf bot\logs\2026-02-18_125110.log
+  Log     → c:\Users\User\Desktop\adf bot\logs\2026-02-18_153023.log
   Journal → c:\Users\User\Desktop\adf bot\system_log.csv
   Errors  → c:\Users\User\Desktop\adf bot\error.log
 

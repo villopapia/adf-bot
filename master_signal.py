@@ -205,21 +205,26 @@ def compute_rolling_signals(close: pd.DataFrame, a: str, b: str) -> pd.DataFrame
 def live_check(signals: pd.DataFrame) -> dict:
     """
     Examine the LAST row of the signal DataFrame.
-    Returns dict with pass/fail, current z, direction, and current beta.
+    Returns dict with pass/fail, current z, direction, current beta,
+    and latest prices for both legs.
     """
     last = signals.iloc[-1]
     z_now    = last["z"]
     beta_now = last["beta"]
+    pa_now   = last["price_a"]
+    pb_now   = last["price_b"]
 
     if np.isnan(z_now):
         return {"pass": False, "reason": "Current z-score is NaN"}
 
     if abs(z_now) <= Z_ENTRY:
         return {"pass": False, "z": z_now, "beta": beta_now,
+                "price_a": pa_now, "price_b": pb_now,
                 "reason": f"|z| = {abs(z_now):.2f} <= {Z_ENTRY} threshold"}
 
     direction = "LONG" if z_now < -Z_ENTRY else "SHORT"
     return {"pass": True, "z": z_now, "beta": beta_now,
+            "price_a": pa_now, "price_b": pb_now,
             "direction": direction}
 
 
@@ -454,43 +459,62 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def print_diamond(a: str, b: str, live: dict, bt: dict):
-    """Print a DIAMOND SIGNAL block — passed ALL gates."""
+    """Print a DIAMOND SIGNAL block — passed ALL gates + execution ticket."""
+    # ── Execution Ticket calculations (mirrors backtest share sizing) ─────
+    pa       = live["price_a"]
+    pb       = live["price_b"]
+    half     = CAPITAL_PER_TRADE / 2.0
+    shares_a = round(half / pa)
+    shares_b = round(half / pb)
+    not_a    = shares_a * pa
+    not_b    = shares_b * pb
+
+    if live["direction"] == "LONG":
+        act_label = "LONG SPREAD"
+        act_a, act_b = "BUY", "SELL"
+        hint = "Buy A / Sell B"
+    else:
+        act_label = "SHORT SPREAD"
+        act_a, act_b = "SELL", "BUY"
+        hint = "Sell A / Buy B"
+
+    W = 58   # inner width between the ║ walls
+    def L(s): return f"  \u2551{s:<{W}}\u2551"
+
     print()
-    print("  \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557")
-    print(f"  \u2551  \u25c6 DIAMOND SIGNAL \u25c6   {a:>6} / {b:<6}                 \u2551")
-    print("  \u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563")
-    print(f"  \u2551  LIVE                                                    \u2551")
-    print(f"  \u2551    Direction    : {live['direction']:<8}"
-          f"                                \u2551")
-    print(f"  \u2551    Current Z    : {live['z']:>+8.4f}"
-          f"                                \u2551")
-    print(f"  \u2551    Current \u03b2    : {live['beta']:>8.4f}"
-          f"                                \u2551")
-    print(f"  \u2551                                                          \u2551")
-    print(f"  \u2551  BACKTEST (2yr, 1-bar delay)                             \u2551")
-    print(f"  \u2551    Trades       : {bt['n_trades']:>5}"
-          f"                                   \u2551")
-    print(f"  \u2551    Win Rate     : {bt['win_rate']:>5.1f} %"
-          f"                                 \u2551")
-    print(f"  \u2551    Profit Factor: {bt['profit_factor']:>5.2f}x"
-          f"                                 \u2551")
-    print(f"  \u2551    Total P&L    : ${bt['total_pnl']:>+9.2f}"
-          f"                            \u2551")
-    print(f"  \u2551    Sharpe       : {bt['sharpe']:>+5.2f}"
-          f"                                  \u2551")
-    print(f"  \u2551    Avg Hold     : {bt['avg_hold']:>5.1f} days"
-          f"                               \u2551")
-    print(f"  \u2551                                                          \u2551")
-    print(f"  \u2551  REGIME GATES                                            \u2551")
-    print(f"  \u2551    Half-1 P&L   : ${bt.get('h1_pnl', 0):>+9.2f}"
-          f"   \u2713                       \u2551")
-    print(f"  \u2551    Half-2 P&L   : ${bt.get('h2_pnl', 0):>+9.2f}"
-          f"   \u2713                       \u2551")
-    print(f"  \u2551    Recent ADF   :  Stationary"
-          f"   \u2713                       \u2551")
-    print(f"  \u2551    Last 5 P&L   : ${bt.get('recent_pnl', 0):>+9.2f}"
-          f"   \u2713                       \u2551")
-    print("  \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d")
+    print(f"  \u2554{'\u2550'*W}\u2557")
+    print(L(f"  \u25c6 DIAMOND SIGNAL \u25c6   {a} / {b}"))
+    print(f"  \u2560{'\u2550'*W}\u2563")
+    print(L(f"  LIVE"))
+    print(L(f"    Direction    : {live['direction']}"))
+    print(L(f"    Current Z    : {live['z']:>+8.4f}"))
+    print(L(f"    Current \u03b2    : {live['beta']:>8.4f}"))
+    print(L(""))
+    print(L(f"  BACKTEST (2yr, 1-bar delay)"))
+    print(L(f"    Trades       : {bt['n_trades']:>5}"))
+    print(L(f"    Win Rate     : {bt['win_rate']:>5.1f} %"))
+    print(L(f"    Profit Factor: {bt['profit_factor']:>5.2f}x"))
+    print(L(f"    Total P&L    : ${bt['total_pnl']:>+9.2f}"))
+    print(L(f"    Sharpe       : {bt['sharpe']:>+5.2f}"))
+    print(L(f"    Avg Hold     : {bt['avg_hold']:>5.1f} days"))
+    print(L(""))
+    print(L(f"  REGIME GATES"))
+    print(L(f"    Half-1 P&L   : ${bt.get('h1_pnl', 0):>+9.2f}   \u2713"))
+    print(L(f"    Half-2 P&L   : ${bt.get('h2_pnl', 0):>+9.2f}   \u2713"))
+    print(L(f"    Recent ADF   :  Stationary   \u2713"))
+    print(L(f"    Last 5 P&L   : ${bt.get('recent_pnl', 0):>+9.2f}   \u2713"))
+    print(L(""))
+    print(f"  \u2560{'\u2550'*W}\u2563")
+    print(L(f"  \u26a1 EXECUTION TICKET"))
+    print(L(f"    ACTION : {act_label} ({hint})"))
+    print(L(f"    {'\u2500'*40}"))
+    print(L(f"    Hedge Ratio (\u03b2) : {live['beta']:.4f}"))
+    print(L(f"    Leg A ({a:>5})    : {act_a:>4} {shares_a:>4} shares  (${not_a:>,.0f})"))
+    print(L(f"    Leg B ({b:>5})    : {act_b:>4} {shares_b:>4} shares  (${not_b:>,.0f})"))
+    print(L(f"    {'\u2500'*40}"))
+    print(L(f"    Capital / trade : ${CAPITAL_PER_TRADE:>,.0f}"))
+    print(L(f"    Total notional  : ${not_a + not_b:>,.0f}"))
+    print(f"  \u255a{'\u2550'*W}\u255d")
 
 
 def print_rejected(a: str, b: str, live: dict, bt: dict):
