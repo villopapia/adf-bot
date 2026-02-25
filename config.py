@@ -69,6 +69,14 @@ AV_RATE_DELAY      = 12.0               # secs between AV calls (12 = free 5/min
 FMP_API_KEY        = "VRe6WPJFJWPY7TZ2kz99DB8blWgx1YyR"  # Financial Modeling Prep key
 EARNINGS_BLACKOUT_DAYS = 7             # block entry if earnings within this many days (±)
 
+# ── Live Trade Tracking ───────────────────────────────────────────────────────
+LIVE_TRADES_CSV          = "live_trades.csv"   # paper trade journal
+SYSTEM_STATE_JSON        = "system_state.json" # running P&L, kill switch
+MAX_CONCURRENT_POSITIONS = 3                   # max open pairs at any time
+BORROW_COST_PCT          = 0.005               # annual short-leg borrow cost (0.5%)
+MAX_CONSECUTIVE_LOSSES   = 5                   # kill switch: N live losses in a row
+MAX_SYSTEM_DRAWDOWN      = -500.0              # kill switch: peak-to-trough live P&L ($)
+
 # ── File Paths ──────────────────────────────────────────────────────────────
 LOG_DIR            = "logs"
 SYSTEM_LOG         = "system_log.csv"

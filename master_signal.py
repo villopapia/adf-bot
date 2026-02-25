@@ -82,6 +82,7 @@ from config import (
     VIX_MAX_ENTRY,
     AV_API_KEY, AV_RATE_DELAY,
     FMP_API_KEY, EARNINGS_BLACKOUT_DAYS,
+    BORROW_COST_PCT,
 )
 
 # ── Volatility floor — prevents z-score explosion when std collapses ────────
@@ -504,7 +505,18 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                                 + shares_b * price_b[exec_bar])
                 cost = SLIPPAGE_PCT * (entry_notional + exit_notional)
 
-                net_pnl = gross - cost
+                # ── Short-leg borrow cost ─────────────────────────────────
+                #    LONG spread: short B;  SHORT spread: short A
+                #    Daily rate = BORROW_COST_PCT / 252
+                hold_bars = exec_bar - entry_bar
+                if position == 1:   # short B
+                    avg_pb = (price_b[entry_bar] + price_b[exec_bar]) / 2.0
+                    borrow = shares_b * avg_pb * (BORROW_COST_PCT / 252) * hold_bars
+                else:               # short A
+                    avg_pa = (price_a[entry_bar] + price_a[exec_bar]) / 2.0
+                    borrow = shares_a * avg_pa * (BORROW_COST_PCT / 252) * hold_bars
+
+                net_pnl = gross - cost - borrow
 
                 trades.append({
                     "entry_bar":   entry_bar,
@@ -532,13 +544,20 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                         + shares_b * price_b[entry_bar])
         exit_notional  = (shares_a * price_a[last_bar]
                         + shares_b * price_b[last_bar])
-        cost = SLIPPAGE_PCT * (entry_notional + exit_notional)
+        cost      = SLIPPAGE_PCT * (entry_notional + exit_notional)
+        hold_bars = last_bar - entry_bar
+        if position == 1:
+            avg_pb = (price_b[entry_bar] + price_b[last_bar]) / 2.0
+            borrow = shares_b * avg_pb * (BORROW_COST_PCT / 252) * hold_bars
+        else:
+            avg_pa = (price_a[entry_bar] + price_a[last_bar]) / 2.0
+            borrow = shares_a * avg_pa * (BORROW_COST_PCT / 252) * hold_bars
         trades.append({
             "entry_bar":   entry_bar,
-            "hold_days":   last_bar - entry_bar,
+            "hold_days":   hold_bars,
             "exit_reason": "eod",
             "gross_pnl":   gross,
-            "net_pnl":     gross - cost,
+            "net_pnl":     gross - cost - borrow,
             "cost":        cost,
         })
 

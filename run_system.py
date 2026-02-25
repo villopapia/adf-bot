@@ -43,7 +43,9 @@ from config import (
     ROLLING_BETA_WIN, ROLLING_Z_WIN,
     CAPITAL_PER_TRADE, SLIPPAGE_PCT,
     MIN_WIN_RATE, MIN_PROFIT_FACTOR,
+    MAX_CONCURRENT_POSITIONS,
 )
+import trade_tracker
 
 # ── Resolved Paths ───────────────────────────────────────────────────────────
 LOG_DIR_PATH    = os.path.join(SCRIPT_DIR, LOG_DIR)
@@ -380,6 +382,31 @@ def main():
 
     print_health(pairs_loaded, scanner_age, data_ok, log_new)
 
+    # ── Phase 0: Portfolio Update ─────────────────────────────────────────
+    print(f"  {CY}{B}═══ PHASE 0 — Portfolio Update ═══{RST}\n")
+    newly_closed = trade_tracker.check_exits()
+    if newly_closed:
+        print(f"  {G}Positions closed today:{RST}")
+        for t in newly_closed:
+            pnl   = float(t["net_pnl"])
+            pc    = G if pnl > 0 else R
+            icon  = "+" if pnl > 0 else "-"
+            print(f"    {pc}{icon}{RST} {t['stock_a']}/{t['stock_b']}  "
+                  f"{t['direction']}  exit={t['exit_reason']}  "
+                  f"hold={t['hold_days']}d  "
+                  f"P&L={pc}${pnl:>+.2f}{RST}")
+        print()
+    else:
+        print(f"  {D}No positions closed today.{RST}\n")
+
+    trade_tracker.print_portfolio_status()
+
+    ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
+    if ks_active:
+        print(f"\n  {R}{B}!! KILL SWITCH ACTIVE — no new entries will be accepted.{RST}")
+        print(f"  {R}   Reason : {ks_reason}{RST}")
+        print(f"  {D}   To reset: call trade_tracker.reset_kill_switch(){RST}\n")
+
     # ── Phase 1: Scanner ─────────────────────────────────────────────────
     if should_run_scanner(args.scan or args.scan_only):
         run_scanner()
@@ -454,6 +481,32 @@ def main():
 
         # ── Bright verified table ────────────────────────────────────────
         print_verified_table(result.get("verified", []))
+
+        # ── Auto-log diamond entries (portfolio cap + kill switch aware) ──
+        diamonds = result.get("verified", [])
+        if diamonds:
+            ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
+            logged, skipped_cap, skipped_ks = [], [], []
+            for d in diamonds:
+                if ks_active:
+                    skipped_ks.append(d)
+                elif trade_tracker.at_portfolio_cap():
+                    skipped_cap.append(d)
+                else:
+                    tid = trade_tracker.log_entry(d)
+                    logged.append((d, tid))
+            if logged:
+                print(f"  {G}Paper trades logged ({len(logged)}):{RST}")
+                for d, tid in logged:
+                    print(f"    {G}+{RST} {d['a']}/{d['b']}  "
+                          f"{d['live']['direction']}  [{tid}]")
+            if skipped_cap:
+                print(f"  {Y}Skipped {len(skipped_cap)} signal(s) — "
+                      f"portfolio at cap ({MAX_CONCURRENT_POSITIONS} positions){RST}")
+            if skipped_ks:
+                print(f"  {R}Skipped {len(skipped_ks)} signal(s) — "
+                      f"kill switch active{RST}")
+            print()
 
         # ── Rejected summary ─────────────────────────────────────────────
         print_rejected_summary(result.get("rejected", []))
