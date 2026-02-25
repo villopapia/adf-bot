@@ -42,6 +42,7 @@ from config import (
     MAX_CONCURRENT_POSITIONS, BORROW_COST_PCT,
     MAX_CONSECUTIVE_LOSSES, MAX_SYSTEM_DRAWDOWN,
     Z_STOP, MAX_HOLD, SLIPPAGE_PCT, CAPITAL_PER_TRADE,
+    PORTFOLIO_CORR_MAX,
 )
 
 LIVE_TRADES_PATH  = os.path.join(_SCRIPT_DIR, LIVE_TRADES_CSV)
@@ -391,3 +392,136 @@ def print_portfolio_status():
     if state.get("kill_switch"):
         print(f"\n    !! KILL SWITCH ACTIVE: {state['kill_switch_reason']}")
     print("  " + "-" * 60)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  Portfolio correlation check
+# ──────────────────────────────────────────────────────────────────────────────
+
+def is_correlated_with_open(new_a: str, new_b: str,
+                            threshold: float = PORTFOLIO_CORR_MAX) -> bool:
+    """
+    Check if a new pair's legs are highly correlated with any open position's legs.
+    Returns True (blocked) if any open position leg has correlation > threshold
+    with any leg of the new pair over the last 90 days.
+    """
+    import yfinance as yf
+
+    open_trades = get_open_trades()
+    if not open_trades:
+        return False
+
+    # Collect all unique tickers (open positions + new pair)
+    open_tickers = set()
+    for t in open_trades:
+        open_tickers.add(t["stock_a"])
+        open_tickers.add(t["stock_b"])
+    new_tickers = {new_a, new_b}
+
+    all_tickers = list(open_tickers | new_tickers)
+    try:
+        raw = yf.download(all_tickers, period="90d",
+                          auto_adjust=True, progress=False, threads=True)
+        if isinstance(raw.columns, pd.MultiIndex):
+            prices = raw["Close"].dropna()
+        else:
+            prices = raw[["Close"]].rename(
+                columns={"Close": all_tickers[0]}).dropna()
+    except Exception:
+        return False  # cannot fetch — do not block
+
+    if prices.empty or len(prices) < 20:
+        return False
+
+    for t in open_trades:
+        open_legs = [t["stock_a"], t["stock_b"]]
+        for ol in open_legs:
+            for nl in [new_a, new_b]:
+                if ol == nl:
+                    continue  # same ticker is obviously correlated, skip
+                if ol not in prices.columns or nl not in prices.columns:
+                    continue
+                try:
+                    corr = float(prices[ol].corr(prices[nl]))
+                    if abs(corr) > threshold:
+                        return True
+                except Exception:
+                    continue
+    return False
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  Live vs Backtest Performance Report
+# ──────────────────────────────────────────────────────────────────────────────
+
+def print_performance_report():
+    """
+    Print a live vs backtest comparison report.
+    Reads live_trades.csv and compares live performance to backtest expectations.
+    Only meaningful when there are at least 3 closed trades.
+    """
+    df = load_trades()
+    if df.empty:
+        return
+
+    closed = df[df["status"] == "closed"].copy()
+    n_closed = len(closed)
+    if n_closed < 3:
+        return
+
+    # Parse numeric columns
+    closed["net_pnl"]        = pd.to_numeric(closed["net_pnl"], errors="coerce")
+    closed["bt_win_rate"]    = pd.to_numeric(closed["bt_win_rate"], errors="coerce")
+    closed["bt_expected_pnl"] = pd.to_numeric(closed["bt_expected_pnl"], errors="coerce")
+
+    pnls = closed["net_pnl"].dropna().values
+    if len(pnls) < 3:
+        return
+
+    wins       = pnls[pnls > 0]
+    live_wr    = len(wins) / len(pnls) * 100
+    live_avg   = pnls.mean()
+    bt_wr_avg  = closed["bt_win_rate"].dropna().mean()
+    bt_pnl_avg = closed["bt_expected_pnl"].dropna().mean()
+
+    # Live Sharpe (if enough trades)
+    live_sharpe_str = "N/A"
+    if len(pnls) >= 5:
+        std_pnl = pnls.std(ddof=1) if len(pnls) > 1 else 1e-12
+        live_sharpe = (live_avg / std_pnl) * np.sqrt(250 / 15)  # rough annualisation
+        live_sharpe_str = f"{live_sharpe:+.2f}"
+
+    # Consecutive losses
+    max_consec_loss = 0
+    curr_consec     = 0
+    for p in pnls:
+        if p <= 0:
+            curr_consec += 1
+            max_consec_loss = max(max_consec_loss, curr_consec)
+        else:
+            curr_consec = 0
+
+    # System drawdown
+    cum_pnl  = np.cumsum(pnls)
+    peak     = np.maximum.accumulate(cum_pnl)
+    max_dd   = float((cum_pnl - peak).min())
+
+    # Verdict
+    if bt_wr_avg > 0 and live_wr >= bt_wr_avg * 0.8:
+        verdict = "Edge holding"
+    else:
+        verdict = "Edge degrading -- review"
+
+    print()
+    print("  -- Live vs Backtest Performance " + "-" * 29)
+    print(f"    Closed trades      : {n_closed}")
+    print(f"    Live win rate      : {live_wr:.1f}%")
+    print(f"    Live avg P&L       : ${live_avg:>+.2f}")
+    print(f"    BT avg win rate    : {bt_wr_avg:.1f}%")
+    print(f"    BT avg expected P&L: ${bt_pnl_avg:>+.2f}")
+    print(f"    Live Sharpe        : {live_sharpe_str}")
+    print(f"    Max consec. losses : {max_consec_loss}")
+    print(f"    System drawdown    : ${max_dd:>+.2f}")
+    print(f"    Verdict            : {verdict}")
+    print("  " + "-" * 60)
+    print()

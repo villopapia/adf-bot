@@ -44,6 +44,7 @@ from config import (
     CAPITAL_PER_TRADE, SLIPPAGE_PCT,
     MIN_WIN_RATE, MIN_PROFIT_FACTOR,
     MAX_CONCURRENT_POSITIONS,
+    LOG_RETENTION_DAYS,
 )
 import trade_tracker
 
@@ -99,6 +100,26 @@ def _setup_tee(log_path: str):
         log_fh.close()
 
     return cleanup
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  LOG RETENTION — clean up old .log files
+# ══════════════════════════════════════════════════════════════════════════════
+def _cleanup_old_logs(log_dir: str, days: int = LOG_RETENTION_DAYS):
+    """Delete .log files in log_dir older than `days` days."""
+    if not os.path.isdir(log_dir):
+        return
+    cutoff = datetime.datetime.now() - datetime.timedelta(days=days)
+    for fname in os.listdir(log_dir):
+        if not fname.endswith(".log"):
+            continue
+        fpath = os.path.join(log_dir, fname)
+        try:
+            mtime = datetime.datetime.fromtimestamp(os.path.getmtime(fpath))
+            if mtime < cutoff:
+                os.remove(fpath)
+        except Exception:
+            pass
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -355,6 +376,9 @@ def main():
     log_path = os.path.join(LOG_DIR_PATH, log_name)
     tee_cleanup = _setup_tee(log_path)
 
+    # ── Clean up old log files ─────────────────────────────────────────────
+    _cleanup_old_logs(LOG_DIR_PATH)
+
     # ── Clear screen ─────────────────────────────────────────────────────
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -400,6 +424,7 @@ def main():
         print(f"  {D}No positions closed today.{RST}\n")
 
     trade_tracker.print_portfolio_status()
+    trade_tracker.print_performance_report()
 
     ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
     if ks_active:
@@ -486,12 +511,14 @@ def main():
         diamonds = result.get("verified", [])
         if diamonds:
             ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
-            logged, skipped_cap, skipped_ks = [], [], []
+            logged, skipped_cap, skipped_ks, skipped_corr = [], [], [], []
             for d in diamonds:
                 if ks_active:
                     skipped_ks.append(d)
                 elif trade_tracker.at_portfolio_cap():
                     skipped_cap.append(d)
+                elif trade_tracker.is_correlated_with_open(d["a"], d["b"]):
+                    skipped_corr.append(d)
                 else:
                     tid = trade_tracker.log_entry(d)
                     logged.append((d, tid))
@@ -506,6 +533,12 @@ def main():
             if skipped_ks:
                 print(f"  {R}Skipped {len(skipped_ks)} signal(s) — "
                       f"kill switch active{RST}")
+            if skipped_corr:
+                print(f"  {Y}Skipped {len(skipped_corr)} signal(s) — "
+                      f"correlated with open position(s){RST}")
+                for d in skipped_corr:
+                    print(f"    {Y}-{RST} {d['a']}/{d['b']}  "
+                          f"{d['live']['direction']}")
             print()
 
         # ── Rejected summary ─────────────────────────────────────────────

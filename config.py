@@ -79,8 +79,10 @@ MAX_CONCURRENT_POSITIONS = 3                   # max open pairs at any time
 BORROW_COST_PCT          = 0.005               # annual short-leg borrow cost (0.5%)
 MAX_CONSECUTIVE_LOSSES   = 5                   # kill switch: N live losses in a row
 MAX_SYSTEM_DRAWDOWN      = -500.0              # kill switch: peak-to-trough live P&L ($)
+PORTFOLIO_CORR_MAX       = 0.7                 # block new entry if any leg corr > threshold with open
 
 # ── File Paths ──────────────────────────────────────────────────────────────
 LOG_DIR            = "logs"
 SYSTEM_LOG         = "system_log.csv"
 ERROR_LOG          = "error.log"
+LOG_RETENTION_DAYS = 30             # delete .log files older than this many days
