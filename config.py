@@ -17,9 +17,9 @@ ROLLING_BETA_WIN   = 60            # OLS regression window (days)
 ROLLING_Z_WIN      = 20            # z-score lookback (days)
 
 # ── Entry / Exit Rules ──────────────────────────────────────────────────────
-Z_ENTRY            = 1.5           # entry threshold (both sides)
+Z_ENTRY            = 2.0           # entry threshold (both sides)
 Z_EXIT             = 0.0           # mean-reversion target
-Z_STOP             = 3.5           # stop-loss threshold
+Z_STOP             = 3.0           # stop-loss threshold
 MAX_HOLD           = 30            # max holding period (days)
 
 # ── Capital & Costs ─────────────────────────────────────────────────────────
@@ -27,8 +27,8 @@ CAPITAL_PER_TRADE  = 1000.0        # dollars per trade
 SLIPPAGE_PCT       = 0.001         # 0.10% per leg
 
 # ── Backtest Quality Gates ──────────────────────────────────────────────────
-MIN_WIN_RATE       = 50.0          # minimum win rate (%)
-MIN_PROFIT_FACTOR  = 1.1           # minimum profit factor
+MIN_WIN_RATE       = 55.0          # minimum win rate (%)
+MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
 MIN_TOTAL_PNL      = 0.0           # minimum total P&L ($)
 
 # ── Scanner ─────────────────────────────────────────────────────────────────
@@ -49,10 +49,12 @@ RETRY_DELAY        = 2             # seconds between retries
 # These reduce "past ≠ future" risk by detecting pairs that are already
 # showing signs of regime change or deteriorating cointegration.
 SPLIT_HALF_ENABLED   = True        # require BOTH halves profitable independently
+SPLIT_HALF_MIN_PNL   = 20.0        # each half must clear this P&L floor ($), not just > $0
 RECENT_ADF_WINDOW    = 90          # days for recent cointegration check
 RECENT_ADF_PVAL      = 0.10        # max ADF p-value on recent spread
 RECENT_MOMENTUM_N    = 5           # how many recent trades to check
                                    # reject if combined P&L of last N <= $0
+VIX_MAX_ENTRY        = 25.0        # block new entries when VIX exceeds this level
 
 # ── File Paths ──────────────────────────────────────────────────────────────
 LOG_DIR            = "logs"

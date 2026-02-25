@@ -68,9 +68,10 @@ from config import (
     CAPITAL_PER_TRADE, SLIPPAGE_PCT,
     MIN_WIN_RATE, MIN_PROFIT_FACTOR, MIN_TOTAL_PNL,
     MAX_RETRIES, RETRY_DELAY, ERROR_LOG,
-    SPLIT_HALF_ENABLED,
+    SPLIT_HALF_ENABLED, SPLIT_HALF_MIN_PNL,
     RECENT_ADF_WINDOW, RECENT_ADF_PVAL,
     RECENT_MOMENTUM_N,
+    VIX_MAX_ENTRY,
 )
 
 # ── Volatility floor — prevents z-score explosion when std collapses ────────
@@ -89,6 +90,21 @@ if not _err_logger.handlers:
         "%(asctime)s | %(levelname)s | %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S"))
     _err_logger.addHandler(_fh)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  VIX REGIME FILTER
+# ──────────────────────────────────────────────────────────────────────────────
+
+def get_vix() -> float | None:
+    """Fetch the latest VIX closing level. Returns None on failure."""
+    try:
+        raw = yf.download("^VIX", period="5d", auto_adjust=False, progress=False)
+        close = (raw["Close"]["^VIX"] if isinstance(raw.columns, pd.MultiIndex)
+                 else raw["Close"])
+        return float(close.dropna().iloc[-1])
+    except Exception:
+        return None
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -417,10 +433,10 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
             h2 = [t for t in trades if t["entry_bar"] >= mid_bar]
             h1_pnl_val = sum(t["net_pnl"] for t in h1) if h1 else 0.0
             h2_pnl_val = sum(t["net_pnl"] for t in h2) if h2 else 0.0
-            if not h1 or h1_pnl_val <= 0:
-                reasons.append(f"Failed H1 P&L (${h1_pnl_val:+.0f})")
-            if not h2 or h2_pnl_val <= 0:
-                reasons.append(f"Failed H2 P&L (${h2_pnl_val:+.0f})")
+            if not h1 or h1_pnl_val < SPLIT_HALF_MIN_PNL:
+                reasons.append(f"Failed H1 P&L (${h1_pnl_val:+.0f} < ${SPLIT_HALF_MIN_PNL:.0f})")
+            if not h2 or h2_pnl_val < SPLIT_HALF_MIN_PNL:
+                reasons.append(f"Failed H2 P&L (${h2_pnl_val:+.0f} < ${SPLIT_HALF_MIN_PNL:.0f})")
 
     # ── GATE B: Recent Trade Momentum (Alpha Decay) ─────────────────────
     #    Last N trades combined P&L must be > $0.
@@ -585,6 +601,19 @@ def main() -> dict:
           f"(entry+exit, both legs) | Capital: ${CAPITAL_PER_TRADE:,.0f}/trade")
     print(f"  Execution: 1-bar delay (signal@close \u2192 trade@next close)\n")
 
+    # ── VIX Regime Filter ─────────────────────────────────────────────────────
+    vix_level   = get_vix()
+    vix_blocked = (vix_level is not None and vix_level > VIX_MAX_ENTRY)
+    if vix_level is None:
+        print(f"  VIX : unavailable — proceeding without regime filter\n")
+    elif vix_blocked:
+        print(f"\n  {'!'*60}")
+        print(f"  ⚠  VIX REGIME BLOCK: {vix_level:.1f} > {VIX_MAX_ENTRY}")
+        print(f"  Signals shown but flagged BLOCKED. No new entries advised.")
+        print(f"  {'!'*60}\n")
+    else:
+        print(f"  VIX : {vix_level:.1f}  ✓ (threshold {VIX_MAX_ENTRY})\n")
+
     verified  = []
     rejected  = []
     no_signal = 0
@@ -637,10 +666,14 @@ def main() -> dict:
                     pass   # ADF can fail on degenerate data — don't block
 
             if bt["pass"]:
-                print(f"\u25c6 DIAMOND  (WR {bt['win_rate']:.0f}% | "
-                      f"PF {bt['profit_factor']:.2f}x | "
-                      f"P&L ${bt['total_pnl']:+.0f})")
-                verified.append({"a": a, "b": b, "live": live, "bt": bt})
+                if vix_blocked:
+                    print(f"\u25c6 DIAMOND \u2192 VIX BLOCKED ({vix_level:.1f} > {VIX_MAX_ENTRY})")
+                    bt["reason"] = f"VIX Regime Block ({vix_level:.1f} > {VIX_MAX_ENTRY})"
+                    rejected.append({"a": a, "b": b, "live": live, "bt": bt})
+                else:
+                    print(f"\u25c6 DIAMOND  (WR {bt['win_rate']:.0f}% | "
+                          f"PF {bt['profit_factor']:.2f}x | P&L ${bt['total_pnl']:+.0f})")
+                    verified.append({"a": a, "b": b, "live": live, "bt": bt})
             else:
                 print(f"\u2717 REJECTED")
                 rejected.append({"a": a, "b": b, "live": live, "bt": bt})
@@ -693,6 +726,7 @@ def main() -> dict:
         "no_signal": no_signal,
         "errors":    errors,
         "timestamp": ts,
+        "vix":       vix_level,
     }
 
 

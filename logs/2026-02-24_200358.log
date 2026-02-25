@@ -1,0 +1,395 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-02-24 20:03:58                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 100
+    Scanner Age      : 0d old
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=30d
+    Quality Gates    : WR>55.0% | PF>1.3x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  Scanner skipped (candidates 0d old, refresh every 7d). Use --scan to force.
+
+  ═══ PHASE 2 — Master Signal (live + backtest) ═══
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
+║  Run : 2026-02-24 20:04:00                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+  Loaded 100 pairs from daily_candidates.csv
+  Strategy: β=60d | z=20d | Entry |z|>2.0 | Exit z→0.0 | Stop |z|>3.0 | Hold≤30d
+  Quality gates: WR>55.0% | PF>1.3x | P&L>$0
+  Slippage: 0.10% on notional (entry+exit, both legs) | Capital: $1,000/trade
+  Execution: 1-bar delay (signal@close → trade@next close)
+
+  VIX : 19.6  ✓ (threshold 25.0)
+
+  [1/100]        APD / IP  —  No signal  (|z| = 1.32)
+  [2/100]      KLAC / STX  —  No signal  (|z| = 1.24)
+  [3/100]       ATO / XEL  ⚡ z=-2.96  LONG  →  ✗ REJECTED
+  [4/100]       LNT / XEL  ⚡ z=-2.41  LONG  →  ✗ REJECTED
+  [5/100]      CBOE / HIG  —  No signal  (|z| = 1.53)
+  [6/100]      ABBV / MDT  —  No signal  (|z| = 1.03)
+  [7/100]       PPL / WEC  —  No signal  (|z| = 0.97)
+  [8/100]        NI / XEL  ⚡ z=-2.88  LONG  →  ✗ REJECTED
+  [9/100]        BAC / MS  —  No signal  (|z| = 1.64)
+  [10/100]       DG / DLTR  ⚡ z=+2.84 SHORT  →  ✗ REJECTED
+  [11/100]      BF-B / STZ  —  No signal  (|z| = 1.11)
+  [12/100]       AME / LUV  —  No signal  (|z| = 1.30)
+  [13/100]        KEY / RF  ⚡ z=+2.44 SHORT  →  ✗ REJECTED
+  [14/100]     CDNS / MSFT  —  No signal  (|z| = 0.53)
+  [15/100]         ES / FE  ⚡ z=-3.58  LONG  →  ✗ REJECTED
+  [16/100]       HD / NCLH  —  No signal  (|z| = 0.88)
+  [17/100]         J / PNR  —  No signal  (|z| = 0.98)
+  [18/100]        GL / TRV  —  No signal  (|z| = 1.77)
+  [19/100]       PPL / XEL  ⚡ z=-3.44  LONG  →  ✗ REJECTED
+  [20/100]       DUK / XEL  ⚡ z=-2.80  LONG  →  ✗ REJECTED
+  [21/100]       DTE / DUK  ⚡ z=-2.77  LONG  →  ✗ REJECTED
+  [22/100]      BF-B / GIS  —  No signal  (|z| = 1.26)
+  [23/100]       EME / NSC  —  No signal  (|z| = 1.22)
+  [24/100]       HWM / JCI  —  No signal  (|z| = 2.00)
+  [25/100]       IR / ODFL  ⚡ z=-2.12  LONG  →  ✗ REJECTED
+  [26/100]     AMZN / TSLA  ⚡ z=-2.31  LONG  →  ✗ REJECTED
+  [27/100]      CBOE / TRV  —  No signal  (|z| = 1.95)
+  [28/100]       CINF / GL  —  No signal  (|z| = 0.41)
+  [29/100]      GOOG / WBD  ⚡ z=+3.03 SHORT  →  ✗ REJECTED
+  [30/100]        GL / HIG  —  No signal  (|z| = 0.41)
+  [31/100]       ADM / HSY  —  No signal  (|z| = 0.61)
+  [32/100]     GOOGL / WBD  ⚡ z=+3.01 SHORT  →  ✗ REJECTED
+  [33/100]      AMZN / CCL  ⚡ z=+2.73 SHORT  →  ✗ REJECTED
+  [34/100]       BAX / MOH  —  No signal  (|z| = 1.98)
+  [35/100]      IBKR / JPM  ⚡ z=+3.50 SHORT  →  ✗ REJECTED
+  [36/100]      DHR / REGN  ⚡ z=+2.33 SHORT  →  ✗ REJECTED
+  [37/100]      AMAT / TER  —  No signal  (|z| = 1.42)
+  [38/100]      COF / NDAQ  —  No signal  (|z| = 1.56)
+  [39/100]       EQR / UDR  —  No signal  (|z| = 1.21)
+  [40/100]         D / XEL  ⚡ z=-2.60  LONG  →  ✗ REJECTED
+  [41/100]      LYV / META  ⚡ z=+4.41 SHORT  →  ✗ REJECTED
+  [42/100]      IBKR / WFC  ⚡ z=+2.31 SHORT  →  ✗ REJECTED
+  [43/100]      CEG / EVRG  —  No signal  (|z| = 0.36)
+  [44/100]       AXP / BAC  —  No signal  (|z| = 0.71)
+  [45/100]       CEG / XEL  ⚡ z=+2.37 SHORT  →  ✗ REJECTED
+  [46/100]      BF-B / KHC  ⚡ z=-2.45  LONG  →  ✗ REJECTED
+  [47/100]      AMZN / WSM  ⚡ z=+2.23 SHORT  →  ✗ REJECTED
+  [48/100]        GL / JPM  ⚡ z=+2.90 SHORT  →  ✗ REJECTED
+  [49/100]       CMS / DUK  —  No signal  (|z| = 0.14)
+  [50/100]      ALL / CBOE  —  No signal  (|z| = 0.74)
+  [51/100]      GILD / DGX  —  No signal  (|z| = 1.52)
+  [52/100]       ALL / CME  —  No signal  (|z| = 0.00)
+  [53/100]       AME / CMI  —  No signal  (|z| = 1.47)
+  [54/100]       CMS / XEL  ⚡ z=-2.06  LONG  →  ✗ REJECTED
+  [55/100]       CPT / ESS  —  No signal  (|z| = 0.90)
+  [56/100]        CI / ELV  —  No signal  (|z| = 1.46)
+  [57/100]      ATO / EVRG  —  No signal  (|z| = 0.50)
+  [58/100]       CEG / NRG  —  No signal  (|z| = 1.52)
+  [59/100]       ESS / MAA  —  No signal  (|z| = 1.57)
+  [60/100]       GL / IBKR  —  No signal  (|z| = 0.57)
+  [61/100]         BK / GL  ⚡ z=+3.25 SHORT  →  ✗ REJECTED
+  [62/100]        CBOE / L  —  No signal  (|z| = 1.53)
+  [63/100]       ALL / BLK  ⚡ z=+3.14 SHORT  →  ✗ REJECTED
+  [64/100]          BK / L  —  No signal  (|z| = 0.36)
+  [65/100]       WEC / XEL  ⚡ z=-2.50  LONG  →  ✗ REJECTED
+  [66/100]      ANET / HPE  —  No signal  (|z| = 1.58)
+  [67/100]     AMZN / EXPE  —  No signal  (|z| = 1.24)
+  [68/100]        BAC / GS  ⚡ z=+3.85 SHORT  →  ✗ REJECTED
+  [69/100]        BLK / GL  ⚡ z=+3.12 SHORT  →  ✗ REJECTED
+  [70/100]     DASH / ORLY  ⚡ z=-2.21  LONG  →  ✗ REJECTED
+  [71/100]       FTV / IEX  —  No signal  (|z| = 0.53)
+  [72/100]        ALL / BK  —  No signal  (|z| = 0.73)
+  [73/100]     EBAY / ORLY  ⚡ z=-2.14  LONG  →  ✗ REJECTED
+  [74/100]        NI / PPL  ⚡ z=-2.23  LONG  →  ✗ REJECTED
+  [75/100]      ALL / NDAQ  —  No signal  (|z| = 0.07)
+  [76/100]      NDSN / TXT  —  No signal  (|z| = 1.69)
+  [77/100]      IEX / ODFL  —  No signal  (|z| = 1.78)
+  [78/100]       AMP / APO  —  No signal  (|z| = 1.63)
+  [79/100]       FTV / UPS  —  No signal  (|z| = 0.90)
+  [80/100]      BF-B / CAG  —  No signal  (|z| = 0.57)
+  [81/100]    GOOGL / GOOG  ⚡ z=-3.20  LONG  →  ✗ REJECTED
+  [82/100]        CEG / NI  —  No signal  (|z| = 0.11)
+  [83/100]       BK / CBOE  ⚡ z=+3.66 SHORT  →  ✗ REJECTED
+  [84/100]        LNT / NI  —  No signal  (|z| = 0.43)
+  [85/100]      LDOS / URI  ⚡ z=+3.06 SHORT  →  ✗ REJECTED
+  [86/100]       BAC / STT  —  No signal  (|z| = 0.87)
+  [87/100]      ADBE / HPQ  —  No signal  (|z| = 1.54)
+  [88/100]      BF-B / TGT  —  No signal  (|z| = 1.94)
+  [89/100]     MCHP / NXPI  —  No signal  (|z| = 0.87)
+  [90/100]       CRL / WST  —  No signal  (|z| = 1.95)
+  [91/100]       NSC / PWR  —  No signal  (|z| = 1.59)
+  [92/100]          GS / L  —  No signal  (|z| = 0.06)
+  [93/100]     JBHT / PCAR  —  No signal  (|z| = 0.51)
+  [94/100]      BF-B / CPB  ⚡ z=-2.33  LONG  →  ✗ REJECTED
+  [95/100]      LRCX / WDC  —  No signal  (|z| = 1.72)
+  [96/100]       ABT / BSX  —  No signal  (|z| = 1.31)
+  [97/100]      GRMN / RCL  —  No signal  (|z| = 0.99)
+  [98/100]        F / ULTA  —  No signal  (|z| = 1.23)
+  [99/100]       EQR / EXR  —  No signal  (|z| = 0.21)
+  [100/100]       LUV / WAB  ⚡ z=+2.44 SHORT  →  ✗ REJECTED
+
+
+════════════════════════════════════════════════════════════════
+  SCAN COMPLETE
+════════════════════════════════════════════════════════════════
+  Pairs scanned   : 100
+  No live signal  : 63
+  Download errors : 0
+  Signals found   : 37
+    ◆ Diamond     : 0
+    ✗ Rejected    : 37
+════════════════════════════════════════════════════════════════
+
+  No diamond signals today.
+
+
+  ── Rejected Signals (had live z, failed backtest) ──
+
+  ATO / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.96 LONG | BT: 31 trades, WR 35%, PF 0.41x, P&L $-154
+       Gates: WR 35.5% < 55.0% | PF 0.41x < 1.3x | P&L $-154.33 ≤ $0 | Failed H1 P&L ($-98 < $20) | Failed H2 P&L ($-57 < $20) | Low Recent Cointegration: ADF p=0.303 > 0.1
+
+  LNT / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.41 LONG | BT: 40 trades, WR 45%, PF 1.07x, P&L $+9
+       Gates: WR 45.0% < 55.0% | PF 1.07x < 1.3x | Failed H1 P&L ($-37 < $20) | Low Recent Momentum: last 5 trades P&L=$-20 | Low Recent Cointegration: ADF p=0.920 > 0.1
+
+  NI / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.88 LONG | BT: 35 trades, WR 31%, PF 0.50x, P&L $-98
+       Gates: WR 31.4% < 55.0% | PF 0.50x < 1.3x | P&L $-98.33 ≤ $0 | Failed H1 P&L ($-108 < $20) | Failed H2 P&L ($+10 < $20) | Low Recent Momentum: last 5 trades P&L=$-12 | Low Recent Cointegration: ADF p=0.836 > 0.1
+
+  DG / DLTR:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.84 SHORT | BT: 26 trades, WR 58%, PF 1.13x, P&L $+51
+       Gates: PF 1.13x < 1.3x | Failed H2 P&L ($-129 < $20) | Low Recent Momentum: last 5 trades P&L=$-60 | Low Recent Cointegration: ADF p=0.504 > 0.1
+
+  KEY / RF:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.44 SHORT | BT: 35 trades, WR 31%, PF 0.25x, P&L $-145
+       Gates: WR 31.4% < 55.0% | PF 0.25x < 1.3x | P&L $-145.08 ≤ $0 | Failed H1 P&L ($-112 < $20) | Failed H2 P&L ($-33 < $20) | Low Recent Momentum: last 5 trades P&L=$-12 | Low Recent Cointegration: ADF p=0.257 > 0.1
+
+  ES / FE:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-3.58 LONG | BT: 39 trades, WR 38%, PF 0.70x, P&L $-92
+       Gates: WR 38.5% < 55.0% | PF 0.70x < 1.3x | P&L $-92.33 ≤ $0 | Failed H2 P&L ($-125 < $20) | Low Recent Momentum: last 5 trades P&L=$-19 | Low Recent Cointegration: ADF p=0.345 > 0.1
+
+  PPL / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-3.44 LONG | BT: 35 trades, WR 26%, PF 0.32x, P&L $-118
+       Gates: WR 25.7% < 55.0% | PF 0.32x < 1.3x | P&L $-117.92 ≤ $0 | Failed H1 P&L ($-22 < $20) | Failed H2 P&L ($-96 < $20) | Low Recent Momentum: last 5 trades P&L=$-15 | Low Recent Cointegration: ADF p=0.427 > 0.1
+
+  DUK / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.80 LONG | BT: 44 trades, WR 34%, PF 0.70x, P&L $-50
+       Gates: WR 34.1% < 55.0% | PF 0.70x < 1.3x | P&L $-49.79 ≤ $0 | Failed H1 P&L ($-33 < $20) | Failed H2 P&L ($-16 < $20) | Low Recent Momentum: last 5 trades P&L=$-34 | Low Recent Cointegration: ADF p=0.705 > 0.1
+
+  DTE / DUK:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.77 LONG | BT: 28 trades, WR 46%, PF 0.70x, P&L $-39
+       Gates: WR 46.4% < 55.0% | PF 0.70x < 1.3x | P&L $-39.13 ≤ $0 | Failed H2 P&L ($-62 < $20) | Low Recent Cointegration: ADF p=0.137 > 0.1
+
+  IR / ODFL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.12 LONG | BT: 32 trades, WR 47%, PF 0.51x, P&L $-179
+       Gates: WR 46.9% < 55.0% | PF 0.51x < 1.3x | P&L $-178.93 ≤ $0 | Failed H1 P&L ($-197 < $20) | Failed H2 P&L ($+18 < $20) | Low Recent Momentum: last 5 trades P&L=$-79 | Low Recent Cointegration: ADF p=0.470 > 0.1
+
+  AMZN / TSLA:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.31 LONG | BT: 36 trades, WR 36%, PF 0.75x, P&L $-197
+       Gates: WR 36.1% < 55.0% | PF 0.75x < 1.3x | P&L $-196.56 ≤ $0 | Failed H2 P&L ($-442 < $20) | Low Recent Cointegration: ADF p=0.466 > 0.1
+
+  GOOG / WBD:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.03 SHORT | BT: 32 trades, WR 44%, PF 0.44x, P&L $-415
+       Gates: WR 43.8% < 55.0% | PF 0.44x < 1.3x | P&L $-414.64 ≤ $0 | Failed H1 P&L ($-305 < $20) | Failed H2 P&L ($-110 < $20) | Low Recent Momentum: last 5 trades P&L=$-9 | Low Recent Cointegration: ADF p=0.773 > 0.1
+
+  GOOGL / WBD:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.01 SHORT | BT: 33 trades, WR 42%, PF 0.67x, P&L $-244
+       Gates: WR 42.4% < 55.0% | PF 0.67x < 1.3x | P&L $-243.98 ≤ $0 | Failed H1 P&L ($-311 < $20) | Low Recent Momentum: last 5 trades P&L=$-4 | Low Recent Cointegration: ADF p=0.871 > 0.1
+
+  AMZN / CCL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.73 SHORT | BT: 22 trades, WR 55%, PF 0.90x, P&L $-39
+       Gates: WR 54.5% < 55.0% | PF 0.90x < 1.3x | P&L $-38.88 ≤ $0 | Failed H1 P&L ($-7 < $20) | Failed H2 P&L ($-32 < $20) | Low Recent Momentum: last 5 trades P&L=$-35
+
+  IBKR / JPM:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.50 SHORT | BT: 34 trades, WR 29%, PF 0.67x, P&L $-113
+       Gates: WR 29.4% < 55.0% | PF 0.67x < 1.3x | P&L $-112.82 ≤ $0 | Failed H2 P&L ($-234 < $20) | Low Recent Momentum: last 5 trades P&L=$-53 | Low Recent Cointegration: ADF p=0.891 > 0.1
+
+  DHR / REGN:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.33 SHORT | BT: 36 trades, WR 36%, PF 1.03x, P&L $+11
+       Gates: WR 36.1% < 55.0% | PF 1.03x < 1.3x | Failed H1 P&L ($-32 < $20) | Low Recent Momentum: last 5 trades P&L=$-44 | Low Recent Cointegration: ADF p=0.910 > 0.1
+
+  D / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.60 LONG | BT: 40 trades, WR 32%, PF 0.65x, P&L $-72
+       Gates: WR 32.5% < 55.0% | PF 0.65x < 1.3x | P&L $-71.56 ≤ $0 | Failed H1 P&L ($-53 < $20) | Failed H2 P&L ($-18 < $20) | Low Recent Momentum: last 5 trades P&L=$-37 | Low Recent Cointegration: ADF p=0.999 > 0.1
+
+  LYV / META:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+4.41 SHORT | BT: 29 trades, WR 41%, PF 1.08x, P&L $+19
+       Gates: WR 41.4% < 55.0% | PF 1.08x < 1.3x | Failed H2 P&L ($-68 < $20) | Low Recent Momentum: last 5 trades P&L=$-51 | Low Recent Cointegration: ADF p=0.948 > 0.1
+
+  IBKR / WFC:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.31 SHORT | BT: 39 trades, WR 44%, PF 0.84x, P&L $-67
+       Gates: WR 43.6% < 55.0% | PF 0.84x < 1.3x | P&L $-67.23 ≤ $0 | Failed H1 P&L ($+11 < $20) | Failed H2 P&L ($-78 < $20) | Low Recent Cointegration: ADF p=0.289 > 0.1
+
+  CEG / XEL:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=+2.37 SHORT | BT: 29 trades, WR 62%, PF 1.46x, P&L $+167
+       Gates: Low Recent Cointegration: ADF p=0.971 > 0.1
+
+  BF-B / KHC:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.45 LONG | BT: 29 trades, WR 34%, PF 0.87x, P&L $-33
+       Gates: WR 34.5% < 55.0% | PF 0.87x < 1.3x | P&L $-32.74 ≤ $0 | Failed H1 P&L ($-44 < $20) | Failed H2 P&L ($+12 < $20) | Low Recent Momentum: last 5 trades P&L=$-33 | Low Recent Cointegration: ADF p=0.583 > 0.1
+
+  AMZN / WSM:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.23 SHORT | BT: 35 trades, WR 49%, PF 1.58x, P&L $+201
+       Gates: WR 48.6% < 55.0% | Failed H2 P&L ($-7 < $20) | Low Recent Momentum: last 5 trades P&L=$-40 | Low Recent Cointegration: ADF p=0.564 > 0.1
+
+  GL / JPM:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.90 SHORT | BT: 34 trades, WR 41%, PF 0.61x, P&L $-205
+       Gates: WR 41.2% < 55.0% | PF 0.61x < 1.3x | P&L $-204.58 ≤ $0 | Failed H1 P&L ($-267 < $20) | Low Recent Cointegration: ADF p=0.446 > 0.1
+
+  CMS / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.06 LONG | BT: 32 trades, WR 44%, PF 0.84x, P&L $-21
+       Gates: WR 43.8% < 55.0% | PF 0.84x < 1.3x | P&L $-20.97 ≤ $0 | Failed H1 P&L ($-17 < $20) | Failed H2 P&L ($-3 < $20) | Low Recent Momentum: last 5 trades P&L=$-30 | Low Recent Cointegration: ADF p=0.931 > 0.1
+
+  BK / GL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.25 SHORT | BT: 29 trades, WR 59%, PF 1.13x, P&L $+21
+       Gates: PF 1.13x < 1.3x | Failed H1 P&L ($-7 < $20) | Low Recent Cointegration: ADF p=0.245 > 0.1
+
+  ALL / BLK:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.14 SHORT | BT: 23 trades, WR 35%, PF 0.69x, P&L $-99
+       Gates: WR 34.8% < 55.0% | PF 0.69x < 1.3x | P&L $-99.27 ≤ $0 | Failed H1 P&L ($+2 < $20) | Failed H2 P&L ($-102 < $20) | Low Recent Momentum: last 5 trades P&L=$-40 | Low Recent Cointegration: ADF p=0.789 > 0.1
+
+  WEC / XEL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.50 LONG | BT: 34 trades, WR 35%, PF 0.37x, P&L $-151
+       Gates: WR 35.3% < 55.0% | PF 0.37x < 1.3x | P&L $-150.98 ≤ $0 | Failed H1 P&L ($-86 < $20) | Failed H2 P&L ($-65 < $20) | Low Recent Momentum: last 5 trades P&L=$-31 | Low Recent Cointegration: ADF p=0.179 > 0.1
+
+  BAC / GS:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.85 SHORT | BT: 32 trades, WR 44%, PF 0.86x, P&L $-31
+       Gates: WR 43.8% < 55.0% | PF 0.86x < 1.3x | P&L $-31.24 ≤ $0 | Failed H1 P&L ($-86 < $20) | Low Recent Cointegration: ADF p=0.926 > 0.1
+
+  BLK / GL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.12 SHORT | BT: 32 trades, WR 47%, PF 1.11x, P&L $+29
+       Gates: WR 46.9% < 55.0% | PF 1.11x < 1.3x | Failed H1 P&L ($-30 < $20) | Low Recent Momentum: last 5 trades P&L=$-7 | Low Recent Cointegration: ADF p=0.221 > 0.1
+
+  DASH / ORLY:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=-2.21 LONG | BT: 29 trades, WR 52%, PF 1.17x, P&L $+77
+       Gates: WR 51.7% < 55.0% | PF 1.17x < 1.3x | Low Recent Cointegration: ADF p=0.200 > 0.1
+
+  EBAY / ORLY:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.14 LONG | BT: 33 trades, WR 42%, PF 1.12x, P&L $+42
+       Gates: WR 42.4% < 55.0% | PF 1.12x < 1.3x | Failed H1 P&L ($-39 < $20) | Low Recent Cointegration: ADF p=0.323 > 0.1
+
+  NI / PPL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.23 LONG | BT: 28 trades, WR 43%, PF 0.48x, P&L $-79
+       Gates: WR 42.9% < 55.0% | PF 0.48x < 1.3x | P&L $-79.04 ≤ $0 | Failed H1 P&L ($-67 < $20) | Failed H2 P&L ($-12 < $20) | Low Recent Cointegration: ADF p=0.519 > 0.1
+
+  GOOGL / GOOG:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-3.20 LONG | BT: 28 trades, WR 0%, PF 0.00x, P&L $-67
+       Gates: WR 0.0% < 55.0% | PF 0.00x < 1.3x | P&L $-67.23 ≤ $0 | Failed H1 P&L ($-27 < $20) | Failed H2 P&L ($-40 < $20) | Low Recent Momentum: last 5 trades P&L=$-10 | Low Recent Cointegration: ADF p=0.913 > 0.1
+
+  BK / CBOE:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.66 SHORT | BT: 34 trades, WR 38%, PF 0.60x, P&L $-120
+       Gates: WR 38.2% < 55.0% | PF 0.60x < 1.3x | P&L $-119.73 ≤ $0 | Failed H1 P&L ($-55 < $20) | Failed H2 P&L ($-65 < $20) | Low Recent Cointegration: ADF p=0.180 > 0.1
+
+  LDOS / URI:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.06 SHORT | BT: 44 trades, WR 39%, PF 0.51x, P&L $-276
+       Gates: WR 38.6% < 55.0% | PF 0.51x < 1.3x | P&L $-275.58 ≤ $0 | Failed H1 P&L ($-89 < $20) | Failed H2 P&L ($-187 < $20) | Low Recent Momentum: last 5 trades P&L=$-33
+
+  BF-B / CPB:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=-2.33 LONG | BT: 19 trades, WR 63%, PF 2.74x, P&L $+289
+       Gates: Low Recent Cointegration: ADF p=0.429 > 0.1
+
+  LUV / WAB:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=+2.44 SHORT | BT: 30 trades, WR 53%, PF 1.65x, P&L $+131
+       Gates: WR 53.3% < 55.0% | Low Recent Cointegration: ADF p=0.405 > 0.1
+
+
+  ✓ system_log.csv updated (0 diamond, 37 rejected)
+
+  ════════════════════════════════════════════════════════════
+    DAILY RESULTS  (Standard + Split-Half + ADF90 + Momentum)
+  ════════════════════════════════════════════════════════════
+    Pairs scanned   : 100
+    No live signal  : 63
+    Download errors : 0
+    ◆ Diamond       : 0
+    ✗ Rejected      : 37
+
+  No diamond signals today.
+
+  ── Rejected (37 pairs: had live signal, failed regime gates) ──
+    ✗    ATO/XEL      LONG  z=-2.96  WR=35%  PF=0.41x  P&L=$-154
+    ✗    LNT/XEL      LONG  z=-2.41  WR=45%  PF=1.07x  P&L=$+9
+    ✗     NI/XEL      LONG  z=-2.88  WR=31%  PF=0.50x  P&L=$-98
+    ✗     DG/DLTR    SHORT  z=+2.84  WR=58%  PF=1.13x  P&L=$+51
+    ✗    KEY/RF      SHORT  z=+2.44  WR=31%  PF=0.25x  P&L=$-145
+    ✗     ES/FE       LONG  z=-3.58  WR=38%  PF=0.70x  P&L=$-92
+    ✗    PPL/XEL      LONG  z=-3.44  WR=26%  PF=0.32x  P&L=$-118
+    ✗    DUK/XEL      LONG  z=-2.80  WR=34%  PF=0.70x  P&L=$-50
+    ✗    DTE/DUK      LONG  z=-2.77  WR=46%  PF=0.70x  P&L=$-39
+    ✗     IR/ODFL     LONG  z=-2.12  WR=47%  PF=0.51x  P&L=$-179
+    ✗   AMZN/TSLA     LONG  z=-2.31  WR=36%  PF=0.75x  P&L=$-197
+    ✗   GOOG/WBD     SHORT  z=+3.03  WR=44%  PF=0.44x  P&L=$-415
+    ✗  GOOGL/WBD     SHORT  z=+3.01  WR=42%  PF=0.67x  P&L=$-244
+    ✗   AMZN/CCL     SHORT  z=+2.73  WR=55%  PF=0.90x  P&L=$-39
+    ✗   IBKR/JPM     SHORT  z=+3.50  WR=29%  PF=0.67x  P&L=$-113
+    ✗    DHR/REGN    SHORT  z=+2.33  WR=36%  PF=1.03x  P&L=$+11
+    ✗      D/XEL      LONG  z=-2.60  WR=32%  PF=0.65x  P&L=$-72
+    ✗    LYV/META    SHORT  z=+4.41  WR=41%  PF=1.08x  P&L=$+19
+    ✗   IBKR/WFC     SHORT  z=+2.31  WR=44%  PF=0.84x  P&L=$-67
+    ✗    CEG/XEL     SHORT  z=+2.37  WR=62%  PF=1.46x  P&L=$+167
+    ✗   BF-B/KHC      LONG  z=-2.45  WR=34%  PF=0.87x  P&L=$-33
+    ✗   AMZN/WSM     SHORT  z=+2.23  WR=49%  PF=1.58x  P&L=$+201
+    ✗     GL/JPM     SHORT  z=+2.90  WR=41%  PF=0.61x  P&L=$-205
+    ✗    CMS/XEL      LONG  z=-2.06  WR=44%  PF=0.84x  P&L=$-21
+    ✗     BK/GL      SHORT  z=+3.25  WR=59%  PF=1.13x  P&L=$+21
+    ✗    ALL/BLK     SHORT  z=+3.14  WR=35%  PF=0.69x  P&L=$-99
+    ✗    WEC/XEL      LONG  z=-2.50  WR=35%  PF=0.37x  P&L=$-151
+    ✗    BAC/GS      SHORT  z=+3.85  WR=44%  PF=0.86x  P&L=$-31
+    ✗    BLK/GL      SHORT  z=+3.12  WR=47%  PF=1.11x  P&L=$+29
+    ✗   DASH/ORLY     LONG  z=-2.21  WR=52%  PF=1.17x  P&L=$+77
+    ✗   EBAY/ORLY     LONG  z=-2.14  WR=42%  PF=1.12x  P&L=$+42
+    ✗     NI/PPL      LONG  z=-2.23  WR=43%  PF=0.48x  P&L=$-79
+    ✗  GOOGL/GOOG     LONG  z=-3.20  WR=0%  PF=0.00x  P&L=$-67
+    ✗     BK/CBOE    SHORT  z=+3.66  WR=38%  PF=0.60x  P&L=$-120
+    ✗   LDOS/URI     SHORT  z=+3.06  WR=39%  PF=0.51x  P&L=$-276
+    ✗   BF-B/CPB      LONG  z=-2.33  WR=63%  PF=2.74x  P&L=$+289
+    ✗    LUV/WAB     SHORT  z=+2.44  WR=53%  PF=1.65x  P&L=$+131
+
+  Log     → C:\Users\User\Desktop\adf bot\logs\2026-02-24_200358.log
+  Journal → C:\Users\User\Desktop\adf bot\system_log.csv
+  Errors  → C:\Users\User\Desktop\adf bot\error.log
+
