@@ -34,6 +34,8 @@ MIN_SHARPE         = 0.5           # minimum annualised Sharpe ratio
 MAX_DRAWDOWN       = -200.0        # maximum allowable peak-to-trough drawdown ($)
 MIN_TRADES         = 10            # minimum backtest trades for statistical validity
 BETA_STABILITY_MAX = 0.30          # max hedge-ratio coefficient of variation (std/|mean|)
+MIN_SORTINO        = 0.5           # minimum annualised Sortino ratio
+MIN_AVG_PNL        = 5.0           # minimum average net P&L per trade ($)
 RECENT_CORR_WINDOW = 90            # days for recent correlation check
 MIN_RECENT_CORR    = 0.65          # minimum recent correlation required (Gate D)
 
@@ -61,6 +63,7 @@ RECENT_ADF_PVAL      = 0.10        # max ADF p-value on recent spread
 RECENT_MOMENTUM_N    = 5           # how many recent trades to check
                                    # reject if combined P&L of last N <= $0
 VIX_MAX_ENTRY        = 25.0        # block new entries when VIX exceeds this level
+WALK_FORWARD_SPLIT   = 0.70        # train/test split for walk-forward validation (70/30)
 
 # ── External APIs ────────────────────────────────────────────────────────────
 # WARNING: do not commit real keys to a public repo — use a secrets.py instead

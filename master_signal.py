@@ -32,6 +32,8 @@
  ---------------------------------------------------
     Standard  — Min trades >= 10 | WR > 55% | PF > 1.3x | P&L > $0
     Sharpe    — Annualised Sharpe > 0.5
+    Sortino   — Annualised Sortino > 0.5 (downside-only risk)
+    Avg P&L   — Average net P&L per trade > $5.00
     Drawdown  — Peak-to-trough drawdown > -$200
     Beta      — Hedge-ratio coefficient of variation < 0.30
     Gate A    — Split-Half  : Both halves P&L >= $20 independently
@@ -39,6 +41,7 @@
     Gate C    — Freshness   : ADF on last 90 days of spread, p < 0.10
     Gate D    — Correlation : Recent 90-day price correlation >= 0.65
     Gate E    — Earnings    : Neither leg reports within ±7 days of today (FMP)
+    Gate F    — Walk-Forward: OOS (30%) Sharpe > 0 and OOS P&L > 0
 
  Strategy Parameters
  -------------------
@@ -74,12 +77,14 @@ from config import (
     CAPITAL_PER_TRADE, SLIPPAGE_PCT,
     MIN_WIN_RATE, MIN_PROFIT_FACTOR, MIN_TOTAL_PNL, MIN_SHARPE, MAX_DRAWDOWN,
     MIN_TRADES, BETA_STABILITY_MAX,
+    MIN_SORTINO, MIN_AVG_PNL,
     MAX_RETRIES, RETRY_DELAY, ERROR_LOG,
     SPLIT_HALF_ENABLED, SPLIT_HALF_MIN_PNL,
     RECENT_ADF_WINDOW, RECENT_ADF_PVAL,
     RECENT_MOMENTUM_N,
     RECENT_CORR_WINDOW, MIN_RECENT_CORR,
     VIX_MAX_ENTRY,
+    WALK_FORWARD_SPLIT,
     AV_API_KEY, AV_RATE_DELAY,
     FMP_API_KEY, EARNINGS_BLACKOUT_DAYS,
     BORROW_COST_PCT,
@@ -565,6 +570,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     if not trades:
         return {"n_trades": 0, "win_rate": 0.0, "profit_factor": 0.0,
                 "total_pnl": 0.0, "avg_pnl": 0.0, "sharpe": 0.0,
+                "sortino": 0.0, "oos_sharpe": 0.0, "oos_pnl": 0.0,
                 "avg_hold": 0.0, "max_dd": 0.0, "beta_cv": 0.0,
                 "recent_corr": None, "pass": False,
                 "reason": "No historical trades",
@@ -586,6 +592,11 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     tpy      = 250 / max(avg_hold, 1)
     std_pnl  = pnls.std(ddof=1) if n_trades > 1 else 1e-12
     sharpe   = (avg_pnl / std_pnl) * np.sqrt(tpy)
+
+    # ── Sortino ratio (downside deviation only) ───────────────────────
+    downside      = pnls[pnls < 0]
+    downside_std  = downside.std(ddof=1) if len(downside) > 1 else 1e-12
+    sortino       = (avg_pnl / downside_std) * np.sqrt(tpy)
 
     # ── Max drawdown (peak-to-trough on cumulative P&L) ──────────────────
     cum_pnl  = np.cumsum(pnls)
@@ -615,6 +626,10 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         reasons.append(f"Max DD ${max_dd:+.0f} < ${MAX_DRAWDOWN:+.0f}")
     if beta_cv > BETA_STABILITY_MAX:
         reasons.append(f"Unstable Beta: CV={beta_cv:.2f} > {BETA_STABILITY_MAX}")
+    if sortino < MIN_SORTINO:
+        reasons.append(f"Sortino {sortino:+.2f} < {MIN_SORTINO}")
+    if avg_pnl < MIN_AVG_PNL:
+        reasons.append(f"Avg P&L ${avg_pnl:+.2f} < ${MIN_AVG_PNL:.2f}")
 
     # ── GATE A: Split-Half Validation (Calendar-Based) ───────────────────
     #    Split at temporal midpoint of the data (not trade count).
@@ -649,6 +664,27 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                 f"Low Recent Momentum: last {RECENT_MOMENTUM_N} trades "
                 f"P&L=${recent_pnl:+.0f}")
 
+    # ── GATE F: Walk-Forward Validation (70/30 OOS test) ──────────────
+    #    Train on first 70% of data, test backtest stats on last 30%.
+    #    OOS Sharpe must be > 0 and OOS total P&L must be > 0.
+    oos_sharpe = 0.0
+    oos_pnl    = 0.0
+    split_idx  = int(len(trades) * WALK_FORWARD_SPLIT)
+    if len(trades) >= MIN_TRADES and split_idx > 0 and split_idx < len(trades):
+        oos_trades = trades[split_idx:]
+        oos_pnls   = np.array([t["net_pnl"] for t in oos_trades])
+        oos_pnl    = float(oos_pnls.sum())
+        if len(oos_pnls) > 1:
+            oos_avg  = oos_pnls.mean()
+            oos_std  = oos_pnls.std(ddof=1) if len(oos_pnls) > 1 else 1e-12
+            oos_hold = np.mean([t["hold_days"] for t in oos_trades])
+            oos_tpy  = 250 / max(oos_hold, 1)
+            oos_sharpe = float((oos_avg / oos_std) * np.sqrt(oos_tpy))
+        if oos_sharpe <= 0 or oos_pnl <= 0:
+            reasons.append(
+                f"Walk-Forward OOS: Sharpe={oos_sharpe:+.2f}, "
+                f"P&L=${oos_pnl:+.2f}")
+
     passed = len(reasons) == 0
 
     return {
@@ -658,6 +694,9 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         "total_pnl":     total_pnl,
         "avg_pnl":       avg_pnl,
         "sharpe":        sharpe,
+        "sortino":       sortino,
+        "oos_sharpe":    oos_sharpe,
+        "oos_pnl":       oos_pnl,
         "avg_hold":      avg_hold,
         "max_dd":        max_dd,
         "beta_cv":       beta_cv,
@@ -713,6 +752,9 @@ def print_diamond(a: str, b: str, live: dict, bt: dict):
     print(L(f"    Total P&L    : ${bt['total_pnl']:>+9.2f}"))
     print(L(f"    Max Drawdown : ${bt.get('max_dd', 0):>+9.2f}"))
     print(L(f"    Sharpe       : {bt['sharpe']:>+5.2f}"))
+    print(L(f"    Sortino      : {bt.get('sortino', 0):>+5.2f}"))
+    print(L(f"    OOS Sharpe   : {bt.get('oos_sharpe', 0):>+5.2f}"))
+    print(L(f"    OOS P&L      : ${bt.get('oos_pnl', 0):>+9.2f}"))
     print(L(f"    Avg Hold     : {bt['avg_hold']:>5.1f} days"))
     print(L(""))
     rc_str = (f"{bt['recent_corr']:.2f}" if bt.get("recent_corr") is not None
@@ -756,8 +798,14 @@ def print_rejected(a: str, b: str, live: dict, bt: dict):
         gate = "Failed Split-Half"
     elif "ADF" in reason or "Low Recent Cointegration" in reason:
         gate = "Failed Cointegration / ADF"
+    elif "Walk-Forward" in reason:
+        gate = "Failed Walk-Forward OOS"
     elif "Recent Momentum" in reason:
         gate = "Alpha Decay (Recent Trades)"
+    elif "Sortino" in reason:
+        gate = "Low Sortino"
+    elif "Avg P&L" in reason:
+        gate = "Avg P&L Too Thin"
     elif "Sharpe" in reason:
         gate = "Low Sharpe"
     elif "Max DD" in reason:
@@ -875,6 +923,7 @@ def main() -> dict:
                     "reason": f"Earnings Blackout: {earn_sym} earnings {when}",
                     "n_trades": 0, "win_rate": 0.0, "profit_factor": 0.0,
                     "total_pnl": 0.0, "avg_pnl": 0.0, "sharpe": 0.0,
+                    "sortino": 0.0, "oos_sharpe": 0.0, "oos_pnl": 0.0,
                     "avg_hold": 0.0, "max_dd": 0.0, "beta_cv": 0.0,
                     "recent_corr": None, "h1_pnl": 0.0, "h2_pnl": 0.0,
                     "recent_pnl": 0.0,
