@@ -64,8 +64,10 @@ VIX_MAX_ENTRY        = 25.0        # block new entries when VIX exceeds this lev
 
 # ── External APIs ────────────────────────────────────────────────────────────
 # WARNING: do not commit real keys to a public repo — use a secrets.py instead
-AV_API_KEY         = "KCUX8R91HIPN7296"  # Alpha Vantage key
+AV_API_KEY         = "KCUX8R91HIPN7296"  # Alpha Vantage key (DAILY_ADJUSTED needs paid plan)
 AV_RATE_DELAY      = 12.0               # secs between AV calls (12 = free 5/min; 0.8 = paid)
+FMP_API_KEY        = "VRe6WPJFJWPY7TZ2kz99DB8blWgx1YyR"  # Financial Modeling Prep key
+EARNINGS_BLACKOUT_DAYS = 7             # block entry if earnings within this many days (±)
 
 # ── File Paths ──────────────────────────────────────────────────────────────
 LOG_DIR            = "logs"

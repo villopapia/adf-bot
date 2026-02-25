@@ -38,6 +38,7 @@
     Gate B    — Momentum    : Last 5 trades combined P&L > $0
     Gate C    — Freshness   : ADF on last 90 days of spread, p < 0.10
     Gate D    — Correlation : Recent 90-day price correlation >= 0.65
+    Gate E    — Earnings    : Neither leg reports within ±7 days of today (FMP)
 
  Strategy Parameters
  -------------------
@@ -80,6 +81,7 @@ from config import (
     RECENT_CORR_WINDOW, MIN_RECENT_CORR,
     VIX_MAX_ENTRY,
     AV_API_KEY, AV_RATE_DELAY,
+    FMP_API_KEY, EARNINGS_BLACKOUT_DAYS,
 )
 
 # ── Volatility floor — prevents z-score explosion when std collapses ────────
@@ -108,9 +110,10 @@ if not _err_logger.handlers:
 _av_cache: dict[str, pd.Series] = {}
 
 
-def _clear_av_cache() -> None:
-    global _av_cache
+def _clear_caches() -> None:
+    global _av_cache, _fmp_earnings_cache
     _av_cache = {}
+    _fmp_earnings_cache = {}
 
 
 def _fetch_av_ticker(symbol: str) -> "pd.Series | None":
@@ -168,6 +171,64 @@ def _fetch_av_ticker(symbol: str) -> "pd.Series | None":
     except Exception as e:
         _err_logger.warning(f"Alpha Vantage fetch failed for {symbol}: {e}")
         return None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  FMP EARNINGS BLACKOUT — Gate E
+# ──────────────────────────────────────────────────────────────────────────────
+# Earnings announcements are the single biggest cointegration breaker.
+# If either leg reports within ±EARNINGS_BLACKOUT_DAYS of today, block entry.
+# Results cached per run — each ticker fetched at most once per main() call.
+_fmp_earnings_cache: dict[str, list] = {}
+
+
+def _fetch_earnings_dates(symbol: str) -> list:
+    """
+    Fetch recent + upcoming earnings dates for a ticker from FMP.
+    Returns a list of datetime.date objects (empty on failure or missing key).
+    Cached per run.
+    """
+    global _fmp_earnings_cache
+    if symbol in _fmp_earnings_cache:
+        return _fmp_earnings_cache[symbol]
+    if not FMP_API_KEY:
+        _fmp_earnings_cache[symbol] = []
+        return []
+    try:
+        resp = requests.get(
+            "https://financialmodelingprep.com/stable/earnings",
+            params={"symbol": symbol, "limit": 8, "apikey": FMP_API_KEY},
+            timeout=10,
+        )
+        data = resp.json()
+        if not isinstance(data, list):
+            _fmp_earnings_cache[symbol] = []
+            return []
+        dates = [
+            datetime.date.fromisoformat(row["date"])
+            for row in data if row.get("date")
+        ]
+        _fmp_earnings_cache[symbol] = dates
+        return dates
+    except Exception as e:
+        _err_logger.warning(f"FMP earnings fetch failed for {symbol}: {e}")
+        _fmp_earnings_cache[symbol] = []
+        return []
+
+
+def check_earnings_blackout(a: str, b: str):
+    """
+    Returns (ticker, delta_days) if either leg has earnings within
+    ±EARNINGS_BLACKOUT_DAYS of today, else (None, None).
+    delta_days < 0 means earnings was N days ago; > 0 means N days ahead.
+    """
+    today = datetime.date.today()
+    for symbol in (a, b):
+        for edate in _fetch_earnings_dates(symbol):
+            delta = (edate - today).days
+            if abs(delta) <= EARNINGS_BLACKOUT_DAYS:
+                return symbol, delta
+    return None, None
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -664,7 +725,9 @@ def print_rejected(a: str, b: str, live: dict, bt: dict):
     reason = bt.get("reason", "")
 
     # Determine short gate label for console
-    if "Insufficient trades" in reason:
+    if "Earnings Blackout" in reason:
+        gate = "Earnings Blackout"
+    elif "Insufficient trades" in reason:
         gate = "Too Few Trades"
     elif "Unstable Beta" in reason:
         gate = "Unstable Hedge Ratio"
@@ -708,7 +771,7 @@ def main() -> dict:
         errors    — int
         timestamp — str
     """
-    _clear_av_cache()   # fresh cache for this run
+    _clear_caches()   # fresh cache for this run
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print()
     print("\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557")
@@ -779,6 +842,25 @@ def main() -> dict:
 
             print(f"\u26a1 z={live['z']:+.2f} {live['direction']:>5}  \u2192  ", end="",
                   flush=True)
+
+            # ── GATE E: Earnings Blackout ─────────────────────────────────
+            #    Block entry if either leg reports within ±EARNINGS_BLACKOUT_DAYS.
+            #    Checked before the expensive backtest to save computation.
+            earn_sym, earn_delta = check_earnings_blackout(a, b)
+            if earn_sym:
+                when = (f"in {earn_delta}d" if earn_delta >= 0
+                        else f"{abs(earn_delta)}d ago")
+                print(f"\U0001f4c5 EARNINGS BLOCK  ({earn_sym} earnings {when})")
+                rejected.append({"a": a, "b": b, "live": live, "bt": {
+                    "pass": False,
+                    "reason": f"Earnings Blackout: {earn_sym} earnings {when}",
+                    "n_trades": 0, "win_rate": 0.0, "profit_factor": 0.0,
+                    "total_pnl": 0.0, "avg_pnl": 0.0, "sharpe": 0.0,
+                    "avg_hold": 0.0, "max_dd": 0.0, "beta_cv": 0.0,
+                    "recent_corr": None, "h1_pnl": 0.0, "h2_pnl": 0.0,
+                    "recent_pnl": 0.0,
+                }})
+                continue
 
             # ── STEP 2: History Check (with 1-bar delay) ─────────────────
             bt = backtest_pair(signals)
