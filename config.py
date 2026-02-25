@@ -32,6 +32,10 @@ MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
 MIN_TOTAL_PNL      = 0.0           # minimum total P&L ($)
 MIN_SHARPE         = 0.5           # minimum annualised Sharpe ratio
 MAX_DRAWDOWN       = -200.0        # maximum allowable peak-to-trough drawdown ($)
+MIN_TRADES         = 10            # minimum backtest trades for statistical validity
+BETA_STABILITY_MAX = 0.30          # max hedge-ratio coefficient of variation (std/|mean|)
+RECENT_CORR_WINDOW = 90            # days for recent correlation check
+MIN_RECENT_CORR    = 0.65          # minimum recent correlation required (Gate D)
 
 # ── Scanner ─────────────────────────────────────────────────────────────────
 SCANNER_INTERVAL_DAYS = 7          # days between auto-refresh

@@ -30,12 +30,14 @@
 
  Diamond Quality Gates (hard reject unless ALL pass)
  ---------------------------------------------------
-    Standard  — Win Rate > 55% | Profit Factor > 1.3x | Total P&L > $0
+    Standard  — Min trades >= 10 | WR > 55% | PF > 1.3x | P&L > $0
     Sharpe    — Annualised Sharpe > 0.5
     Drawdown  — Peak-to-trough drawdown > -$200
+    Beta      — Hedge-ratio coefficient of variation < 0.30
     Gate A    — Split-Half  : Both halves P&L >= $20 independently
     Gate B    — Momentum    : Last 5 trades combined P&L > $0
     Gate C    — Freshness   : ADF on last 90 days of spread, p < 0.10
+    Gate D    — Correlation : Recent 90-day price correlation >= 0.65
 
  Strategy Parameters
  -------------------
@@ -70,10 +72,12 @@ from config import (
     Z_ENTRY, Z_EXIT, Z_STOP, MAX_HOLD,
     CAPITAL_PER_TRADE, SLIPPAGE_PCT,
     MIN_WIN_RATE, MIN_PROFIT_FACTOR, MIN_TOTAL_PNL, MIN_SHARPE, MAX_DRAWDOWN,
+    MIN_TRADES, BETA_STABILITY_MAX,
     MAX_RETRIES, RETRY_DELAY, ERROR_LOG,
     SPLIT_HALF_ENABLED, SPLIT_HALF_MIN_PNL,
     RECENT_ADF_WINDOW, RECENT_ADF_PVAL,
     RECENT_MOMENTUM_N,
+    RECENT_CORR_WINDOW, MIN_RECENT_CORR,
     VIX_MAX_ENTRY,
 )
 
@@ -392,7 +396,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     if not trades:
         return {"n_trades": 0, "win_rate": 0.0, "profit_factor": 0.0,
                 "total_pnl": 0.0, "avg_pnl": 0.0, "sharpe": 0.0,
-                "avg_hold": 0.0, "max_dd": 0.0, "pass": False,
+                "avg_hold": 0.0, "max_dd": 0.0, "beta_cv": 0.0,
+                "recent_corr": None, "pass": False,
                 "reason": "No historical trades",
                 "h1_pnl": 0.0, "h2_pnl": 0.0, "recent_pnl": 0.0}
 
@@ -418,8 +423,17 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     peak     = np.maximum.accumulate(cum_pnl)
     max_dd   = float((cum_pnl - peak).min())   # <= 0
 
+    # ── Beta stability (coefficient of variation of rolling hedge ratio) ──
+    beta_vals = signals["beta"].dropna().values
+    beta_cv   = 0.0
+    if len(beta_vals) > 1:
+        mean_b  = abs(beta_vals.mean())
+        beta_cv = (beta_vals.std(ddof=1) / mean_b) if mean_b > 1e-4 else np.inf
+
     # ── Standard quality gates ───────────────────────────────────────────
     reasons = []
+    if n_trades < MIN_TRADES:
+        reasons.append(f"Insufficient trades ({n_trades} < {MIN_TRADES})")
     if win_rate < MIN_WIN_RATE:
         reasons.append(f"WR {win_rate:.1f}% < {MIN_WIN_RATE}%")
     if profit_factor < MIN_PROFIT_FACTOR:
@@ -430,6 +444,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         reasons.append(f"Sharpe {sharpe:+.2f} < {MIN_SHARPE}")
     if max_dd < MAX_DRAWDOWN:
         reasons.append(f"Max DD ${max_dd:+.0f} < ${MAX_DRAWDOWN:+.0f}")
+    if beta_cv > BETA_STABILITY_MAX:
+        reasons.append(f"Unstable Beta: CV={beta_cv:.2f} > {BETA_STABILITY_MAX}")
 
     # ── GATE A: Split-Half Validation (Calendar-Based) ───────────────────
     #    Split at temporal midpoint of the data (not trade count).
@@ -475,6 +491,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         "sharpe":        sharpe,
         "avg_hold":      avg_hold,
         "max_dd":        max_dd,
+        "beta_cv":       beta_cv,
+        "recent_corr":   None,       # filled in by main() after Gate D
         "pass":          passed,
         "reason":        " | ".join(reasons) if reasons else "",
         "h1_pnl":        h1_pnl_val,
@@ -528,11 +546,15 @@ def print_diamond(a: str, b: str, live: dict, bt: dict):
     print(L(f"    Sharpe       : {bt['sharpe']:>+5.2f}"))
     print(L(f"    Avg Hold     : {bt['avg_hold']:>5.1f} days"))
     print(L(""))
+    rc_str = (f"{bt['recent_corr']:.2f}" if bt.get("recent_corr") is not None
+              else "N/A")
     print(L(f"  REGIME GATES"))
     print(L(f"    Half-1 P&L   : ${bt.get('h1_pnl', 0):>+9.2f}   \u2713"))
     print(L(f"    Half-2 P&L   : ${bt.get('h2_pnl', 0):>+9.2f}   \u2713"))
     print(L(f"    Recent ADF   :  Stationary   \u2713"))
     print(L(f"    Last 5 P&L   : ${bt.get('recent_pnl', 0):>+9.2f}   \u2713"))
+    print(L(f"    Recent \u03c1     :  {rc_str:>5}         \u2713"))
+    print(L(f"    Beta CV      :  {bt.get('beta_cv', 0):.2f}          \u2713"))
     print(L(""))
     print(f"  \u2560{'\u2550'*W}\u2563")
     print(L(f"  \u26a1 EXECUTION TICKET"))
@@ -553,12 +575,22 @@ def print_rejected(a: str, b: str, live: dict, bt: dict):
     reason = bt.get("reason", "")
 
     # Determine short gate label for console
-    if "H1 P&L" in reason or "H2 P&L" in reason or "Split-Half" in reason:
+    if "Insufficient trades" in reason:
+        gate = "Too Few Trades"
+    elif "Unstable Beta" in reason:
+        gate = "Unstable Hedge Ratio"
+    elif "Low Recent Correlation" in reason:
+        gate = "Correlation Breakdown"
+    elif "H1 P&L" in reason or "H2 P&L" in reason or "Split-Half" in reason:
         gate = "Failed Split-Half"
     elif "ADF" in reason or "Low Recent Cointegration" in reason:
         gate = "Failed Cointegration / ADF"
     elif "Recent Momentum" in reason:
         gate = "Alpha Decay (Recent Trades)"
+    elif "Sharpe" in reason:
+        gate = "Low Sharpe"
+    elif "Max DD" in reason:
+        gate = "Excessive Drawdown"
     elif "WR" in reason or "PF" in reason or "P&L" in reason:
         gate = "Failed Standard Backtest"
     else:
@@ -678,6 +710,25 @@ def main() -> dict:
                                         if old_reason else coint_msg)
                 except Exception:
                     pass   # ADF can fail on degenerate data — don't block
+
+            # ── GATE D: Recent Correlation Freshness ─────────────────────
+            #    Price correlation over last 90 days must still be high.
+            #    A pair with ρ=0.85 historically but ρ=0.30 recently is broken.
+            pa_recent = signals["price_a"].dropna().values[-RECENT_CORR_WINDOW:]
+            pb_recent = signals["price_b"].dropna().values[-RECENT_CORR_WINDOW:]
+            if len(pa_recent) >= RECENT_CORR_WINDOW and len(pb_recent) >= RECENT_CORR_WINDOW:
+                try:
+                    recent_corr = float(np.corrcoef(pa_recent, pb_recent)[0, 1])
+                    bt["recent_corr"] = recent_corr
+                    if recent_corr < MIN_RECENT_CORR:
+                        bt["pass"] = False
+                        old_reason = bt.get("reason", "")
+                        corr_msg = (f"Low Recent Correlation: "
+                                    f"\u03c1={recent_corr:.2f} < {MIN_RECENT_CORR}")
+                        bt["reason"] = (f"{old_reason} | {corr_msg}"
+                                        if old_reason else corr_msg)
+                except Exception:
+                    pass   # correlation can fail on degenerate data — don't block
 
             if bt["pass"]:
                 if vix_blocked:
