@@ -71,7 +71,7 @@ if _SCRIPT_DIR not in sys.path:
 from config import (
     LOOKBACK_YEARS, CORRELATION_THRESHOLD, TOP_N_PAIRS,
     INPUT_CSV, MISSING_THRESHOLD, COINT_PVAL_THRESH,
-    SCANNER_BATCH_SIZE,
+    SCANNER_BATCH_SIZE, ENABLE_NASDAQ100,
 )
 
 CORR_PRE_FILTER = CORRELATION_THRESHOLD
@@ -181,6 +181,109 @@ def _hardcoded_sp500_with_sectors() -> pd.DataFrame:
 
     df = pd.DataFrame(rows).drop_duplicates("Symbol")
     print(f"[STEP 1] Using hardcoded list of {len(df)} tickers with sectors.")
+    return df
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  STEP 1b — FETCH NASDAQ-100 TICKERS  +  SECTORS  (optional)
+# ══════════════════════════════════════════════════════════════════════════════
+
+def get_nasdaq100_tickers() -> pd.DataFrame:
+    """
+    Scrape the Nasdaq-100 table from Wikipedia.
+    Returns a DataFrame with columns ['Symbol', 'Sector'].
+    Falls back to a hardcoded snapshot if the request fails.
+    """
+    url = "https://en.wikipedia.org/wiki/Nasdaq-100"
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        resp.raise_for_status()
+        tables = pd.read_html(io.StringIO(resp.text))
+
+        # Find the table that has ticker/symbol + sector columns
+        for tbl in tables:
+            cols_lower = [str(c).lower() for c in tbl.columns]
+            has_ticker = any("ticker" in c or "symbol" in c for c in cols_lower)
+            has_sector = any("sector" in c for c in cols_lower)
+            if has_ticker and has_sector:
+                # Map to canonical column names
+                col_map = {}
+                for c in tbl.columns:
+                    cl = str(c).lower()
+                    if "ticker" in cl or "symbol" in cl:
+                        col_map[c] = "Symbol"
+                    elif "sector" in cl:
+                        col_map[c] = "Sector"
+                df = tbl.rename(columns=col_map)[["Symbol", "Sector"]].copy()
+                df["Symbol"] = df["Symbol"].str.replace(".", "-", regex=False)
+                df = df.drop_duplicates("Symbol")
+                print(f"[STEP 1b] Scraped {len(df)} Nasdaq-100 tickers + sectors "
+                      f"from Wikipedia.")
+                return df
+
+        raise ValueError("No suitable table found on Nasdaq-100 Wikipedia page.")
+
+    except Exception as exc:
+        print(f"[STEP 1b] Wikipedia Nasdaq-100 scrape failed ({exc}); "
+              f"using hardcoded list.")
+        return _hardcoded_nasdaq100_with_sectors()
+
+
+def _hardcoded_nasdaq100_with_sectors() -> pd.DataFrame:
+    """Fallback — representative Nasdaq-100 tickers grouped by GICS Sector."""
+    sector_map = {
+        "Information Technology": (
+            "AAPL MSFT NVDA AVGO CSCO ADBE AMD INTC QCOM TXN MU AMAT KLAC "
+            "LRCX SNPS CDNS MCHP ON NXPI ADI MRVL"
+        ),
+        "Consumer Discretionary": (
+            "AMZN TSLA BKNG ABNB ORLY SBUX MAR EBAY DLTR ROST"
+        ),
+        "Communication Services": (
+            "META GOOGL GOOG NFLX CMCSA TTWO EA WBD"
+        ),
+        "Health Care": (
+            "LLY AMGN GILD REGN VRTX IDXX ALGN DXCM MRNA GEHC"
+        ),
+        "Industrials": (
+            "HON CSX FAST CTAS ODFL PCAR VRSK"
+        ),
+        "Consumer Staples": (
+            "COST PEP MNST KDP"
+        ),
+        "Financials": (
+            "PYPL PAYX FISV"
+        ),
+        "Utilities": (
+            "CEG"
+        ),
+        "Real Estate": (
+            "EQIX PLD"
+        ),
+        "Energy": (
+            "CEG"
+        ),
+        "Materials": (
+            "FSLR"
+        ),
+    }
+
+    rows = []
+    for sector, tickers_str in sector_map.items():
+        for t in tickers_str.split():
+            rows.append({"Symbol": t, "Sector": sector})
+
+    df = pd.DataFrame(rows).drop_duplicates("Symbol")
+    print(f"[STEP 1b] Using hardcoded list of {len(df)} Nasdaq-100 tickers.")
     return df
 
 
@@ -374,6 +477,13 @@ def main():
 
     # 1. Get ticker universe with sectors
     sector_df = get_sp500_with_sectors()
+    if ENABLE_NASDAQ100:
+        ndx_df    = get_nasdaq100_tickers()
+        combined  = pd.concat([sector_df, ndx_df], ignore_index=True)
+        # keep="first" so S&P 500 sector labels win on collision (more reliable GICS data)
+        sector_df = combined.drop_duplicates(subset="Symbol", keep="first").reset_index(drop=True)
+        print(f"[STEP 1b] Combined universe: {len(sector_df)} unique tickers "
+              f"(S&P 500 + Nasdaq-100).\n")
 
     # 2. Bulk download
     all_tickers = sector_df["Symbol"].tolist()
@@ -410,7 +520,10 @@ def main():
               f"coint p={row['Coint_pval']:.4f}")
     print()
 
-    print("  \u26a0  NOTE: Universe is current S&P 500 constituents.")
+    if ENABLE_NASDAQ100:
+        print("  NOTE: Universe is current S&P 500 + Nasdaq-100 constituents.")
+    else:
+        print("  NOTE: Universe is current S&P 500 constituents.")
     print("     Historical backtest results may exhibit survivorship bias.\n")
 
     return df_out

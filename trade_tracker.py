@@ -43,6 +43,7 @@ from config import (
     MAX_CONSECUTIVE_LOSSES, MAX_SYSTEM_DRAWDOWN,
     Z_STOP, MAX_HOLD, SLIPPAGE_PCT, CAPITAL_PER_TRADE,
     PORTFOLIO_CORR_MAX,
+    KELLY_FRACTION, KELLY_MIN_SCALE, KELLY_MAX_SCALE,
 )
 
 LIVE_TRADES_PATH  = os.path.join(_SCRIPT_DIR, LIVE_TRADES_CSV)
@@ -51,7 +52,7 @@ SYSTEM_STATE_PATH = os.path.join(_SCRIPT_DIR, SYSTEM_STATE_JSON)
 TRADE_HEADERS = [
     "trade_id", "date_open", "stock_a", "stock_b", "direction",
     "entry_z", "beta", "shares_a", "shares_b",
-    "price_a_entry", "price_b_entry", "capital_deployed",
+    "price_a_entry", "price_b_entry", "capital_deployed", "kelly_scale",
     "bt_expected_pnl", "bt_win_rate", "bt_profit_factor",
     "status",
     "date_close", "price_a_exit", "price_b_exit",
@@ -185,6 +186,36 @@ def _evaluate_kill_switch(state: dict) -> dict:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+#  Kelly criterion sizing
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _kelly_capital(bt: dict) -> tuple[float, float]:
+    """
+    Compute Kelly-adjusted capital for a trade.
+
+    Kelly formula:
+        f* = win_rate - (1 - win_rate) / profit_factor
+        f_kelly = f* * KELLY_FRACTION
+        scale = clamp(f_kelly, KELLY_MIN_SCALE, KELLY_MAX_SCALE)
+        adjusted_capital = CAPITAL_PER_TRADE * scale
+
+    Returns (adjusted_capital, scale).
+    Falls back to (CAPITAL_PER_TRADE, 1.0) if stats are missing or invalid.
+    """
+    try:
+        win_rate      = bt.get("win_rate", 0) / 100.0   # convert % to fraction
+        profit_factor = bt.get("profit_factor", 0)
+        if win_rate <= 0 or profit_factor <= 0:
+            return CAPITAL_PER_TRADE, 1.0
+        f_star  = win_rate - (1.0 - win_rate) / profit_factor
+        f_kelly = f_star * KELLY_FRACTION
+        scale   = max(KELLY_MIN_SCALE, min(KELLY_MAX_SCALE, f_kelly))
+        return CAPITAL_PER_TRADE * scale, round(scale, 4)
+    except Exception:
+        return CAPITAL_PER_TRADE, 1.0
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 #  Entry logging
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -198,7 +229,8 @@ def log_entry(diamond: dict) -> str:
     b        = diamond["b"]
     live     = diamond["live"]
     bt       = diamond["bt"]
-    half     = CAPITAL_PER_TRADE / 2.0
+    kelly_capital, kelly_scale = _kelly_capital(bt)
+    half     = kelly_capital / 2.0
     shares_a = round(half / live["price_a"])
     shares_b = round(half / live["price_b"])
     capital  = shares_a * live["price_a"] + shares_b * live["price_b"]
@@ -217,6 +249,7 @@ def log_entry(diamond: dict) -> str:
         "price_a_entry":    round(live["price_a"], 4),
         "price_b_entry":    round(live["price_b"], 4),
         "capital_deployed": round(capital, 2),
+        "kelly_scale":      kelly_scale,
         "bt_expected_pnl":  round(bt.get("avg_pnl", 0), 2),
         "bt_win_rate":      round(bt.get("win_rate", 0), 1),
         "bt_profit_factor": round(bt.get("profit_factor", 0), 2),

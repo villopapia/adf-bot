@@ -26,6 +26,11 @@ MAX_HOLD           = 30            # max holding period (days)
 CAPITAL_PER_TRADE  = 1000.0        # dollars per trade
 SLIPPAGE_PCT       = 0.001         # 0.10% per leg
 
+# Kelly position sizing
+KELLY_FRACTION     = 0.5           # fraction of full Kelly (0.5 = half-Kelly)
+KELLY_MIN_SCALE    = 0.5           # minimum position as fraction of CAPITAL_PER_TRADE
+KELLY_MAX_SCALE    = 2.0           # maximum position as fraction of CAPITAL_PER_TRADE
+
 # ── Backtest Quality Gates ──────────────────────────────────────────────────
 MIN_WIN_RATE       = 55.0          # minimum win rate (%)
 MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
@@ -42,7 +47,8 @@ MIN_RECENT_CORR    = 0.65          # minimum recent correlation required (Gate D
 # ── Scanner ─────────────────────────────────────────────────────────────────
 SCANNER_INTERVAL_DAYS = 7          # days between auto-refresh
 CORRELATION_THRESHOLD = 0.80       # pre-filter correlation
-TOP_N_PAIRS        = 100            # pairs to export
+TOP_N_PAIRS        = 150           # pairs to export
+ENABLE_NASDAQ100   = True          # include Nasdaq-100 tickers in universe
 
 # ── Scanner — Advanced ──────────────────────────────────────────────────────
 MISSING_THRESHOLD     = 0.10        # drop tickers with > 10% NaN values
@@ -75,10 +81,10 @@ EARNINGS_BLACKOUT_DAYS = 7             # block entry if earnings within this man
 # ── Live Trade Tracking ───────────────────────────────────────────────────────
 LIVE_TRADES_CSV          = "live_trades.csv"   # paper trade journal
 SYSTEM_STATE_JSON        = "system_state.json" # running P&L, kill switch
-MAX_CONCURRENT_POSITIONS = 3                   # max open pairs at any time
+MAX_CONCURRENT_POSITIONS = 10                  # max open pairs at any time
 BORROW_COST_PCT          = 0.005               # annual short-leg borrow cost (0.5%)
 MAX_CONSECUTIVE_LOSSES   = 5                   # kill switch: N live losses in a row
-MAX_SYSTEM_DRAWDOWN      = -500.0              # kill switch: peak-to-trough live P&L ($)
+MAX_SYSTEM_DRAWDOWN      = -1500.0             # kill switch: peak-to-trough live P&L ($)
 PORTFOLIO_CORR_MAX       = 0.7                 # block new entry if any leg corr > threshold with open
 
 # ── File Paths ──────────────────────────────────────────────────────────────
