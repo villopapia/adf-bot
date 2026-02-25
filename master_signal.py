@@ -30,9 +30,12 @@
 
  Diamond Quality Gates (hard reject unless ALL pass)
  ---------------------------------------------------
-    Gate A — Split-Half  : Year 1 P&L > $0 AND Year 2 P&L > $0
-    Gate B — Momentum    : Last 5 trades combined P&L > $0
-    Gate C — Freshness   : ADF on last 90 days of spread, p < 0.10
+    Standard  — Win Rate > 55% | Profit Factor > 1.3x | Total P&L > $0
+    Sharpe    — Annualised Sharpe > 0.5
+    Drawdown  — Peak-to-trough drawdown > -$200
+    Gate A    — Split-Half  : Both halves P&L >= $20 independently
+    Gate B    — Momentum    : Last 5 trades combined P&L > $0
+    Gate C    — Freshness   : ADF on last 90 days of spread, p < 0.10
 
  Strategy Parameters
  -------------------
@@ -66,7 +69,7 @@ from config import (
     ROLLING_BETA_WIN, ROLLING_Z_WIN,
     Z_ENTRY, Z_EXIT, Z_STOP, MAX_HOLD,
     CAPITAL_PER_TRADE, SLIPPAGE_PCT,
-    MIN_WIN_RATE, MIN_PROFIT_FACTOR, MIN_TOTAL_PNL,
+    MIN_WIN_RATE, MIN_PROFIT_FACTOR, MIN_TOTAL_PNL, MIN_SHARPE, MAX_DRAWDOWN,
     MAX_RETRIES, RETRY_DELAY, ERROR_LOG,
     SPLIT_HALF_ENABLED, SPLIT_HALF_MIN_PNL,
     RECENT_ADF_WINDOW, RECENT_ADF_PVAL,
@@ -389,7 +392,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     if not trades:
         return {"n_trades": 0, "win_rate": 0.0, "profit_factor": 0.0,
                 "total_pnl": 0.0, "avg_pnl": 0.0, "sharpe": 0.0,
-                "avg_hold": 0.0, "pass": False,
+                "avg_hold": 0.0, "max_dd": 0.0, "pass": False,
                 "reason": "No historical trades",
                 "h1_pnl": 0.0, "h2_pnl": 0.0, "recent_pnl": 0.0}
 
@@ -410,6 +413,11 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     std_pnl  = pnls.std(ddof=1) if n_trades > 1 else 1e-12
     sharpe   = (avg_pnl / std_pnl) * np.sqrt(tpy)
 
+    # ── Max drawdown (peak-to-trough on cumulative P&L) ──────────────────
+    cum_pnl  = np.cumsum(pnls)
+    peak     = np.maximum.accumulate(cum_pnl)
+    max_dd   = float((cum_pnl - peak).min())   # <= 0
+
     # ── Standard quality gates ───────────────────────────────────────────
     reasons = []
     if win_rate < MIN_WIN_RATE:
@@ -418,6 +426,10 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         reasons.append(f"PF {profit_factor:.2f}x < {MIN_PROFIT_FACTOR}x")
     if total_pnl <= MIN_TOTAL_PNL:
         reasons.append(f"P&L ${total_pnl:+.2f} \u2264 $0")
+    if sharpe < MIN_SHARPE:
+        reasons.append(f"Sharpe {sharpe:+.2f} < {MIN_SHARPE}")
+    if max_dd < MAX_DRAWDOWN:
+        reasons.append(f"Max DD ${max_dd:+.0f} < ${MAX_DRAWDOWN:+.0f}")
 
     # ── GATE A: Split-Half Validation (Calendar-Based) ───────────────────
     #    Split at temporal midpoint of the data (not trade count).
@@ -462,6 +474,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         "avg_pnl":       avg_pnl,
         "sharpe":        sharpe,
         "avg_hold":      avg_hold,
+        "max_dd":        max_dd,
         "pass":          passed,
         "reason":        " | ".join(reasons) if reasons else "",
         "h1_pnl":        h1_pnl_val,
@@ -511,6 +524,7 @@ def print_diamond(a: str, b: str, live: dict, bt: dict):
     print(L(f"    Win Rate     : {bt['win_rate']:>5.1f} %"))
     print(L(f"    Profit Factor: {bt['profit_factor']:>5.2f}x"))
     print(L(f"    Total P&L    : ${bt['total_pnl']:>+9.2f}"))
+    print(L(f"    Max Drawdown : ${bt.get('max_dd', 0):>+9.2f}"))
     print(L(f"    Sharpe       : {bt['sharpe']:>+5.2f}"))
     print(L(f"    Avg Hold     : {bt['avg_hold']:>5.1f} days"))
     print(L(""))

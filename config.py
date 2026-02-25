@@ -30,6 +30,8 @@ SLIPPAGE_PCT       = 0.001         # 0.10% per leg
 MIN_WIN_RATE       = 55.0          # minimum win rate (%)
 MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
 MIN_TOTAL_PNL      = 0.0           # minimum total P&L ($)
+MIN_SHARPE         = 0.5           # minimum annualised Sharpe ratio
+MAX_DRAWDOWN       = -200.0        # maximum allowable peak-to-trough drawdown ($)
 
 # ── Scanner ─────────────────────────────────────────────────────────────────
 SCANNER_INTERVAL_DAYS = 7          # days between auto-refresh
