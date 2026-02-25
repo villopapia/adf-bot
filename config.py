@@ -62,6 +62,11 @@ RECENT_MOMENTUM_N    = 5           # how many recent trades to check
                                    # reject if combined P&L of last N <= $0
 VIX_MAX_ENTRY        = 25.0        # block new entries when VIX exceeds this level
 
+# ── External APIs ────────────────────────────────────────────────────────────
+# WARNING: do not commit real keys to a public repo — use a secrets.py instead
+AV_API_KEY         = "KCUX8R91HIPN7296"  # Alpha Vantage key
+AV_RATE_DELAY      = 12.0               # secs between AV calls (12 = free 5/min; 0.8 = paid)
+
 # ── File Paths ──────────────────────────────────────────────────────────────
 LOG_DIR            = "logs"
 SYSTEM_LOG         = "system_log.csv"

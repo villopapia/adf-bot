@@ -53,7 +53,7 @@
 ================================================================================
 """
 
-import warnings, datetime, time, logging, os
+import warnings, datetime, time, logging, os, requests
 warnings.filterwarnings("ignore")
 
 import numpy as np
@@ -79,6 +79,7 @@ from config import (
     RECENT_MOMENTUM_N,
     RECENT_CORR_WINDOW, MIN_RECENT_CORR,
     VIX_MAX_ENTRY,
+    AV_API_KEY, AV_RATE_DELAY,
 )
 
 # ── Volatility floor — prevents z-score explosion when std collapses ────────
@@ -97,6 +98,76 @@ if not _err_logger.handlers:
         "%(asctime)s | %(levelname)s | %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S"))
     _err_logger.addHandler(_fh)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+#  ALPHA VANTAGE — per-run price cache + fetch helper
+# ──────────────────────────────────────────────────────────────────────────────
+# Cache is keyed by ticker symbol and lives for the duration of one main() call.
+# This means a ticker shared across multiple pairs is only downloaded once.
+_av_cache: dict[str, pd.Series] = {}
+
+
+def _clear_av_cache() -> None:
+    global _av_cache
+    _av_cache = {}
+
+
+def _fetch_av_ticker(symbol: str) -> "pd.Series | None":
+    """
+    Fetch the full daily adjusted-close series from Alpha Vantage.
+    Returns a pd.Series(DatetimeIndex → float) or None on failure/rate-limit.
+    Caches results so each ticker is fetched at most once per run.
+
+    Free tier  : 25 calls/day, 5/min  → AV_RATE_DELAY = 12.0
+    Paid tier  : 75 calls/min         → AV_RATE_DELAY = 0.8
+    When the daily quota is exhausted AV returns a 'Note' key; fetch_pair()
+    falls back to yfinance automatically.
+    """
+    global _av_cache
+    if symbol in _av_cache:
+        return _av_cache[symbol]
+    if not AV_API_KEY:
+        return None
+    try:
+        resp = requests.get(
+            "https://www.alphavantage.co/query",
+            params={
+                "function":   "TIME_SERIES_DAILY_ADJUSTED",
+                "symbol":     symbol,
+                "outputsize": "full",
+                "apikey":     AV_API_KEY,
+            },
+            timeout=15,
+        )
+        data = resp.json()
+
+        # Rate-limit or quota exhausted — AV sends a Note / Information key
+        if "Note" in data or "Information" in data:
+            _err_logger.warning(
+                f"Alpha Vantage quota/rate-limit hit fetching {symbol} — "
+                "falling back to yfinance for this and subsequent tickers.")
+            return None
+
+        ts = data.get("Time Series (Daily)")
+        if not ts:
+            return None
+
+        series = pd.Series(
+            {pd.Timestamp(d): float(v["5. adjusted close"])
+             for d, v in ts.items()},
+            name=symbol,
+            dtype=float,
+        ).sort_index()
+
+        _av_cache[symbol] = series
+        if AV_RATE_DELAY > 0:
+            time.sleep(AV_RATE_DELAY)
+        return series
+
+    except Exception as e:
+        _err_logger.warning(f"Alpha Vantage fetch failed for {symbol}: {e}")
+        return None
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -120,21 +191,39 @@ def get_vix() -> float | None:
 
 def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
     """
-    Download ~2 years of daily adjusted closes.
-    auto_adjust=True → Close column is split/dividend-adjusted.
-    Retries up to MAX_RETRIES on failure.
+    Download ~2 years of daily adjusted closes for a pair.
+
+    Data source priority:
+      1. Alpha Vantage (TIME_SERIES_DAILY_ADJUSTED) — more stable, split/
+         dividend-adjusted. Results cached per-run; each ticker fetched once.
+         Falls back to yfinance when quota is exhausted or fetch fails.
+      2. yfinance (auto_adjust=True) — batched download with retry logic.
+
+    Data hygiene (both sources):
+      - dropna() on the common index — no ffill, no fake convergence.
     """
-    end   = datetime.date.today()
-    start = end - datetime.timedelta(days=int(LOOKBACK_YEARS * 365 * 1.1))
+    end      = datetime.date.today()
+    start    = end - datetime.timedelta(days=int(LOOKBACK_YEARS * 365 * 1.1))
     min_bars = ROLLING_BETA_WIN + ROLLING_Z_WIN + 50
 
+    # ── 1. Try Alpha Vantage ──────────────────────────────────────────────
+    if AV_API_KEY:
+        sa = _fetch_av_ticker(a)
+        sb = _fetch_av_ticker(b)
+        if sa is not None and sb is not None:
+            close = (pd.concat([sa, sb], axis=1)
+                     .loc[pd.Timestamp(start):]
+                     .dropna())
+            if len(close) >= min_bars:
+                return close
+            # AV returned data but not enough history — fall through to yfinance
+
+    # ── 2. Fall back to yfinance ──────────────────────────────────────────
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             raw = yf.download([a, b], start=str(start), end=str(end),
                               auto_adjust=True, progress=False, threads=True)
             if isinstance(raw.columns, pd.MultiIndex):
-                # Data hygiene: dropna enforces common index alignment.
-                # No ffill — missing data = no signal, not fake convergence.
                 close = raw["Close"][[a, b]].dropna()
             else:
                 if attempt < MAX_RETRIES:
@@ -142,11 +231,11 @@ def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
                     continue
                 return None
             if len(close) < min_bars:
-                return None   # not enough data — no point retrying
+                return None
             return close
         except Exception as e:
             _err_logger.warning(
-                f"{a}/{b} fetch attempt {attempt}/{MAX_RETRIES}: {e}")
+                f"{a}/{b} yfinance attempt {attempt}/{MAX_RETRIES}: {e}")
             if attempt < MAX_RETRIES:
                 time.sleep(RETRY_DELAY)
             else:
@@ -619,6 +708,7 @@ def main() -> dict:
         errors    — int
         timestamp — str
     """
+    _clear_av_cache()   # fresh cache for this run
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print()
     print("\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557")
