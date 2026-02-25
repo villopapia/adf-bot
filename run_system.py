@@ -26,7 +26,7 @@
 ================================================================================
 """
 
-import os, sys, re, csv, datetime, argparse, traceback
+import os, sys, re, csv, datetime, argparse, traceback, subprocess
 
 # Enable ANSI escape codes on Windows 10+
 if sys.platform == "win32":
@@ -297,6 +297,41 @@ def print_rejected_summary(rejected: list):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  DESKTOP NOTIFICATION  (Windows balloon — best-effort, no extra deps)
+# ══════════════════════════════════════════════════════════════════════════════
+def _notify_diamonds(diamonds: list):
+    """Fire a Windows balloon toast when diamond signals are found."""
+    if not diamonds or sys.platform != "win32":
+        return
+    n     = len(diamonds)
+    title = f"\u25c6 {n} Diamond Signal{'s' if n > 1 else ''} Found"
+    pairs = ", ".join(
+        f"{d['a']}/{d['b']} {d['live']['direction']}" for d in diamonds
+    )
+    body  = pairs[:250]   # Windows balloon has a ~256 char body limit
+    # Use Windows Forms balloon via PowerShell — no external packages needed
+    ps = (
+        "Add-Type -AssemblyName System.Windows.Forms; "
+        "$n = New-Object System.Windows.Forms.NotifyIcon; "
+        "$n.Icon = [System.Drawing.SystemIcons]::Information; "
+        "$n.Visible = $true; "
+        f"$n.ShowBalloonTip(10000, '{title}', '{body}', "
+        "[System.Windows.Forms.ToolTipIcon]::Info); "
+        "Start-Sleep -Seconds 11; "
+        "$n.Dispose()"
+    )
+    try:
+        subprocess.Popen(
+            ["powershell", "-WindowStyle", "Hidden",
+             "-NonInteractive", "-Command", ps],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except Exception:
+        pass   # notifications are best-effort; never block the run
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  MAIN
 # ══════════════════════════════════════════════════════════════════════════════
 def main():
@@ -422,6 +457,9 @@ def main():
 
         # ── Rejected summary ─────────────────────────────────────────────
         print_rejected_summary(result.get("rejected", []))
+
+        # ── Desktop notification ──────────────────────────────────────────
+        _notify_diamonds(result.get("verified", []))
     else:
         print(f"\n  {R}System encountered errors. "
               f"Check {ERROR_LOG} and log file.{RST}\n")

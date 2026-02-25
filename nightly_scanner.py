@@ -319,7 +319,11 @@ def cointegration_filter(prices: pd.DataFrame,
         if (idx + 1) % 200 == 0:
             print(f"         … {idx+1}/{n_cand}", flush=True)
         try:
-            _, pval, _ = coint(prices[a], prices[b])
+            # Use strict dropna per-pair — matches master_signal.py data hygiene.
+            # The ffill in clean_data() was for correlation pre-filtering only;
+            # cointegration tests should see only real observed prices.
+            pair_data = prices[[a, b]].dropna()
+            _, pval, _ = coint(pair_data[a], pair_data[b])
             tested += 1
             if pval < pval_thresh:
                 results.append({

@@ -439,7 +439,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     if profit_factor < MIN_PROFIT_FACTOR:
         reasons.append(f"PF {profit_factor:.2f}x < {MIN_PROFIT_FACTOR}x")
     if total_pnl <= MIN_TOTAL_PNL:
-        reasons.append(f"P&L ${total_pnl:+.2f} \u2264 $0")
+        reasons.append(f"P&L ${total_pnl:+.2f} \u2264 ${MIN_TOTAL_PNL:.0f}")
     if sharpe < MIN_SHARPE:
         reasons.append(f"Sharpe {sharpe:+.2f} < {MIN_SHARPE}")
     if max_dd < MAX_DRAWDOWN:

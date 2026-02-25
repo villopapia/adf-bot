@@ -29,7 +29,7 @@ SLIPPAGE_PCT       = 0.001         # 0.10% per leg
 # ── Backtest Quality Gates ──────────────────────────────────────────────────
 MIN_WIN_RATE       = 55.0          # minimum win rate (%)
 MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
-MIN_TOTAL_PNL      = 0.0           # minimum total P&L ($)
+MIN_TOTAL_PNL      = 50.0          # minimum total P&L ($) over full backtest
 MIN_SHARPE         = 0.5           # minimum annualised Sharpe ratio
 MAX_DRAWDOWN       = -200.0        # maximum allowable peak-to-trough drawdown ($)
 MIN_TRADES         = 10            # minimum backtest trades for statistical validity
