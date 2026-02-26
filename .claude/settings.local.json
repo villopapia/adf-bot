@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "WebSearch",
+      "Bash(grep:*)",
+      "Bash(cd C:\\\\Users\\\\User\\\\Desktop\\\\adf bot:*)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

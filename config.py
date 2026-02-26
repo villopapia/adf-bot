@@ -49,6 +49,8 @@ SCANNER_INTERVAL_DAYS = 7          # days between auto-refresh
 CORRELATION_THRESHOLD = 0.80       # pre-filter correlation
 TOP_N_PAIRS        = 150           # pairs to export
 ENABLE_NASDAQ100   = True          # include Nasdaq-100 tickers in universe
+ENABLE_HISTORICAL_CONSTITUENTS  = True   # include past S&P 500 members in universe
+HISTORICAL_SECTOR_YFINANCE_MAX  = 20     # max yfinance fast_info lookups per scan run
 
 # ── Scanner — Advanced ──────────────────────────────────────────────────────
 MISSING_THRESHOLD     = 0.10        # drop tickers with > 10% NaN values

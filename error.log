@@ -1,0 +1,1345 @@
+2026-02-25 13:45:56 | WARNING | FMP earnings fetch failed for AAPL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 13:45:57 | WARNING | FMP earnings fetch failed for MSFT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:50:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching APD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching IP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching KLAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching STX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:55 | WARNING | FMP earnings fetch failed for ATO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:50:56 | WARNING | FMP earnings fetch failed for XEL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:50:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:57 | WARNING | FMP earnings fetch failed for LNT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:50:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABBV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:50:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching MDT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:02 | WARNING | FMP earnings fetch failed for NI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching MS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching DG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching DLTR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:05 | WARNING | FMP earnings fetch failed for DG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:05 | WARNING | FMP earnings fetch failed for DLTR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching STZ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching KEY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching RF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:09 | WARNING | FMP earnings fetch failed for KEY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:10 | WARNING | FMP earnings fetch failed for RF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching CDNS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching MSFT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching ES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching FE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:13 | WARNING | FMP earnings fetch failed for ES: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:13 | WARNING | FMP earnings fetch failed for FE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching HD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching NCLH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching PNR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:18 | WARNING | FMP earnings fetch failed for PPL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:20 | WARNING | FMP earnings fetch failed for DUK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching DTE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:21 | WARNING | FMP earnings fetch failed for DTE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching EME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching HWM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching JCI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching IR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:26 | WARNING | FMP earnings fetch failed for IR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:27 | WARNING | FMP earnings fetch failed for ODFL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching TSLA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:34 | WARNING | FMP earnings fetch failed for AMZN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:35 | WARNING | FMP earnings fetch failed for TSLA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:37 | WARNING | FMP earnings fetch failed for CBOE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:37 | WARNING | FMP earnings fetch failed for TRV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:40 | WARNING | FMP earnings fetch failed for GOOG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:41 | WARNING | FMP earnings fetch failed for WBD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching HSY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:44 | WARNING | FMP earnings fetch failed for GOOGL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching CCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:46 | WARNING | FMP earnings fetch failed for CCL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching MOH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:49 | WARNING | FMP earnings fetch failed for IBKR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:50 | WARNING | FMP earnings fetch failed for JPM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching DHR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching REGN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:51 | WARNING | FMP earnings fetch failed for DHR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:52 | WARNING | FMP earnings fetch failed for REGN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMAT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching TER — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching UDR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:57 | WARNING | FMP earnings fetch failed for D: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching LYV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching META — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:51:58 | WARNING | FMP earnings fetch failed for LYV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:51:59 | WARNING | FMP earnings fetch failed for META: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:01 | WARNING | FMP earnings fetch failed for WFC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching AXP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:05 | WARNING | FMP earnings fetch failed for CEG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:07 | WARNING | FMP earnings fetch failed for BF-B: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:08 | WARNING | FMP earnings fetch failed for KHC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching WSM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:09 | WARNING | FMP earnings fetch failed for WSM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:11 | WARNING | FMP earnings fetch failed for GL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching GILD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching DGX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching CME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching ELV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching NRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching MAA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:25 | WARNING | FMP earnings fetch failed for BK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:28 | WARNING | FMP earnings fetch failed for ALL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:28 | WARNING | FMP earnings fetch failed for BLK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:31 | WARNING | FMP earnings fetch failed for WEC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching ANET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:40 | WARNING | FMP earnings fetch failed for BAC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:40 | WARNING | FMP earnings fetch failed for GS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:43 | WARNING | FMP earnings fetch failed for DASH: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:44 | WARNING | FMP earnings fetch failed for ORLY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:47 | WARNING | FMP earnings fetch failed for EBAY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDSN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching TXT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:52 | WARNING | FMP earnings fetch failed for IEX: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:52:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching APO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching UPS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching CAG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:52:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching LDOS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:01 | WARNING | FMP earnings fetch failed for LDOS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:53:01 | WARNING | FMP earnings fetch failed for URI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:53:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADBE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching TGT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching MCHP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching NXPI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching CRL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching WST — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching JBHT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching PCAR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:12 | WARNING | FMP earnings fetch failed for CPB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:53:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching LRCX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching BSX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching GRMN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching F — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching ULTA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching WAB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 14:53:19 | WARNING | FMP earnings fetch failed for LUV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 14:53:19 | WARNING | FMP earnings fetch failed for WAB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching APD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching IP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:06 | WARNING | FMP earnings fetch failed for ATO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:07 | WARNING | FMP earnings fetch failed for XEL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:09 | WARNING | FMP earnings fetch failed for LNT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABBV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching MDT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:14 | WARNING | FMP earnings fetch failed for NI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching DG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching DLTR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:16 | WARNING | FMP earnings fetch failed for DG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:16 | WARNING | FMP earnings fetch failed for DLTR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching STZ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:19 | WARNING | FMP earnings fetch failed for PPL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching KLAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching STX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching MS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching KEY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching RF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:24 | WARNING | FMP earnings fetch failed for KEY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:25 | WARNING | FMP earnings fetch failed for RF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching HD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching NCLH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching CDNS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching MSFT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching PNR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching ES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching FE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:30 | WARNING | FMP earnings fetch failed for ES: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:31 | WARNING | FMP earnings fetch failed for FE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching DTE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:34 | WARNING | FMP earnings fetch failed for DTE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:34 | WARNING | FMP earnings fetch failed for DUK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching EME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching TSLA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:41 | WARNING | FMP earnings fetch failed for AMZN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:42 | WARNING | FMP earnings fetch failed for TSLA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching IR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:43 | WARNING | FMP earnings fetch failed for IR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:44 | WARNING | FMP earnings fetch failed for ODFL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching HWM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching JCI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:48 | WARNING | FMP earnings fetch failed for CBOE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:48 | WARNING | FMP earnings fetch failed for TRV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching MOH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:53 | WARNING | FMP earnings fetch failed for GOOG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:54 | WARNING | FMP earnings fetch failed for WBD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:55 | WARNING | FMP earnings fetch failed for D: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:14:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching AXP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMAT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching TER — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:14:59 | WARNING | FMP earnings fetch failed for GOOGL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:01 | WARNING | FMP earnings fetch failed for CEG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching DHR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching REGN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:04 | WARNING | FMP earnings fetch failed for DHR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:04 | WARNING | FMP earnings fetch failed for REGN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching HSY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching UDR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching LYV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching META — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:11 | WARNING | FMP earnings fetch failed for LYV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:11 | WARNING | FMP earnings fetch failed for META: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching NRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching GILD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching DGX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:16 | WARNING | FMP earnings fetch failed for IBKR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:17 | WARNING | FMP earnings fetch failed for JPM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:19 | WARNING | FMP earnings fetch failed for BF-B: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:20 | WARNING | FMP earnings fetch failed for KHC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching CME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:23 | WARNING | FMP earnings fetch failed for GL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:26 | WARNING | FMP earnings fetch failed for WFC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching ELV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching WSM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:31 | WARNING | FMP earnings fetch failed for WSM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching MAA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:35 | WARNING | FMP earnings fetch failed for BK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching ANET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:39 | WARNING | FMP earnings fetch failed for ALL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:40 | WARNING | FMP earnings fetch failed for BLK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching LRCX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:48 | WARNING | FMP earnings fetch failed for WEC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:52 | WARNING | FMP earnings fetch failed for DASH: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:52 | WARNING | FMP earnings fetch failed for ORLY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching CCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:56 | WARNING | FMP earnings fetch failed for CCL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:15:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching MCHP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching NXPI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:15:59 | WARNING | FMP earnings fetch failed for IEX: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching CAG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:02 | WARNING | FMP earnings fetch failed for CMS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:04 | WARNING | FMP earnings fetch failed for EBAY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADBE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching WAB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:07 | WARNING | FMP earnings fetch failed for LUV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:07 | WARNING | FMP earnings fetch failed for WAB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching UPS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching BSX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching KR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching PM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching LDOS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:15 | WARNING | FMP earnings fetch failed for LDOS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:15 | WARNING | FMP earnings fetch failed for URI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching GRMN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching ETR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching CRL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching WST — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching MTD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching TMO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:22 | WARNING | FMP earnings fetch failed for MTD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:22 | WARNING | FMP earnings fetch failed for TMO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching JBHT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching PCAR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDSN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching TXT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching PH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:29 | WARNING | FMP earnings fetch failed for CPB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching TGT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:31 | WARNING | FMP earnings fetch failed for COF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:36 | WARNING | FMP earnings fetch failed for AEE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching WRB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:39 | WARNING | FMP earnings fetch failed for WRB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching FITB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching USB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:41 | WARNING | FMP earnings fetch failed for FITB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:42 | WARNING | FMP earnings fetch failed for USB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching APO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:46 | WARNING | FMP earnings fetch failed for BAC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:46 | WARNING | FMP earnings fetch failed for GS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching RTX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching ROL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching COO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching RVTY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:57 | WARNING | FMP earnings fetch failed for STT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:16:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADSK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching PANW — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching AZO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:16:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching GE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching ROL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching RL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching TPR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching TFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching USB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching NOC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching ARES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching SPGI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching A — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching TMO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching HBAN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMCR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching IFF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching PSA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching C — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching MET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:18 | WARNING | FMP earnings fetch failed for AMP: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:17:19 | WARNING | FMP earnings fetch failed for MET: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:17:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching WRB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching SNA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching UAL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:23 | WARNING | FMP earnings fetch failed for SNA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:17:24 | WARNING | FMP earnings fetch failed for UAL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:17:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching F — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching ULTA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching NTRS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:17:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching HBAN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching APD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching IP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:55 | WARNING | FMP earnings fetch failed for ATO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:19:55 | WARNING | FMP earnings fetch failed for XEL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:19:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:57 | WARNING | FMP earnings fetch failed for LNT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:19:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:19:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABBV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching MDT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:02 | WARNING | FMP earnings fetch failed for NI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching DG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching DLTR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:04 | WARNING | FMP earnings fetch failed for DG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:04 | WARNING | FMP earnings fetch failed for DLTR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching STZ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:07 | WARNING | FMP earnings fetch failed for PPL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching KLAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching STX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching MS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching KEY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching RF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:13 | WARNING | FMP earnings fetch failed for KEY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:13 | WARNING | FMP earnings fetch failed for RF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching HD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching NCLH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching CDNS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching MSFT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching PNR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching ES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching FE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:22 | WARNING | FMP earnings fetch failed for ES: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:22 | WARNING | FMP earnings fetch failed for FE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching DTE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:26 | WARNING | FMP earnings fetch failed for DTE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:26 | WARNING | FMP earnings fetch failed for DUK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching EME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching TSLA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:32 | WARNING | FMP earnings fetch failed for AMZN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:33 | WARNING | FMP earnings fetch failed for TSLA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching IR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:35 | WARNING | FMP earnings fetch failed for IR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:36 | WARNING | FMP earnings fetch failed for ODFL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching HWM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching JCI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:39 | WARNING | FMP earnings fetch failed for CBOE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:40 | WARNING | FMP earnings fetch failed for TRV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching MOH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:45 | WARNING | FMP earnings fetch failed for GOOG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:45 | WARNING | FMP earnings fetch failed for WBD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:47 | WARNING | FMP earnings fetch failed for D: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching AXP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMAT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching TER — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:51 | WARNING | FMP earnings fetch failed for GOOGL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:52 | WARNING | FMP earnings fetch failed for CEG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching DHR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching REGN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:54 | WARNING | FMP earnings fetch failed for DHR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:55 | WARNING | FMP earnings fetch failed for REGN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:20:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching HSY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching UDR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:20:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching LYV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching META — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:01 | WARNING | FMP earnings fetch failed for LYV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:02 | WARNING | FMP earnings fetch failed for META: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching NRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching GILD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching DGX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:07 | WARNING | FMP earnings fetch failed for IBKR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:07 | WARNING | FMP earnings fetch failed for JPM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:09 | WARNING | FMP earnings fetch failed for BF-B: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:10 | WARNING | FMP earnings fetch failed for KHC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching CME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:14 | WARNING | FMP earnings fetch failed for GL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:17 | WARNING | FMP earnings fetch failed for WFC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching ELV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching WSM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:20 | WARNING | FMP earnings fetch failed for WSM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching MAA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:24 | WARNING | FMP earnings fetch failed for BK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching ANET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:28 | WARNING | FMP earnings fetch failed for ALL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:29 | WARNING | FMP earnings fetch failed for BLK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching LRCX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:36 | WARNING | FMP earnings fetch failed for WEC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:40 | WARNING | FMP earnings fetch failed for DASH: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:40 | WARNING | FMP earnings fetch failed for ORLY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching CCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:45 | WARNING | FMP earnings fetch failed for CCL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching MCHP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching NXPI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:48 | WARNING | FMP earnings fetch failed for IEX: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching CAG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:50 | WARNING | FMP earnings fetch failed for CMS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:52 | WARNING | FMP earnings fetch failed for EBAY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADBE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching WAB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:55 | WARNING | FMP earnings fetch failed for LUV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:56 | WARNING | FMP earnings fetch failed for WAB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:21:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching UPS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching BSX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:21:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching KR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching PM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching LDOS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:03 | WARNING | FMP earnings fetch failed for LDOS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:04 | WARNING | FMP earnings fetch failed for URI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching GRMN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching ETR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching CRL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching WST — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching MTD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching TMO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:10 | WARNING | FMP earnings fetch failed for MTD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:11 | WARNING | FMP earnings fetch failed for TMO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching JBHT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching PCAR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDSN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching TXT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching PH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:17 | WARNING | FMP earnings fetch failed for CPB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching TGT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:20 | WARNING | FMP earnings fetch failed for COF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:24 | WARNING | FMP earnings fetch failed for AEE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching WRB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:27 | WARNING | FMP earnings fetch failed for WRB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching FITB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching USB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:29 | WARNING | FMP earnings fetch failed for FITB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:29 | WARNING | FMP earnings fetch failed for USB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching APO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:34 | WARNING | FMP earnings fetch failed for BAC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:34 | WARNING | FMP earnings fetch failed for GS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching RTX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching ROL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching COO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching RVTY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:45 | WARNING | FMP earnings fetch failed for STT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:22:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADSK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching PANW — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching AZO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching GE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching ROL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching RL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching TPR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching TFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching USB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching NOC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching ARES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching SPGI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching A — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching TMO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching HBAN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:22:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMCR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching IFF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching PSA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching C — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching MET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:06 | WARNING | FMP earnings fetch failed for AMP: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:23:06 | WARNING | FMP earnings fetch failed for MET: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:23:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching WRB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching SNA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching UAL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:10 | WARNING | FMP earnings fetch failed for SNA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:23:11 | WARNING | FMP earnings fetch failed for UAL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 17:23:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching F — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching ULTA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching NTRS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 17:23:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching HBAN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:48:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching APD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:48:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching IP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:48:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:48:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:00 | WARNING | FMP earnings fetch failed for ATO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:00 | WARNING | FMP earnings fetch failed for XEL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:02 | WARNING | FMP earnings fetch failed for LNT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABBV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching MDT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:08 | WARNING | FMP earnings fetch failed for NI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching DG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching DLTR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:10 | WARNING | FMP earnings fetch failed for DG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:10 | WARNING | FMP earnings fetch failed for DLTR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching STZ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:13 | WARNING | FMP earnings fetch failed for PPL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching KLAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching STX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching MS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching KEY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching RF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:18 | WARNING | FMP earnings fetch failed for KEY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:19 | WARNING | FMP earnings fetch failed for RF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching HD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching NCLH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching CDNS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching MSFT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching PNR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching ES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching FE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:24 | WARNING | FMP earnings fetch failed for ES: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:24 | WARNING | FMP earnings fetch failed for FE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching DTE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:27 | WARNING | FMP earnings fetch failed for DTE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:28 | WARNING | FMP earnings fetch failed for DUK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching EME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching TSLA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:34 | WARNING | FMP earnings fetch failed for AMZN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:35 | WARNING | FMP earnings fetch failed for TSLA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching IR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:35 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:36 | WARNING | FMP earnings fetch failed for IR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:37 | WARNING | FMP earnings fetch failed for ODFL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching HWM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching JCI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:40 | WARNING | FMP earnings fetch failed for CBOE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:41 | WARNING | FMP earnings fetch failed for TRV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching HIG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching MOH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:46 | WARNING | FMP earnings fetch failed for GOOG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:46 | WARNING | FMP earnings fetch failed for WBD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:48 | WARNING | FMP earnings fetch failed for D: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching AXP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMAT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching TER — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching WBD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:52 | WARNING | FMP earnings fetch failed for GOOGL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:54 | WARNING | FMP earnings fetch failed for CEG: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching DHR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching REGN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:55 | WARNING | FMP earnings fetch failed for DHR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:56 | WARNING | FMP earnings fetch failed for REGN: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:49:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching HSY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching UDR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:49:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching LYV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching META — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:02 | WARNING | FMP earnings fetch failed for LYV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:03 | WARNING | FMP earnings fetch failed for META: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching NRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching GILD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching DGX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:07 | WARNING | FMP earnings fetch failed for IBKR: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:08 | WARNING | FMP earnings fetch failed for JPM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:10 | WARNING | FMP earnings fetch failed for BF-B: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:11 | WARNING | FMP earnings fetch failed for KHC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching CME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:17 | WARNING | FMP earnings fetch failed for GL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:23 | WARNING | FMP earnings fetch failed for WFC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching ELV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching WSM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:27 | WARNING | FMP earnings fetch failed for WSM: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching ESS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching MAA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:30 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:31 | WARNING | FMP earnings fetch failed for BK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching ANET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:33 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:35 | WARNING | FMP earnings fetch failed for ALL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:35 | WARNING | FMP earnings fetch failed for BLK: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:39 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching ATO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching EVRG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching LRCX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching WEC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:43 | WARNING | FMP earnings fetch failed for WEC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:47 | WARNING | FMP earnings fetch failed for DASH: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:47 | WARNING | FMP earnings fetch failed for ORLY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching AME — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMZN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching CCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:51 | WARNING | FMP earnings fetch failed for CCL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching MCHP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching NXPI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching IEX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching ODFL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:54 | WARNING | FMP earnings fetch failed for IEX: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching CAG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:57 | WARNING | FMP earnings fetch failed for CMS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching ORLY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:59 | WARNING | FMP earnings fetch failed for EBAY: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:50:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADBE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:50:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching HPQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching WAB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:01 | WARNING | FMP earnings fetch failed for LUV: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:02 | WARNING | FMP earnings fetch failed for WAB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching FTV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching UPS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching ABT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching BSX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOGL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching GOOG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching KR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching PM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching EXR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching LDOS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:09 | WARNING | FMP earnings fetch failed for LDOS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:10 | WARNING | FMP earnings fetch failed for URI: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching GRMN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:11 | WARNING | Alpha Vantage quota/rate-limit hit fetching CEG — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching ETR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching CRL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching WST — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching MTD — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:15 | WARNING | Alpha Vantage quota/rate-limit hit fetching TMO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:16 | WARNING | FMP earnings fetch failed for MTD: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:17 | WARNING | FMP earnings fetch failed for TMO: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching JBHT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching PCAR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDSN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching TXT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching PH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching LUV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching CPB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:23 | WARNING | FMP earnings fetch failed for CPB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching BF-B — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching TGT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:26 | WARNING | FMP earnings fetch failed for COF: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:26 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching EBAY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:27 | WARNING | Alpha Vantage quota/rate-limit hit fetching RCL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:28 | WARNING | Alpha Vantage quota/rate-limit hit fetching WFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:29 | WARNING | Alpha Vantage quota/rate-limit hit fetching XEL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:30 | WARNING | FMP earnings fetch failed for AEE: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:31 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:32 | WARNING | Alpha Vantage quota/rate-limit hit fetching WRB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:33 | WARNING | FMP earnings fetch failed for WRB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching FITB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:34 | WARNING | Alpha Vantage quota/rate-limit hit fetching USB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:35 | WARNING | FMP earnings fetch failed for FITB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:36 | WARNING | FMP earnings fetch failed for USB: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:36 | WARNING | Alpha Vantage quota/rate-limit hit fetching CBOE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:37 | WARNING | Alpha Vantage quota/rate-limit hit fetching APO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:38 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:40 | WARNING | FMP earnings fetch failed for BAC: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:40 | WARNING | FMP earnings fetch failed for GS: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:40 | WARNING | Alpha Vantage quota/rate-limit hit fetching RTX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:41 | WARNING | Alpha Vantage quota/rate-limit hit fetching ROL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching COO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:42 | WARNING | Alpha Vantage quota/rate-limit hit fetching RVTY — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:43 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching BAX — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:44 | WARNING | Alpha Vantage quota/rate-limit hit fetching CI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching GL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:45 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:46 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:47 | WARNING | Alpha Vantage quota/rate-limit hit fetching PPL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:48 | WARNING | Alpha Vantage quota/rate-limit hit fetching JPM — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:49 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching GS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:50 | WARNING | Alpha Vantage quota/rate-limit hit fetching STT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:51 | WARNING | FMP earnings fetch failed for STT: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:51:51 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADSK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:52 | WARNING | Alpha Vantage quota/rate-limit hit fetching PANW — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching AZO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:53 | WARNING | Alpha Vantage quota/rate-limit hit fetching DASH — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching GIS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:54 | WARNING | Alpha Vantage quota/rate-limit hit fetching KHC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching GE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:55 | WARNING | Alpha Vantage quota/rate-limit hit fetching ROL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching RL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:56 | WARNING | Alpha Vantage quota/rate-limit hit fetching TPR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:57 | WARNING | Alpha Vantage quota/rate-limit hit fetching BK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching TRV — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:58 | WARNING | Alpha Vantage quota/rate-limit hit fetching BLK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:51:59 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching TFC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:00 | WARNING | Alpha Vantage quota/rate-limit hit fetching USB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching NSC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:01 | WARNING | Alpha Vantage quota/rate-limit hit fetching NOC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching ARES — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:02 | WARNING | Alpha Vantage quota/rate-limit hit fetching SPGI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching A — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:03 | WARNING | Alpha Vantage quota/rate-limit hit fetching TMO — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching HBAN — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:04 | WARNING | Alpha Vantage quota/rate-limit hit fetching NDAQ — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:05 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMCR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching IFF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:06 | WARNING | Alpha Vantage quota/rate-limit hit fetching EQR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching PSA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:07 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching COF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:08 | WARNING | Alpha Vantage quota/rate-limit hit fetching C — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching L — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:09 | WARNING | Alpha Vantage quota/rate-limit hit fetching AMP — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:10 | WARNING | Alpha Vantage quota/rate-limit hit fetching MET — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:11 | WARNING | FMP earnings fetch failed for AMP: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:52:11 | WARNING | FMP earnings fetch failed for MET: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:52:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching J — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:12 | WARNING | Alpha Vantage quota/rate-limit hit fetching URI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:13 | WARNING | Alpha Vantage quota/rate-limit hit fetching WRB — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching SNA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:14 | WARNING | Alpha Vantage quota/rate-limit hit fetching UAL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:15 | WARNING | FMP earnings fetch failed for SNA: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:52:16 | WARNING | FMP earnings fetch failed for UAL: Expecting value: line 1 column 1 (char 0)
+2026-02-25 23:52:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching AEE — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:16 | WARNING | Alpha Vantage quota/rate-limit hit fetching NI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching F — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:17 | WARNING | Alpha Vantage quota/rate-limit hit fetching ULTA — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:18 | WARNING | Alpha Vantage quota/rate-limit hit fetching NTRS — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:19 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching DUK — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:20 | WARNING | Alpha Vantage quota/rate-limit hit fetching LNT — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching D — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:21 | WARNING | Alpha Vantage quota/rate-limit hit fetching ADI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:22 | WARNING | Alpha Vantage quota/rate-limit hit fetching WDC — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching CMI — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:23 | WARNING | Alpha Vantage quota/rate-limit hit fetching PWR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching CINF — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:24 | WARNING | Alpha Vantage quota/rate-limit hit fetching IBKR — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching ALL — falling back to yfinance for this and subsequent tickers.
+2026-02-25 23:52:25 | WARNING | Alpha Vantage quota/rate-limit hit fetching HBAN — falling back to yfinance for this and subsequent tickers.

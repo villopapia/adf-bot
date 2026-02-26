@@ -1,0 +1,1 @@
+trade_id,date_open,stock_a,stock_b,direction,entry_z,beta,shares_a,shares_b,price_a_entry,price_b_entry,capital_deployed,kelly_scale,bt_expected_pnl,bt_win_rate,bt_profit_factor,status,date_close,price_a_exit,price_b_exit,exit_reason,hold_days,exit_z,gross_pnl,net_pnl

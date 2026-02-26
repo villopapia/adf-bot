@@ -72,6 +72,7 @@ from config import (
     LOOKBACK_YEARS, CORRELATION_THRESHOLD, TOP_N_PAIRS,
     INPUT_CSV, MISSING_THRESHOLD, COINT_PVAL_THRESH,
     SCANNER_BATCH_SIZE, ENABLE_NASDAQ100,
+    ENABLE_HISTORICAL_CONSTITUENTS, HISTORICAL_SECTOR_YFINANCE_MAX,
 )
 
 CORR_PRE_FILTER = CORRELATION_THRESHOLD
@@ -288,6 +289,181 @@ def _hardcoded_nasdaq100_with_sectors() -> pd.DataFrame:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  STEP 1c — HISTORICAL S&P 500 CONSTITUENTS  (survivorship-bias reduction)
+# ══════════════════════════════════════════════════════════════════════════════
+
+def get_sp500_changes(lookback_years: int) -> list:
+    """
+    Scrape the S&P 500 historical changes table from Wikipedia.
+    Returns a list of dicts with keys 'ticker' and 'date' for removals
+    within the past `lookback_years`.  Returns [] on any failure.
+    """
+    url = ("https://en.wikipedia.org/wiki/"
+           "List_of_S%26P_500_companies")
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=15)
+        resp.raise_for_status()
+        tables = pd.read_html(io.StringIO(resp.text))
+        changes = tables[1].copy()
+
+        # Flatten MultiIndex columns (Wikipedia uses a two-row header)
+        if isinstance(changes.columns, pd.MultiIndex):
+            changes.columns = [
+                " ".join(str(level) for level in col).strip()
+                for col in changes.columns.values
+            ]
+
+        cols_lower = [str(c).lower() for c in changes.columns]
+
+        # Find date column
+        date_col = None
+        for orig, low in zip(changes.columns, cols_lower):
+            if "date" in low:
+                date_col = orig
+                break
+
+        # Find removed-ticker column
+        removed_col = None
+        for orig, low in zip(changes.columns, cols_lower):
+            if "removed" in low and "ticker" in low:
+                removed_col = orig
+                break
+
+        if date_col is None or removed_col is None:
+            print(f"[STEP 1c] Could not identify date/removed columns in "
+                  f"changes table. Columns found: {list(changes.columns)}")
+            return []
+
+        cutoff = datetime.date.today() - datetime.timedelta(days=365 * lookback_years)
+        removals = []
+
+        for _, row in changes.iterrows():
+            removed_ticker = row[removed_col]
+            if pd.isna(removed_ticker) or str(removed_ticker).strip() == "":
+                continue
+
+            try:
+                event_date = pd.to_datetime(row[date_col]).date()
+            except Exception:
+                continue
+
+            if event_date < cutoff:
+                continue
+
+            ticker = str(removed_ticker).strip().replace(".", "-")
+            removals.append({"ticker": ticker, "date": event_date})
+
+        return removals
+
+    except Exception as exc:
+        print(f"[STEP 1c] Wikipedia changes scrape failed ({exc}); "
+              f"skipping historical constituents.")
+        return []
+
+
+def _lookup_sector(ticker: str, sector_lookup: dict,
+                   yfinance_budget: list) -> "str | None":
+    """
+    Resolve a sector for `ticker` using three escalating methods:
+      1. Direct dict lookup in sector_lookup
+      2. Strip suffix (e.g. 'BRK-B' -> 'BRK') and retry
+      3. yfinance fast_info.sector (consumes one unit from yfinance_budget)
+    Returns None if all steps fail.
+    yfinance_budget is a mutable [int] so the counter is shared across calls.
+    """
+    # Step 1: direct lookup
+    if ticker in sector_lookup:
+        return sector_lookup[ticker]
+
+    # Step 2: strip suffix and retry
+    base = ticker.split("-")[0]
+    if base in sector_lookup:
+        return sector_lookup[base]
+
+    # Step 3: yfinance fast_info (budget-limited)
+    if yfinance_budget[0] > 0:
+        try:
+            sector = yf.Ticker(ticker).fast_info.sector
+            yfinance_budget[0] -= 1
+            if sector:
+                return sector
+        except Exception:
+            yfinance_budget[0] -= 1
+
+    return None
+
+
+def get_historical_sp500_constituents(lookback_years: int) -> pd.DataFrame:
+    """
+    Returns a [Symbol, Sector] DataFrame that includes both current S&P 500
+    members and tickers that were removed from the index within the past
+    `lookback_years`.  Same schema as get_sp500_with_sectors().
+    """
+    # Current members (already printed by get_sp500_with_sectors)
+    current_df = get_sp500_with_sectors()
+    current_symbols = set(current_df["Symbol"].tolist())
+
+    # Build sector lookup from both hardcoded maps; S&P 500 wins on collision
+    sector_lookup: dict = {}
+    for row in _hardcoded_nasdaq100_with_sectors().itertuples(index=False):
+        sector_lookup[row.Symbol] = row.Sector
+    for row in _hardcoded_sp500_with_sectors().itertuples(index=False):
+        sector_lookup[row.Symbol] = row.Sector
+    # Add live scraped current members (most authoritative)
+    for row in current_df.itertuples(index=False):
+        sector_lookup[row.Symbol] = row.Sector
+
+    # Fetch historical removals
+    removals = get_sp500_changes(lookback_years)
+    if not removals:
+        print(f"[STEP 1] Historical constituents: {len(current_df)} current + "
+              f"0 historical = {len(current_df)} total tickers.")
+        return current_df
+
+    yfinance_budget = [HISTORICAL_SECTOR_YFINANCE_MAX]
+    historical_rows = []
+    skipped_no_sector = []
+
+    for item in removals:
+        ticker = item["ticker"]
+        if ticker in current_symbols:
+            continue  # already in universe
+
+        sector = _lookup_sector(ticker, sector_lookup, yfinance_budget)
+        if sector is None:
+            skipped_no_sector.append(ticker)
+            continue
+
+        historical_rows.append({"Symbol": ticker, "Sector": sector})
+
+    if skipped_no_sector:
+        print(f"[STEP 1c] Skipped {len(skipped_no_sector)} removed tickers "
+              f"(no sector resolved): {skipped_no_sector[:10]}"
+              + ("..." if len(skipped_no_sector) > 10 else ""))
+
+    if historical_rows:
+        hist_df = pd.DataFrame(historical_rows).drop_duplicates("Symbol")
+        merged = pd.concat([current_df, hist_df], ignore_index=True)
+        merged = merged.drop_duplicates(subset="Symbol", keep="first").reset_index(drop=True)
+    else:
+        merged = current_df
+
+    n_hist = len(merged) - len(current_df)
+    print(f"[STEP 1] Historical constituents: {len(current_df)} current + "
+          f"{n_hist} historical = {len(merged)} total tickers.")
+    return merged
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  STEP 2 — BULK DOWNLOAD PRICE DATA
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -476,7 +652,10 @@ def main():
     print()
 
     # 1. Get ticker universe with sectors
-    sector_df = get_sp500_with_sectors()
+    if ENABLE_HISTORICAL_CONSTITUENTS:
+        sector_df = get_historical_sp500_constituents(LOOKBACK_YEARS)
+    else:
+        sector_df = get_sp500_with_sectors()
     if ENABLE_NASDAQ100:
         ndx_df    = get_nasdaq100_tickers()
         combined  = pd.concat([sector_df, ndx_df], ignore_index=True)
@@ -520,11 +699,18 @@ def main():
               f"coint p={row['Coint_pval']:.4f}")
     print()
 
-    if ENABLE_NASDAQ100:
-        print("  NOTE: Universe is current S&P 500 + Nasdaq-100 constituents.")
+    if ENABLE_HISTORICAL_CONSTITUENTS:
+        note = ("  NOTE: Universe includes historical S&P 500 constituents "
+                "(survivorship bias reduced).")
+        if ENABLE_NASDAQ100:
+            note += " + Nasdaq-100."
     else:
-        print("  NOTE: Universe is current S&P 500 constituents.")
-    print("     Historical backtest results may exhibit survivorship bias.\n")
+        if ENABLE_NASDAQ100:
+            note = "  NOTE: Universe is current S&P 500 + Nasdaq-100 constituents."
+        else:
+            note = "  NOTE: Universe is current S&P 500 constituents."
+        note += "\n     Historical backtest results may exhibit survivorship bias."
+    print(note + "\n")
 
     return df_out
 
