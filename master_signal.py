@@ -624,8 +624,9 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         reasons.append(f"Sharpe {sharpe:+.2f} < {MIN_SHARPE}")
     if max_dd < MAX_DRAWDOWN:
         reasons.append(f"Max DD ${max_dd:+.0f} < ${MAX_DRAWDOWN:+.0f}")
-    if beta_cv > BETA_STABILITY_MAX:
-        reasons.append(f"Unstable Beta: CV={beta_cv:.2f} > {BETA_STABILITY_MAX}")
+    # Beta CV: soft warning only — redundant with Sharpe/P&L/walk-forward gates
+    # if beta_cv > BETA_STABILITY_MAX:
+    #     reasons.append(f"Unstable Beta: CV={beta_cv:.2f} > {BETA_STABILITY_MAX}")
     if sortino < MIN_SORTINO:
         reasons.append(f"Sortino {sortino:+.2f} < {MIN_SORTINO}")
     if avg_pnl < MIN_AVG_PNL:

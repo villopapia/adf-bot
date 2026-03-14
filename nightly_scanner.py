@@ -73,6 +73,7 @@ from config import (
     INPUT_CSV, MISSING_THRESHOLD, COINT_PVAL_THRESH,
     SCANNER_BATCH_SIZE, ENABLE_NASDAQ100,
     ENABLE_HISTORICAL_CONSTITUENTS, HISTORICAL_SECTOR_YFINANCE_MAX,
+    MAX_HALF_LIFE,
 )
 
 CORR_PRE_FILTER = CORRELATION_THRESHOLD
@@ -625,6 +626,92 @@ def cointegration_filter(prices: pd.DataFrame,
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  STEP 5b — HALF-LIFE OF MEAN REVERSION FILTER
+# ══════════════════════════════════════════════════════════════════════════════
+
+def compute_half_life(spread: np.ndarray) -> float:
+    """
+    Estimate the half-life of mean reversion via the Ornstein-Uhlenbeck model.
+
+    Regress delta_spread[t] on spread[t-1]:
+        delta_spread = theta * spread_lag + noise
+    Half-life = -ln(2) / theta   (only valid when theta < 0, i.e. mean-reverting)
+
+    Returns half-life in days, or np.inf if not mean-reverting.
+    """
+    spread = spread[~np.isnan(spread)]
+    if len(spread) < 30:
+        return np.inf
+
+    lag = spread[:-1]
+    delta = np.diff(spread)
+
+    # OLS: delta = theta * lag + intercept
+    X = np.column_stack([lag, np.ones(len(lag))])
+    try:
+        theta = np.linalg.lstsq(X, delta, rcond=None)[0][0]
+    except Exception:
+        return np.inf
+
+    if theta >= 0:
+        return np.inf  # not mean-reverting
+
+    return -np.log(2) / theta
+
+
+def half_life_filter(prices: pd.DataFrame,
+                     df_coint: pd.DataFrame,
+                     max_hl: float = MAX_HALF_LIFE) -> pd.DataFrame:
+    """
+    Compute the spread half-life for each cointegrated pair and drop
+    pairs whose half-life exceeds max_hl days.
+    Adds a 'Half_Life' column to the output.
+    """
+    print(f"[STEP 5b] Half-life filter (max {max_hl} days) ...")
+
+    half_lives = []
+    for _, row in df_coint.iterrows():
+        a, b = row["Stock_A"], row["Stock_B"]
+        pair_data = prices[[a, b]].dropna()
+        if len(pair_data) < 60:
+            half_lives.append(np.inf)
+            continue
+
+        # Log-price OLS to get hedge ratio (same method as master_signal.py)
+        log_a = np.log(pair_data[a].values)
+        log_b = np.log(pair_data[b].values)
+        X = np.column_stack([log_b, np.ones(len(log_b))])
+        try:
+            beta = np.linalg.lstsq(X, log_a, rcond=None)[0][0]
+        except Exception:
+            half_lives.append(np.inf)
+            continue
+
+        spread = log_a - beta * log_b
+        hl = compute_half_life(spread)
+        half_lives.append(round(hl, 1))
+
+    df_coint = df_coint.copy()
+    df_coint["Half_Life"] = half_lives
+
+    before = len(df_coint)
+    df_out = df_coint[df_coint["Half_Life"] <= max_hl].reset_index(drop=True)
+    dropped = before - len(df_out)
+
+    print(f"         Before: {before} | Dropped (HL > {max_hl}d): {dropped} | "
+          f"Remaining: {len(df_out)}")
+
+    if len(df_out) > 0:
+        hl_vals = df_out["Half_Life"].values
+        print(f"         Half-life range: {hl_vals.min():.1f} - {hl_vals.max():.1f} days  "
+              f"(median: {np.median(hl_vals):.1f})\n")
+    else:
+        print()
+
+    return df_out
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  STEP 6 — EXPORT CSV
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -682,7 +769,18 @@ def main():
         print("     Consider lowering CORR_PRE_FILTER or COINT_PVAL_THRESH.\n")
         # Write empty CSV so live_validator doesn't crash on missing file
         pd.DataFrame(columns=["Stock_A","Stock_B","Sector",
-                               "Correlation","Coint_pval"]).to_csv(
+                               "Correlation","Coint_pval","Half_Life"]).to_csv(
+            OUTPUT_CSV, index=False)
+        return pd.DataFrame()
+
+    # 5b. Half-life filter — drop pairs that revert too slowly
+    df_coint = half_life_filter(prices, df_coint)
+
+    if len(df_coint) == 0:
+        print("  ⚠  All pairs filtered out by half-life. CSV will be empty.")
+        print(f"     Consider raising MAX_HALF_LIFE (currently {MAX_HALF_LIFE}).\n")
+        pd.DataFrame(columns=["Stock_A","Stock_B","Sector",
+                               "Correlation","Coint_pval","Half_Life"]).to_csv(
             OUTPUT_CSV, index=False)
         return pd.DataFrame()
 
@@ -693,10 +791,12 @@ def main():
     print("  Top 10 Preview:")
     print("  " + "-" * 72)
     for _, row in df_out.head(10).iterrows():
+        hl = row.get("Half_Life", "N/A")
+        hl_str = f"{hl:.1f}d" if isinstance(hl, (int, float)) else hl
         print(f"    {row['Stock_A']:>6} / {row['Stock_B']:<6}  "
-              f"Sector: {row['Sector']:<28}  "
-              f"ρ={row['Correlation']:.3f}  "
-              f"coint p={row['Coint_pval']:.4f}")
+              f"Sector: {row['Sector']:<25}  "
+              f"p={row['Coint_pval']:.4f}  "
+              f"HL={hl_str}")
     print()
 
     if ENABLE_HISTORICAL_CONSTITUENTS:

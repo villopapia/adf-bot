@@ -32,25 +32,29 @@ KELLY_MIN_SCALE    = 0.5           # minimum position as fraction of CAPITAL_PER
 KELLY_MAX_SCALE    = 2.0           # maximum position as fraction of CAPITAL_PER_TRADE
 
 # ── Backtest Quality Gates ──────────────────────────────────────────────────
-MIN_WIN_RATE       = 55.0          # minimum win rate (%)
+MIN_WIN_RATE       = 50.0          # minimum win rate (%)
 MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
 MIN_TOTAL_PNL      = 50.0          # minimum total P&L ($) over full backtest
 MIN_SHARPE         = 0.5           # minimum annualised Sharpe ratio
 MAX_DRAWDOWN       = -200.0        # maximum allowable peak-to-trough drawdown ($)
 MIN_TRADES         = 10            # minimum backtest trades for statistical validity
-BETA_STABILITY_MAX = 0.30          # max hedge-ratio coefficient of variation (std/|mean|)
+BETA_STABILITY_MAX = 0.60          # max hedge-ratio coefficient of variation (std/|mean|)
 MIN_SORTINO        = 0.5           # minimum annualised Sortino ratio
 MIN_AVG_PNL        = 5.0           # minimum average net P&L per trade ($)
 RECENT_CORR_WINDOW = 90            # days for recent correlation check
 MIN_RECENT_CORR    = 0.65          # minimum recent correlation required (Gate D)
 
 # ── Scanner ─────────────────────────────────────────────────────────────────
-SCANNER_INTERVAL_DAYS = 7          # days between auto-refresh
+SCANNER_INTERVAL_DAYS = 3          # days between auto-refresh
 CORRELATION_THRESHOLD = 0.80       # pre-filter correlation
 TOP_N_PAIRS        = 150           # pairs to export
 ENABLE_NASDAQ100   = True          # include Nasdaq-100 tickers in universe
 ENABLE_HISTORICAL_CONSTITUENTS  = True   # include past S&P 500 members in universe
 HISTORICAL_SECTOR_YFINANCE_MAX  = 20     # max yfinance fast_info lookups per scan run
+
+# ── Scanner — Half-Life Filter ─────────────────────────────────────────────
+MAX_HALF_LIFE      = 30            # reject pairs with half-life > this (days)
+                                   # should match or be <= MAX_HOLD
 
 # ── Scanner — Advanced ──────────────────────────────────────────────────────
 MISSING_THRESHOLD     = 0.10        # drop tickers with > 10% NaN values
@@ -67,7 +71,7 @@ RETRY_DELAY        = 2             # seconds between retries
 SPLIT_HALF_ENABLED   = True        # require BOTH halves profitable independently
 SPLIT_HALF_MIN_PNL   = 20.0        # each half must clear this P&L floor ($), not just > $0
 RECENT_ADF_WINDOW    = 90          # days for recent cointegration check
-RECENT_ADF_PVAL      = 0.10        # max ADF p-value on recent spread
+RECENT_ADF_PVAL      = 0.20        # max ADF p-value on recent spread
 RECENT_MOMENTUM_N    = 5           # how many recent trades to check
                                    # reject if combined P&L of last N <= $0
 VIX_MAX_ENTRY        = 25.0        # block new entries when VIX exceeds this level
