@@ -10,7 +10,7 @@
 
 # ── Data Source ──────────────────────────────────────────────────────────────
 INPUT_CSV          = "daily_candidates.csv"
-LOOKBACK_YEARS     = 2
+LOOKBACK_YEARS     = 5
 
 # ── Rolling Windows ─────────────────────────────────────────────────────────
 ROLLING_BETA_WIN   = 60            # OLS regression window (days)
@@ -46,6 +46,7 @@ MAX_PROFIT_FACTOR_OVERFIT = 5.0     # reject if PF suspiciously high (overfittin
 OOS_SHARPE_RATIO_MIN    = 0.25      # OOS Sharpe must be >= 25% of IS Sharpe
 RECENT_CORR_WINDOW = 90            # days for recent correlation check
 MIN_RECENT_CORR    = 0.70          # minimum recent correlation required (Gate D)
+FDR_ALPHA              = 0.05       # Benjamini-Hochberg false discovery rate threshold
 
 # ── Spread Volatility-Adjusted Sizing ──────────────────────────────────────
 VOL_TARGET_DAILY        = 0.02      # target 2% daily volatility on spread P&L

@@ -66,6 +66,7 @@ import yfinance as yf
 from statsmodels.regression.linear_model import OLS
 from statsmodels.tools import add_constant
 from statsmodels.tsa.stattools import adfuller
+from scipy import stats
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  CONFIGURATION  (imported from config.py — single source of truth)
@@ -91,6 +92,7 @@ from config import (
     FMP_API_KEY, EARNINGS_BLACKOUT_DAYS,
     BORROW_COST_PCT,
     VOL_TARGET_DAILY, VOL_LOOKBACK_DAYS, VOL_SIZE_FLOOR, VOL_SIZE_CAP,
+    FDR_ALPHA,
 )
 
 # ── Volatility floor — prevents z-score explosion when std collapses ────────
@@ -259,15 +261,19 @@ def get_vix() -> float | None:
 #  DATA FETCH  (single download per pair, with retry)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
+def fetch_pair(a: str, b: str) -> "dict | None":
     """
-    Download ~2 years of daily adjusted closes for a pair.
+    Download ~2 years of daily adjusted prices for a pair.
+
+    Returns a dict {"close": close_df, "open": open_df} where open_df may be
+    None when the Alpha Vantage path is used (no open data available there).
 
     Data source priority:
       1. Alpha Vantage (TIME_SERIES_DAILY_ADJUSTED) — more stable, split/
          dividend-adjusted. Results cached per-run; each ticker fetched once.
          Falls back to yfinance when quota is exhausted or fetch fails.
       2. yfinance (auto_adjust=True) — batched download with retry logic.
+         Provides both Close and Open prices.
 
     Data hygiene (both sources):
       - dropna() on the common index — no ffill, no fake convergence.
@@ -285,7 +291,7 @@ def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
                      .loc[pd.Timestamp(start):]
                      .dropna())
             if len(close) >= min_bars:
-                return close
+                return {"close": close, "open": None}
             # AV returned data but not enough history — fall through to yfinance
 
     # ── 2. Fall back to yfinance ──────────────────────────────────────────
@@ -295,6 +301,9 @@ def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
                               auto_adjust=True, progress=False, threads=True)
             if isinstance(raw.columns, pd.MultiIndex):
                 close = raw["Close"][[a, b]].dropna()
+                open_ = raw["Open"][[a, b]].reindex(close.index)
+                # Fill any missing opens with close (rare, but defensive)
+                open_ = open_.fillna(close)
             else:
                 if attempt < MAX_RETRIES:
                     time.sleep(RETRY_DELAY)
@@ -302,7 +311,7 @@ def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
                 return None
             if len(close) < min_bars:
                 return None
-            return close
+            return {"close": close, "open": open_}
         except Exception as e:
             _err_logger.warning(
                 f"{a}/{b} yfinance attempt {attempt}/{MAX_RETRIES}: {e}")
@@ -319,7 +328,8 @@ def fetch_pair(a: str, b: str) -> pd.DataFrame | None:
 #  ROLLING SIGNALS  (log-price OLS beta, spread, z-score — timing-safe)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def compute_rolling_signals(close: pd.DataFrame, a: str, b: str) -> pd.DataFrame:
+def compute_rolling_signals(close: pd.DataFrame, a: str, b: str,
+                            open_prices: "pd.DataFrame | None" = None) -> pd.DataFrame:
     """
     Build day-by-day rolling beta, spread, z-score using LOG of adjusted prices.
 
@@ -329,12 +339,26 @@ def compute_rolling_signals(close: pd.DataFrame, a: str, b: str) -> pd.DataFrame
       mu[t]     = mean( spread[t-20 .. t-1] )         (excludes bar t)
       sigma[t]  = std( spread[t-20 .. t-1] )          (excludes bar t)
       z[t]      = (spread[t] - mu[t]) / max(sigma[t], SIGMA_FLOOR)
+
+    open_prices: optional DataFrame of open prices aligned to close.index.
+      When provided, open_a / open_b columns are included in the output for
+      use as fill prices in backtest_pair().  When None, close prices are used
+      as a fallback (Alpha Vantage path).
     """
     pa_raw = close[a].values.astype(float)
     pb_raw = close[b].values.astype(float)
     # Guard: non-positive prices → NaN (prevents log(0) and division-by-zero)
     pa_raw = np.where(pa_raw > 0, pa_raw, np.nan)
     pb_raw = np.where(pb_raw > 0, pb_raw, np.nan)
+
+    if open_prices is not None:
+        oa_raw = open_prices[a].values.astype(float)
+        ob_raw = open_prices[b].values.astype(float)
+        oa_raw = np.where(oa_raw > 0, oa_raw, np.nan)
+        ob_raw = np.where(ob_raw > 0, ob_raw, np.nan)
+    else:
+        oa_raw = pa_raw  # fallback: use close prices for fills
+        ob_raw = pb_raw
     pa = np.log(pa_raw)
     pb = np.log(pb_raw)
     n  = len(pa)
@@ -374,6 +398,8 @@ def compute_rolling_signals(close: pd.DataFrame, a: str, b: str) -> pd.DataFrame
         "date":    close.index,
         "price_a": pa_raw,
         "price_b": pb_raw,
+        "open_a":  oa_raw,
+        "open_b":  ob_raw,
         "beta":    beta,
         "spread":  spread,
         "z":       z_score,
@@ -419,7 +445,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     Walk-forward backtest with 1-bar execution delay.
 
     Timing model (eliminates lookahead bias):
-      Signal observed at close of bar i  →  execution at close of bar i+1.
+      Signal observed at close of bar i  →  execution at OPEN of bar i+1.
       You CANNOT trade on the bar you observe the z-score.
 
     Exit logic (directional — fixes unreachable |z| < 0 audit finding):
@@ -438,6 +464,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     z       = signals["z"].values
     price_a = signals["price_a"].values
     price_b = signals["price_b"].values
+    open_a  = signals["open_a"].values
+    open_b  = signals["open_b"].values
     n       = len(z)
 
     trades     = []
@@ -457,7 +485,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         exec_bar = i + 1    # next-bar execution (no same-bar trading)
 
         # Guard: skip if execution-bar prices are invalid
-        if np.isnan(price_a[exec_bar]) or np.isnan(price_b[exec_bar]):
+        if np.isnan(open_a[exec_bar]) or np.isnan(open_b[exec_bar]):
             continue
 
         if position == 0:
@@ -478,8 +506,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                 else:
                     vol_scale = 1.0
                 half = (CAPITAL_PER_TRADE * vol_scale) / 2.0
-                shares_a = half / price_a[exec_bar]
-                shares_b = half / price_b[exec_bar]
+                shares_a = half / open_a[exec_bar]
+                shares_b = half / open_b[exec_bar]
                 position  = 1
                 entry_bar = exec_bar
             elif z[i] > Z_ENTRY:
@@ -498,8 +526,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                 else:
                     vol_scale = 1.0
                 half = (CAPITAL_PER_TRADE * vol_scale) / 2.0
-                shares_a = half / price_a[exec_bar]
-                shares_b = half / price_b[exec_bar]
+                shares_a = half / open_a[exec_bar]
+                shares_b = half / open_b[exec_bar]
                 position  = -1
                 entry_bar = exec_bar
 
@@ -524,22 +552,22 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                 close_trade, exit_reason = True, "time"
 
             if close_trade:
-                # ── P&L calculation (shares-based) ───────────────────────
+                # ── P&L calculation (shares-based, fills at open prices) ──
                 if position == 1:    # long A, short B
-                    pnl_a =  shares_a * (price_a[exec_bar] - price_a[entry_bar])
-                    pnl_b = -shares_b * (price_b[exec_bar] - price_b[entry_bar])
+                    pnl_a =  shares_a * (open_a[exec_bar] - open_a[entry_bar])
+                    pnl_b = -shares_b * (open_b[exec_bar] - open_b[entry_bar])
                 else:                # short A, long B
-                    pnl_a = -shares_a * (price_a[exec_bar] - price_a[entry_bar])
-                    pnl_b =  shares_b * (price_b[exec_bar] - price_b[entry_bar])
+                    pnl_a = -shares_a * (open_a[exec_bar] - open_a[entry_bar])
+                    pnl_b =  shares_b * (open_b[exec_bar] - open_b[entry_bar])
                 gross = pnl_a + pnl_b
 
                 # ── TRUE two-leg slippage ────────────────────────────────
                 #    Notional = |shares| * price   for EACH leg
                 #    Applied at entry AND exit, on BOTH legs
-                entry_notional = (shares_a * price_a[entry_bar]
-                                + shares_b * price_b[entry_bar])
-                exit_notional  = (shares_a * price_a[exec_bar]
-                                + shares_b * price_b[exec_bar])
+                entry_notional = (shares_a * open_a[entry_bar]
+                                + shares_b * open_b[entry_bar])
+                exit_notional  = (shares_a * open_a[exec_bar]
+                                + shares_b * open_b[exec_bar])
                 cost = SLIPPAGE_PCT * (entry_notional + exit_notional)
 
                 # ── Short-leg borrow cost ─────────────────────────────────
@@ -547,10 +575,10 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                 #    Daily rate = BORROW_COST_PCT / 252
                 hold_bars = exec_bar - entry_bar
                 if position == 1:   # short B
-                    avg_pb = (price_b[entry_bar] + price_b[exec_bar]) / 2.0
+                    avg_pb = (open_b[entry_bar] + open_b[exec_bar]) / 2.0
                     borrow = shares_b * avg_pb * (BORROW_COST_PCT / 252) * hold_bars
                 else:               # short A
-                    avg_pa = (price_a[entry_bar] + price_a[exec_bar]) / 2.0
+                    avg_pa = (open_a[entry_bar] + open_a[exec_bar]) / 2.0
                     borrow = shares_a * avg_pa * (BORROW_COST_PCT / 252) * hold_bars
 
                 net_pnl = gross - cost - borrow
@@ -572,23 +600,23 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     if position != 0:
         last_bar = n - 1
         if position == 1:
-            pnl_a =  shares_a * (price_a[last_bar] - price_a[entry_bar])
-            pnl_b = -shares_b * (price_b[last_bar] - price_b[entry_bar])
+            pnl_a =  shares_a * (open_a[last_bar] - open_a[entry_bar])
+            pnl_b = -shares_b * (open_b[last_bar] - open_b[entry_bar])
         else:
-            pnl_a = -shares_a * (price_a[last_bar] - price_a[entry_bar])
-            pnl_b =  shares_b * (price_b[last_bar] - price_b[entry_bar])
+            pnl_a = -shares_a * (open_a[last_bar] - open_a[entry_bar])
+            pnl_b =  shares_b * (open_b[last_bar] - open_b[entry_bar])
         gross = pnl_a + pnl_b
-        entry_notional = (shares_a * price_a[entry_bar]
-                        + shares_b * price_b[entry_bar])
-        exit_notional  = (shares_a * price_a[last_bar]
-                        + shares_b * price_b[last_bar])
+        entry_notional = (shares_a * open_a[entry_bar]
+                        + shares_b * open_b[entry_bar])
+        exit_notional  = (shares_a * open_a[last_bar]
+                        + shares_b * open_b[last_bar])
         cost      = SLIPPAGE_PCT * (entry_notional + exit_notional)
         hold_bars = last_bar - entry_bar
         if position == 1:
-            avg_pb = (price_b[entry_bar] + price_b[last_bar]) / 2.0
+            avg_pb = (open_b[entry_bar] + open_b[last_bar]) / 2.0
             borrow = shares_b * avg_pb * (BORROW_COST_PCT / 252) * hold_bars
         else:
-            avg_pa = (price_a[entry_bar] + price_a[last_bar]) / 2.0
+            avg_pa = (open_a[entry_bar] + open_a[last_bar]) / 2.0
             borrow = shares_a * avg_pa * (BORROW_COST_PCT / 252) * hold_bars
         trades.append({
             "entry_bar":   entry_bar,
@@ -885,6 +913,59 @@ def print_rejected(a: str, b: str, live: dict, bt: dict):
         print(f"       Gates: {reason}")
 
 
+def apply_fdr_correction(verified: list, alpha: float) -> tuple:
+    """
+    Benjamini-Hochberg FDR correction on diamond signals.
+    Derives t-statistics from backtest Sharpe and trade count,
+    then controls false discovery rate across multiple comparisons.
+    Returns (surviving_diamonds, fdr_rejected_list).
+    """
+    if not verified:
+        return verified, []
+
+    # Derive p-values from backtest statistics
+    scored = []
+    for v in verified:
+        bt = v["bt"]
+        n_trades = bt.get("n_trades", 0)
+        sharpe = bt.get("sharpe", 0.0)
+        if n_trades < 2 or sharpe <= 0:
+            # Can't compute meaningful t-stat; assign p=1.0
+            scored.append((v, 1.0))
+        else:
+            t_stat = sharpe * np.sqrt(n_trades)
+            p_val = float(stats.t.sf(abs(t_stat), df=n_trades - 1) * 2)
+            scored.append((v, p_val))
+
+    # Sort by p-value ascending
+    scored.sort(key=lambda x: x[1])
+    m = len(scored)
+
+    # Find BH threshold: largest k where p_k <= k/m * alpha
+    max_k = 0
+    for k_idx, (v, p_val) in enumerate(scored):
+        k = k_idx + 1  # 1-indexed rank
+        bh_threshold = k / m * alpha
+        if p_val <= bh_threshold:
+            max_k = k
+
+    # Split into survivors and rejected
+    survivors = []
+    fdr_rejected = []
+    for k_idx, (v, p_val) in enumerate(scored):
+        if k_idx < max_k:
+            survivors.append(v)
+        else:
+            # Move to rejected with FDR reason
+            v["bt"]["pass"] = False
+            old_reason = v["bt"].get("reason", "")
+            fdr_msg = f"FDR correction (p={p_val:.4f})"
+            v["bt"]["reason"] = (f"{old_reason} | {fdr_msg}" if old_reason else fdr_msg)
+            fdr_rejected.append(v)
+
+    return survivors, fdr_rejected
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 #  MAIN
 # ──────────────────────────────────────────────────────────────────────────────
@@ -925,7 +1006,7 @@ def main() -> dict:
           f"PF>{MIN_PROFIT_FACTOR}x | P&L>$0")
     print(f"  Slippage: {SLIPPAGE_PCT*100:.2f}% on notional "
           f"(entry+exit, both legs) | Capital: ${CAPITAL_PER_TRADE:,.0f}/trade")
-    print(f"  Execution: 1-bar delay (signal@close \u2192 trade@next close)\n")
+    print(f"  Execution: 1-bar delay (signal@close \u2192 trade@next open)\n")
 
     # ── VIX Regime Filter ─────────────────────────────────────────────────────
     vix_level   = get_vix()
@@ -951,14 +1032,16 @@ def main() -> dict:
 
         try:
             # ── Fetch data (with retry) ──────────────────────────────────
-            close = fetch_pair(a, b)
-            if close is None:
+            data = fetch_pair(a, b)
+            if data is None:
                 print("SKIP  (download failed)")
                 errors += 1
                 continue
 
             # ── Compute rolling signals (timing-safe) ────────────────────
-            signals = compute_rolling_signals(close, a, b)
+            close_df = data["close"]
+            open_df  = data.get("open")
+            signals = compute_rolling_signals(close_df, a, b, open_prices=open_df)
 
             # ── STEP 1: Live Check ───────────────────────────────────────
             live = live_check(signals)
@@ -1059,6 +1142,11 @@ def main() -> dict:
             _err_logger.error(f"{a}/{b} \u2014 Unexpected: {e}", exc_info=True)
             errors += 1
             continue
+
+    # ── FDR correction for multiple comparisons ──────────────────────────
+    if len(verified) > 1:
+        verified, fdr_rejected = apply_fdr_correction(verified, FDR_ALPHA)
+        rejected.extend(fdr_rejected)
 
     # ══════════════════════════════════════════════════════════════════════
     #  FINAL REPORT

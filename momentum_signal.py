@@ -54,6 +54,7 @@ if _SCRIPT_DIR not in sys.path:
 #  CONFIGURATION  (single source of truth in config.py)
 # ------------------------------------------------------------------------------
 from config import (
+    LOOKBACK_YEARS,
     MOM_FORMATION_DAYS, MOM_FORMATION_SHORT, MOM_FORMATION_LONG,
     MOM_FORMATION_BLEND_VIX, MOM_SKIP_DAYS,
     MOM_MIN_PRICE, MOM_MIN_AVG_VOLUME, MOM_TOP_PCT,
@@ -93,7 +94,7 @@ def _log_error(timestamp: str, context: str, ticker: str, exc: Exception) -> Non
 #  1. FETCH STOCK DATA
 # ==============================================================================
 
-def fetch_stock(ticker: str, years: int = 2) -> "dict | None":
+def fetch_stock(ticker: str, years: int = LOOKBACK_YEARS) -> "dict | None":
     """
     Download OHLCV data for a single stock using yfinance.
 

@@ -52,6 +52,7 @@ if _SCRIPT_DIR not in sys.path:
 # CONFIG IMPORTS
 # ------------------------------------------------------------------------------
 from config import (
+    LOOKBACK_YEARS,
     MOMENTUM_CANDIDATES_CSV, SCANNER_BATCH_SIZE, MISSING_THRESHOLD,
     MOM_FORMATION_DAYS, MOM_FORMATION_SHORT, MOM_FORMATION_LONG,
     MOM_FORMATION_BLEND_VIX, MOM_SKIP_DAYS,
@@ -83,7 +84,7 @@ _OUTPUT_CSV = os.path.join(_SCRIPT_DIR, MOMENTUM_CANDIDATES_CSV)
 #  SECTION 1 — OHLCV DOWNLOAD
 # ==============================================================================
 
-def download_ohlcv(tickers: list, years: int = 2) -> dict:
+def download_ohlcv(tickers: list, years: int = LOOKBACK_YEARS) -> dict:
     """
     Download OHLCV data for all tickers in batched yfinance calls.
 
@@ -478,7 +479,7 @@ def check_market_regime() -> dict:
     # --- S&P 500 regime ---
     try:
         end   = datetime.date.today()
-        start = end - datetime.timedelta(days=365 * 2)
+        start = end - datetime.timedelta(days=365 * LOOKBACK_YEARS)
         sp_raw = yf.download(
             "^GSPC", start=str(start), end=str(end),
             auto_adjust=True, progress=False,
@@ -730,7 +731,7 @@ def main(vix_level: "float | None" = None) -> "pd.DataFrame | None":
     # Step 2 - OHLCV download
     # ------------------------------------------------------------------
     print("\n[STEP 2] Downloading OHLCV data ...")
-    ohlcv = download_ohlcv(tickers, years=2)
+    ohlcv = download_ohlcv(tickers, years=LOOKBACK_YEARS)
     if not ohlcv:
         print("  [SCAN] ERROR: OHLCV download completely failed. Aborting.")
         return None
