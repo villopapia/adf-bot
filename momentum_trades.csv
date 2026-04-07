@@ -1,0 +1,1 @@
+trade_id,date_open,ticker,direction,entry_price,shares,capital_deployed,vol_target_scale,vix_scale,atr_at_entry,trail_stop_price,take_profit_price,bt_win_rate,bt_profit_factor,bt_total_pnl,status,date_close,exit_price,exit_reason,hold_days,peak_price,gross_pnl,net_pnl

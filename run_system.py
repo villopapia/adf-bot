@@ -45,8 +45,25 @@ from config import (
     MIN_WIN_RATE, MIN_PROFIT_FACTOR,
     MAX_CONCURRENT_POSITIONS,
     LOG_RETENTION_DAYS,
+    MOMENTUM_ENABLED, MOM_ACTIVATION_MODE,
+    MOM_MAX_POSITIONS, MOM_VIX_MAX_ENTRY,
+    VIX_MAX_ENTRY,
+    BEAR_MODULE_ENABLED, BEAR_VIX_ACTIVATE,
+    BEAR_MAX_POSITIONS,
+    LIVE_TRADING_ENABLED, ALPACA_SYNC_ON_STARTUP,
 )
 import trade_tracker
+import momentum_tracker
+import bear_tracker
+
+# ── Broker (lazy init to avoid import errors if alpaca-py not installed) ────
+_broker = None
+def _get_broker():
+    global _broker
+    if _broker is None:
+        from alpaca_broker import AlpacaBroker
+        _broker = AlpacaBroker()
+    return _broker
 
 # ── Resolved Paths ───────────────────────────────────────────────────────────
 LOG_DIR_PATH    = os.path.join(SCRIPT_DIR, LOG_DIR)
@@ -406,6 +423,34 @@ def main():
 
     print_health(pairs_loaded, scanner_age, data_ok, log_new)
 
+    # ── Broker Startup Sync ───────────────────────────────────────────────
+    if LIVE_TRADING_ENABLED:
+        print(f"  {CY}{B}--- Broker Sync ---{RST}\n")
+        try:
+            broker = _get_broker()
+            if broker.is_active:
+                acct = broker.get_account_summary()
+                if acct:
+                    print(f"    Alpaca account : ${acct['equity']:,.2f} equity  "
+                          f"| ${acct['buying_power']:,.2f} buying power")
+                    print(f"    Mode           : "
+                          f"{'PAPER' if acct.get('paper') else 'LIVE'}")
+                if ALPACA_SYNC_ON_STARTUP:
+                    drift = broker.sync_positions()
+                    if drift["synced"]:
+                        print(f"    Position sync  : {G}OK{RST}")
+                    else:
+                        print(f"    Position sync  : {Y}DRIFT DETECTED{RST}")
+                        for o in drift.get("orphan_alpaca", []):
+                            print(f"      {Y}! Alpaca has {o} "
+                                  f"-- no paper trade{RST}")
+                        for m in drift.get("missing_alpaca", []):
+                            print(f"      {Y}! Paper trade {m} "
+                                  f"-- no Alpaca position{RST}")
+                print()
+        except Exception as e:
+            print(f"  {R}Broker sync failed: {e}{RST}\n")
+
     # ── Phase 0: Portfolio Update ─────────────────────────────────────────
     print(f"  {CY}{B}═══ PHASE 0 — Portfolio Update ═══{RST}\n")
     newly_closed = trade_tracker.check_exits()
@@ -423,6 +468,17 @@ def main():
     else:
         print(f"  {D}No positions closed today.{RST}\n")
 
+    # Broker: close Alpaca positions for closed pairs trades
+    if LIVE_TRADING_ENABLED and newly_closed:
+        broker = _get_broker()
+        if broker.is_active:
+            for t in newly_closed:
+                res = broker.close_position_pairs(
+                    t["trade_id"], t["stock_a"], t["stock_b"])
+                sc = G + "OK" if res["status"] == "closed" else R + res["status"]
+                print(f"    [BROKER] {t['stock_a']}/{t['stock_b']} "
+                      f"close: {sc}{RST}")
+
     trade_tracker.print_portfolio_status()
     trade_tracker.print_performance_report()
 
@@ -431,6 +487,99 @@ def main():
         print(f"\n  {R}{B}!! KILL SWITCH ACTIVE — no new entries will be accepted.{RST}")
         print(f"  {R}   Reason : {ks_reason}{RST}")
         print(f"  {D}   To reset: call trade_tracker.reset_kill_switch(){RST}\n")
+        if LIVE_TRADING_ENABLED:
+            broker = _get_broker()
+            if broker.is_active:
+                liq = broker.liquidate_all()
+                print(f"  {R}   [BROKER] Emergency liquidation: "
+                      f"{liq['positions_closed']} positions closed{RST}")
+
+    # ── Phase 0b: Momentum Portfolio Update ───────────────────────────────
+    if MOMENTUM_ENABLED:
+        print(f"  {CY}{B}--- PHASE 0b — Momentum Portfolio Update ---{RST}\n")
+        mom_closed = momentum_tracker.check_mom_exits()
+        if mom_closed:
+            print(f"  {G}Momentum positions closed today:{RST}")
+            for t in mom_closed:
+                pnl = float(t.get("net_pnl", 0))
+                pc  = G if pnl > 0 else R
+                icon = "+" if pnl > 0 else "-"
+                print(f"    {pc}{icon}{RST} {t['ticker']}  "
+                      f"exit={t.get('exit_reason','')}  "
+                      f"hold={t.get('hold_days','')}d  "
+                      f"P&L={pc}${pnl:>+.2f}{RST}")
+            print()
+        else:
+            print(f"  {D}No momentum positions closed today.{RST}\n")
+
+        # Broker: close Alpaca positions for closed momentum trades
+        if LIVE_TRADING_ENABLED and mom_closed:
+            broker = _get_broker()
+            if broker.is_active:
+                for t in mom_closed:
+                    res = broker.close_position_single(
+                        t.get("trade_id", ""), t["ticker"])
+                    sc = G + "OK" if res["status"] == "closed" else R + res["status"]
+                    print(f"    [BROKER] {t['ticker']} close: {sc}{RST}")
+
+        momentum_tracker.print_mom_portfolio_status()
+        momentum_tracker.print_mom_performance_report()
+
+        mom_ks, mom_ks_reason = momentum_tracker.is_mom_kill_switch()
+        if mom_ks:
+            print(f"\n  {R}{B}!! MOMENTUM KILL SWITCH ACTIVE{RST}")
+            print(f"  {R}   Reason : {mom_ks_reason}{RST}")
+            print(f"  {D}   To reset: momentum_tracker.reset_mom_kill_switch(){RST}\n")
+            if LIVE_TRADING_ENABLED:
+                broker = _get_broker()
+                if broker.is_active:
+                    liq = broker.liquidate_all()
+                    print(f"  {R}   [BROKER] Emergency liquidation: "
+                          f"{liq['positions_closed']} positions closed{RST}")
+
+    # ── Phase 0c: Bear Portfolio Update ────────────────────────────────
+    if BEAR_MODULE_ENABLED:
+        print(f"  {CY}{B}--- PHASE 0c — Bear Portfolio Update ---{RST}\n")
+        bear_closed = bear_tracker.check_bear_exits()
+        if bear_closed:
+            print(f"  {G}Bear positions closed today:{RST}")
+            for t in bear_closed:
+                pnl = float(t.get("net_pnl", 0))
+                pc  = G if pnl > 0 else R
+                icon = "+" if pnl > 0 else "-"
+                print(f"    {pc}{icon}{RST} {t['ticker']}  "
+                      f"[{t.get('module', '')}]  "
+                      f"exit={t.get('exit_reason', '')}  "
+                      f"hold={t.get('hold_days', '')}d  "
+                      f"P&L={pc}${pnl:>+.2f}{RST}")
+            print()
+        else:
+            print(f"  {D}No bear positions closed today.{RST}\n")
+
+        # Broker: close Alpaca positions for closed bear trades
+        if LIVE_TRADING_ENABLED and bear_closed:
+            broker = _get_broker()
+            if broker.is_active:
+                for t in bear_closed:
+                    res = broker.close_position_single(
+                        t.get("trade_id", ""), t["ticker"])
+                    sc = G + "OK" if res["status"] == "closed" else R + res["status"]
+                    print(f"    [BROKER] {t['ticker']} close: {sc}{RST}")
+
+        bear_tracker.print_bear_portfolio_status()
+        bear_tracker.print_bear_performance_report()
+
+        bear_ks, bear_ks_reason = bear_tracker.is_bear_kill_switch()
+        if bear_ks:
+            print(f"\n  {R}{B}!! BEAR KILL SWITCH ACTIVE{RST}")
+            print(f"  {R}   Reason : {bear_ks_reason}{RST}")
+            print(f"  {D}   To reset: bear_tracker.reset_bear_kill_switch(){RST}\n")
+            if LIVE_TRADING_ENABLED:
+                broker = _get_broker()
+                if broker.is_active:
+                    liq = broker.liquidate_all()
+                    print(f"  {R}   [BROKER] Emergency liquidation: "
+                          f"{liq['positions_closed']} positions closed{RST}")
 
     # ── Phase 1: Scanner ─────────────────────────────────────────────────
     if should_run_scanner(args.scan or args.scan_only):
@@ -522,6 +671,19 @@ def main():
                 else:
                     tid = trade_tracker.log_entry(d)
                     logged.append((d, tid))
+                    # Broker: submit pairs entry to Alpaca
+                    if LIVE_TRADING_ENABLED:
+                        broker = _get_broker()
+                        if broker.is_active:
+                            pt = [t for t in trade_tracker.get_open_trades()
+                                  if t["trade_id"] == tid]
+                            if pt:
+                                broker.submit_entry_pairs(tid, {
+                                    "a": d["a"], "b": d["b"],
+                                    "direction": d["live"]["direction"],
+                                    "shares_a": float(pt[0]["shares_a"]),
+                                    "shares_b": float(pt[0]["shares_b"]),
+                                })
             if logged:
                 print(f"  {G}Paper trades logged ({len(logged)}):{RST}")
                 for d, tid in logged:
@@ -549,6 +711,275 @@ def main():
     else:
         print(f"\n  {R}System encountered errors. "
               f"Check {ERROR_LOG} and log file.{RST}\n")
+
+    # ── Phase 3: Momentum (conditional) ──────────────────────────────────
+    if MOMENTUM_ENABLED:
+        vix_level = result.get("vix") if result else None
+        n_diamonds = len(result.get("verified", [])) if result else 0
+
+        # Activation logic
+        activate = False
+        if MOM_ACTIVATION_MODE == "always":
+            activate = True
+        elif MOM_ACTIVATION_MODE == "vix_only":
+            activate = (vix_level is not None and vix_level > VIX_MAX_ENTRY)
+        else:  # "complement" — pairs idle or VIX elevated
+            pairs_idle = (n_diamonds == 0)
+            vix_elevated = (vix_level is not None and vix_level > VIX_MAX_ENTRY)
+            activate = pairs_idle or vix_elevated
+
+        if activate:
+            print(f"  {CY}{B}--- PHASE 3 — Momentum Strategy ---{RST}\n")
+            if vix_level is not None:
+                print(f"  {D}VIX: {vix_level:.1f}  |  "
+                      f"Pairs diamonds: {n_diamonds}  |  "
+                      f"Mode: {MOM_ACTIVATION_MODE}{RST}\n")
+
+            try:
+                import importlib
+
+                # Step 1: Scan for momentum candidates
+                scanner_mod = importlib.import_module("momentum_scanner")
+                importlib.reload(scanner_mod)
+                candidates_df = scanner_mod.main(vix_level=vix_level)
+
+                if candidates_df is not None and len(candidates_df) > 0:
+                    # Get market regime from scanner
+                    regime = scanner_mod.check_market_regime()
+
+                    # Step 2: Run momentum signal engine
+                    signal_mod = importlib.import_module("momentum_signal")
+                    importlib.reload(signal_mod)
+                    mom_result = signal_mod.main(
+                        candidates_df=candidates_df,
+                        vix_level=vix_level,
+                        market_regime=regime,
+                    )
+
+                    if mom_result:
+                        vix_scale = scanner_mod.get_vix_scale(vix_level)
+                        mom_diamonds = mom_result.get("verified", [])
+                        mom_rejected = mom_result.get("rejected", [])
+
+                        # Summary
+                        print()
+                        print(f"  {B}{W}{'=' * 60}{RST}")
+                        print(f"  {B}{W}  MOMENTUM RESULTS{RST}")
+                        print(f"  {B}{W}{'=' * 60}{RST}")
+                        print(f"    Candidates      : {len(candidates_df)}")
+                        print(f"    No live signal  : {mom_result.get('no_signal', 0)}")
+                        print(f"    Errors          : {mom_result.get('errors', 0)}")
+                        print(f"    {G}* Mom Diamond{RST}   : "
+                              f"{G}{B}{len(mom_diamonds)}{RST}")
+                        print(f"    {R}x Rejected{RST}      : {len(mom_rejected)}")
+                        print()
+
+                        # Momentum diamond table
+                        if mom_diamonds:
+                            print(f"  {G}{B}-- MOMENTUM DIAMONDS --{RST}")
+                            print(f"    {B}{'TICKER':<8} {'MOM':>8} {'WR%':>6} "
+                                  f"{'PF':>7} {'P&L':>10} {'SHARPE':>8}{RST}")
+                            print(f"    {D}{'-'*8} {'-'*8} {'-'*6} "
+                                  f"{'-'*7} {'-'*10} {'-'*8}{RST}")
+                            for v in mom_diamonds:
+                                bt = v["bt"]
+                                live = v["live"]
+                                pnl = bt["total_pnl"]
+                                pc = G if pnl > 0 else R
+                                print(f"  {G}*{RST} {v['ticker']:<8} "
+                                      f"{live['mom_score']:>+8.3f} "
+                                      f"{bt['win_rate']:>5.1f}% "
+                                      f"{bt['profit_factor']:>6.2f}x "
+                                      f"{pc}${pnl:>+8.2f}{RST} "
+                                      f"{bt['sharpe']:>+7.2f}")
+                            print()
+
+                        # Auto-log momentum entries
+                        if mom_diamonds:
+                            mom_ks, _ = momentum_tracker.is_mom_kill_switch()
+                            m_logged, m_skip_cap, m_skip_ks, m_skip_corr = [], [], [], []
+                            for d in mom_diamonds:
+                                if mom_ks:
+                                    m_skip_ks.append(d)
+                                elif momentum_tracker.at_mom_cap():
+                                    m_skip_cap.append(d)
+                                elif momentum_tracker.is_mom_correlated_with_open(
+                                        d["ticker"]):
+                                    m_skip_corr.append(d)
+                                else:
+                                    tid = momentum_tracker.log_mom_entry(
+                                        d, vix_scale=vix_scale)
+                                    m_logged.append((d, tid))
+                                    # Broker: submit momentum entry
+                                    if LIVE_TRADING_ENABLED:
+                                        broker = _get_broker()
+                                        if broker.is_active:
+                                            pt = [t for t in
+                                                  momentum_tracker.get_open_mom_trades()
+                                                  if t["trade_id"] == tid]
+                                            if pt:
+                                                broker.submit_entry_single(
+                                                    tid, d["ticker"],
+                                                    float(pt[0]["shares"]),
+                                                    "buy", "momentum")
+                            if m_logged:
+                                print(f"  {G}Momentum trades logged "
+                                      f"({len(m_logged)}):{RST}")
+                                for d, tid in m_logged:
+                                    print(f"    {G}+{RST} {d['ticker']}  "
+                                          f"LONG  [{tid}]")
+                            if m_skip_cap:
+                                print(f"  {Y}Skipped {len(m_skip_cap)} — "
+                                      f"momentum at cap "
+                                      f"({MOM_MAX_POSITIONS} positions){RST}")
+                            if m_skip_ks:
+                                print(f"  {R}Skipped {len(m_skip_ks)} — "
+                                      f"momentum kill switch active{RST}")
+                            if m_skip_corr:
+                                print(f"  {Y}Skipped {len(m_skip_corr)} — "
+                                      f"correlated with open position(s){RST}")
+                            print()
+
+                        # Rejected summary
+                        if mom_rejected:
+                            print(f"  {D}-- Momentum Rejected "
+                                  f"({len(mom_rejected)}) --{RST}")
+                            for r in mom_rejected[:5]:
+                                print(f"    {R}x{RST} {r['ticker']:>6}  "
+                                      f"{r['bt'].get('reason', '')}")
+                            if len(mom_rejected) > 5:
+                                print(f"    {D}... and "
+                                      f"{len(mom_rejected) - 5} more{RST}")
+                            print()
+                else:
+                    print(f"  {Y}No momentum candidates passed filters.{RST}\n")
+
+            except Exception as e:
+                print(f"\n  {R}Momentum phase failed: {e}{RST}")
+                traceback.print_exc()
+                print()
+        else:
+            print(f"\n  {D}Momentum skipped (pairs active, VIX normal).{RST}\n")
+
+    # ── Phase 4: Bear Module (conditional) ────────────────────────────────
+    if BEAR_MODULE_ENABLED:
+        vix_level = result.get("vix") if result else None
+
+        if vix_level is not None and vix_level > BEAR_VIX_ACTIVATE:
+            print(f"  {CY}{B}--- PHASE 4 — Bear Market Module ---{RST}\n")
+            print(f"  {D}VIX: {vix_level:.1f} > {BEAR_VIX_ACTIVATE} "
+                  f"-- bear module active{RST}\n")
+
+            try:
+                import importlib
+                bear_mod = importlib.import_module("bear_signal")
+                importlib.reload(bear_mod)
+                bear_result = bear_mod.main(vix_level=vix_level)
+
+                if bear_result:
+                    # Summary
+                    n_bounce = len(bear_result.get("bounce_verified", []))
+                    n_short  = len(bear_result.get("short_verified", []))
+                    n_b_rej  = len(bear_result.get("bounce_rejected", []))
+                    n_s_rej  = len(bear_result.get("short_rejected", []))
+
+                    print()
+                    print(f"  {B}{W}{'=' * 60}{RST}")
+                    print(f"  {B}{W}  BEAR MODULE RESULTS{RST}")
+                    print(f"  {B}{W}{'=' * 60}{RST}")
+                    print(f"    Bounce diamonds : {G}{B}{n_bounce}{RST}")
+                    print(f"    Bounce rejected : {n_b_rej}")
+                    print(f"    Short diamonds  : {G}{B}{n_short}{RST}")
+                    print(f"    Short rejected  : {n_s_rej}")
+                    if bear_result.get("capitulation"):
+                        print(f"    {Y}Capitulation boost ACTIVE{RST}")
+                    print()
+
+                    # Auto-log bounce diamonds
+                    for d in bear_result.get("bounce_verified", []):
+                        bear_ks, _ = bear_tracker.is_bear_kill_switch()
+                        if bear_ks:
+                            print(f"  {R}Skipped bounce -- "
+                                  f"bear kill switch active{RST}")
+                            break
+                        if bear_tracker.at_bear_cap():
+                            print(f"  {Y}Skipped bounce -- "
+                                  f"bear at cap "
+                                  f"({BEAR_MAX_POSITIONS} positions){RST}")
+                            break
+                        regime = bear_result["regime"]
+                        tid = bear_tracker.log_bear_entry(
+                            d, module="bounce",
+                            vix_scale=regime["vix_scale"],
+                            capitulation=bear_result.get(
+                                "capitulation", False))
+                        print(f"  {G}+ Bounce trade logged: "
+                              f"{d['ticker']}  [{tid}]{RST}")
+                        # Broker: submit bounce entry
+                        if LIVE_TRADING_ENABLED:
+                            broker = _get_broker()
+                            if broker.is_active:
+                                pt = [t for t in
+                                      bear_tracker.get_open_bear_trades()
+                                      if t["trade_id"] == tid]
+                                if pt:
+                                    broker.submit_entry_single(
+                                        tid, d["ticker"],
+                                        float(pt[0]["shares"]),
+                                        "buy", "bear")
+
+                    # Auto-log short diamonds
+                    for d in bear_result.get("short_verified", []):
+                        bear_ks, _ = bear_tracker.is_bear_kill_switch()
+                        if bear_ks:
+                            print(f"  {R}Skipped short -- "
+                                  f"bear kill switch active{RST}")
+                            break
+                        if bear_tracker.at_bear_cap():
+                            print(f"  {Y}Skipped short -- "
+                                  f"bear at cap "
+                                  f"({BEAR_MAX_POSITIONS} positions){RST}")
+                            break
+                        regime = bear_result["regime"]
+                        tid = bear_tracker.log_bear_entry(
+                            d, module="short",
+                            vix_scale=regime["vix_scale"])
+                        print(f"  {G}+ Short trade logged: "
+                              f"{d['ticker']}  [{tid}]{RST}")
+                        # Broker: submit short entry
+                        if LIVE_TRADING_ENABLED:
+                            broker = _get_broker()
+                            if broker.is_active:
+                                pt = [t for t in
+                                      bear_tracker.get_open_bear_trades()
+                                      if t["trade_id"] == tid]
+                                if pt:
+                                    broker.submit_entry_single(
+                                        tid, d["ticker"],
+                                        float(pt[0]["shares"]),
+                                        "buy", "bear")
+
+                    # Rejected summary
+                    all_rejected = (bear_result.get("bounce_rejected", [])
+                                    + bear_result.get("short_rejected", []))
+                    if all_rejected:
+                        print(f"\n  {D}-- Bear Rejected "
+                              f"({len(all_rejected)}) --{RST}")
+                        for r in all_rejected:
+                            print(f"    {R}x{RST} {r['ticker']}  "
+                                  f"{r['bt'].get('reason', '')}")
+                    print()
+
+            except Exception as e:
+                print(f"\n  {R}Bear module failed: {e}{RST}")
+                import traceback
+                traceback.print_exc()
+                print()
+        else:
+            vix_display = (f"{vix_level:.1f}" if vix_level is not None
+                           else "N/A")
+            print(f"\n  {D}Bear module skipped "
+                  f"(VIX {vix_display} <= {BEAR_VIX_ACTIVATE}).{RST}\n")
 
     # ── Footer ───────────────────────────────────────────────────────────
     print(f"  {D}Log     → {log_path}{RST}")

@@ -735,12 +735,14 @@ def print_diamond(a: str, b: str, live: dict, bt: dict):
         hint = "Sell A / Buy B"
 
     W = 58   # inner width between the ║ walls
+    _hbar = '\u2550' * W
+    _tbar = '\u2500' * 40
     def L(s): return f"  \u2551{s:<{W}}\u2551"
 
     print()
-    print(f"  \u2554{'\u2550'*W}\u2557")
+    print(f"  \u2554{_hbar}\u2557")
     print(L(f"  \u25c6 DIAMOND SIGNAL \u25c6   {a} / {b}"))
-    print(f"  \u2560{'\u2550'*W}\u2563")
+    print(f"  \u2560{_hbar}\u2563")
     print(L(f"  LIVE"))
     print(L(f"    Direction    : {live['direction']}"))
     print(L(f"    Current Z    : {live['z']:>+8.4f}"))
@@ -768,17 +770,17 @@ def print_diamond(a: str, b: str, live: dict, bt: dict):
     print(L(f"    Recent \u03c1     :  {rc_str:>5}         \u2713"))
     print(L(f"    Beta CV      :  {bt.get('beta_cv', 0):.2f}          \u2713"))
     print(L(""))
-    print(f"  \u2560{'\u2550'*W}\u2563")
+    print(f"  \u2560{_hbar}\u2563")
     print(L(f"  \u26a1 EXECUTION TICKET"))
     print(L(f"    ACTION : {act_label} ({hint})"))
-    print(L(f"    {'\u2500'*40}"))
+    print(L(f"    {_tbar}"))
     print(L(f"    Hedge Ratio (\u03b2) : {live['beta']:.4f}"))
     print(L(f"    Leg A ({a:>5})    : {act_a:>4} {shares_a:>4} shares  (${not_a:>,.0f})"))
     print(L(f"    Leg B ({b:>5})    : {act_b:>4} {shares_b:>4} shares  (${not_b:>,.0f})"))
-    print(L(f"    {'\u2500'*40}"))
+    print(L(f"    {_tbar}"))
     print(L(f"    Capital / trade : ${CAPITAL_PER_TRADE:>,.0f}"))
     print(L(f"    Total notional  : ${not_a + not_b:>,.0f}"))
-    print(f"  \u255a{'\u2550'*W}\u255d")
+    print(f"  \u255a{_hbar}\u255d")
 
 
 def print_rejected(a: str, b: str, live: dict, bt: dict):
@@ -874,10 +876,10 @@ def main() -> dict:
     if vix_level is None:
         print(f"  VIX : unavailable — proceeding without regime filter\n")
     elif vix_blocked:
-        print(f"\n  {'!'*60}")
+        print("\n  " + "!"*60)
         print(f"  ⚠  VIX REGIME BLOCK: {vix_level:.1f} > {VIX_MAX_ENTRY}")
         print(f"  Signals shown but flagged BLOCKED. No new entries advised.")
-        print(f"  {'!'*60}\n")
+        print("  " + "!"*60 + "\n")
     else:
         print(f"  VIX : {vix_level:.1f}  ✓ (threshold {VIX_MAX_ENTRY})\n")
 
