@@ -93,7 +93,12 @@ class TeeWriter:
         self._ansi_re = ansi_re
 
     def write(self, msg):
-        self.terminal.write(msg)
+        try:
+            self.terminal.write(msg)
+        except UnicodeEncodeError:
+            self.terminal.write(msg.encode(self.terminal.encoding or "utf-8",
+                                           errors="replace").decode(
+                                           self.terminal.encoding or "utf-8"))
         self._log.write(self._ansi_re.sub("", msg))
 
     def flush(self):

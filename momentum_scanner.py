@@ -886,6 +886,9 @@ def main(vix_level: "float | None" = None) -> "pd.DataFrame | None":
 
     print("-" * 60)
 
+    # Ensure 'ticker' is a column (not just the index) for downstream consumers
+    if "ticker" not in filtered.columns and filtered.index.name == "ticker":
+        filtered = filtered.reset_index()
     return filtered
 
 
