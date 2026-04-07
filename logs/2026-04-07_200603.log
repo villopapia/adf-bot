@@ -1,0 +1,637 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-04-07 20:06:03                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 150
+    Scanner Age      : 0d old
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=30d
+    Quality Gates    : WR>50.0% | PF>1.3x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  ═══ PHASE 0 — Portfolio Update ═══
+
+  No positions closed today.
+
+  -- Live Portfolio -------------------------------------------
+    No open positions.
+
+    Positions open   : 0 / 10
+    Total live P&L   : $+0.00
+    Peak P&L         : $+0.00
+    System drawdown  : $+0.00  (limit $-1500)
+  ------------------------------------------------------------
+  --- PHASE 0b — Momentum Portfolio Update ---
+
+  No momentum positions closed today.
+
+  -- Momentum Portfolio ---------------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  --- PHASE 0c — Bear Portfolio Update ---
+
+  No bear positions closed today.
+
+  -- Bear Module Portfolio ------------------------------------
+    Open positions : 0 / 2
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  Scanner skipped (candidates 0d old, refresh every 3d). Use --scan to force.
+
+  ═══ PHASE 2 — Master Signal (live + backtest) ═══
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
+║  Run : 2026-04-07 20:06:04                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+  Loaded 150 pairs from daily_candidates.csv
+  Strategy: β=60d | z=20d | Entry |z|>2.0 | Exit z→0.0 | Stop |z|>3.0 | Hold≤30d
+  Quality gates: WR>50.0% | PF>1.3x | P&L>$0
+  Slippage: 0.10% on notional (entry+exit, both legs) | Capital: $1,000/trade
+  Execution: 1-bar delay (signal@close → trade@next close)
+
+
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ⚠  VIX REGIME BLOCK: 27.4 > 25.0
+  Signals shown but flagged BLOCKED. No new entries advised.
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  [1/150]        ALL / GL  —  No signal  (|z| = 1.42)
+  [2/150]       PPL / WEC  —  No signal  (|z| = 1.83)
+  [3/150]      KLAC / STX  ⚡ z=+2.07 SHORT  →  ✗ REJECTED
+  [4/150]        ADI / MU  ⚡ z=+3.18 SHORT  →  ✗ REJECTED
+  [5/150]     ADSK / PANW  ⚡ z=+2.07 SHORT  →  ✗ REJECTED
+  [6/150]       DTE / DUK  ⚡ z=+2.36 SHORT  →  ✗ REJECTED
+  [7/150]         J / PNR  —  No signal  (|z| = 1.16)
+  [8/150]      GILD / DGX  ⚡ z=+2.82 SHORT  →  ✗ REJECTED
+  [9/150]     CDNS / MSFT  ⚡ z=-2.97  LONG  →  ✗ REJECTED
+  [10/150]        GL / HIG  —  No signal  (|z| = 1.28)
+  [11/150]       EME / NSC  —  No signal  (|z| = 1.71)
+  [12/150]       AME / CMI  —  No signal  (|z| = 0.53)
+  [13/150]      FITB / USB  —  No signal  (|z| = 0.65)
+  [14/150]        GL / TRV  —  No signal  (|z| = 0.84)
+  [15/150]       GL / IBKR  —  No signal  (|z| = 1.43)
+  [16/150]      AMZN / CCL  —  No signal  (|z| = 0.90)
+  [17/150]       HWM / JCI  —  No signal  (|z| = 1.72)
+  [18/150]      DOV / JBHT  —  No signal  (|z| = 1.45)
+  [19/150]      ABBV / CVS  —  No signal  (|z| = 1.34)
+  [20/150]      DOV / PCAR  —  No signal  (|z| = 1.69)
+  [21/150]      ABBV / MDT  —  No signal  (|z| = 1.20)
+  [22/150]      COO / RVTY  —  No signal  (|z| = 1.18)
+  [23/150]       NVR / MHK  —  No signal  (|z| = 0.81)
+  [24/150]     AMZN / TSLA  —  No signal  (|z| = 0.63)
+  [25/150]      LDOS / URI  —  No signal  (|z| = 1.52)
+  [26/150]     GOOGL / WBD  —  No signal  (|z| = 1.92)
+  [27/150]      AMZN / WSM  —  No signal  (|z| = 1.65)
+  [28/150]      ADI / LRCX  —  No signal  (|z| = 0.66)
+  [29/150]        NI / PPL  ⚡ z=+2.38 SHORT  →  ✗ REJECTED
+  [30/150]          BK / L  —  No signal  (|z| = 0.47)
+  [31/150]      GOOG / WBD  —  No signal  (|z| = 1.91)
+  [32/150]       BAX / ZTS  —  No signal  (|z| = 1.49)
+  [33/150]       ADI / WDC  ⚡ z=+2.40 SHORT  →  ✗ REJECTED
+  [34/150]      CHRW / CAT  ⚡ z=+2.30 SHORT  →  ✗ REJECTED
+  [35/150]        CI / ELV  —  No signal  (|z| = 1.04)
+  [36/150]       COR / CVS  —  No signal  (|z| = 1.90)
+  [37/150]       ESS / MAA  —  No signal  (|z| = 1.10)
+  [38/150]       ALL / CME  ⚡ z=-2.57  LONG  →  ✗ REJECTED
+  [39/150]      BF-B / KHC  —  No signal  (|z| = 0.28)
+  [40/150]       AME / LUV  —  No signal  (|z| = 1.70)
+  [41/150]       CMS / DUK  —  No signal  (|z| = 1.31)
+  [42/150]       EQR / UDR  —  No signal  (|z| = 0.50)
+  [43/150]      FDX / JBHT  —  No signal  (|z| = 1.59)
+  [44/150]       CEG / NRG  —  No signal  (|z| = 0.57)
+  [45/150]       PWR / ROK  —  No signal  (|z| = 0.30)
+  [46/150]      CHRW / CMI  —  No signal  (|z| = 0.48)
+  [47/150]       CSX / VRT  —  No signal  (|z| = 1.47)
+  [48/150]        BAC / MS  —  No signal  (|z| = 0.24)
+  [49/150]      ADI / COHR  —  No signal  (|z| = 1.85)
+  [50/150]       PSX / VLO  —  No signal  (|z| = 0.62)
+  [51/150]      JPM / NDAQ  —  No signal  (|z| = 1.21)
+  [52/150]      NTRS / STT  ⚡ z=-2.09  LONG  →  ✗ REJECTED
+  [53/150]       ADI / STX  ⚡ z=+2.42 SHORT  →  ✗ REJECTED
+  [54/150]        IR / UPS  —  No signal  (|z| = 0.83)
+  [55/150]       DG / DLTR  —  No signal  (|z| = 1.69)
+  [56/150]       CPT / ESS  —  No signal  (|z| = 1.36)
+  [57/150]     ALLE / LDOS  —  No signal  (|z| = 1.30)
+  [58/150]       HD / NCLH  —  No signal  (|z| = 1.71)
+  [59/150]        AFL / GL  —  No signal  (|z| = 1.03)
+  [60/150]      CBOE / TRV  ⚡ z=+2.83 SHORT  →  ✗ REJECTED
+  [61/150]       AEE / PPL  ⚡ z=+2.19 SHORT  →  ✗ REJECTED
+  [62/150]       INTC / MU  ⚡ z=+2.84 SHORT  →  ✗ REJECTED
+  [63/150]       FCX / NUE  —  No signal  (|z| = 1.30)
+  [64/150]     GNRC / HUBB  ⚡ z=+2.64 SHORT  →  ✗ REJECTED
+  [65/150]         ES / FE  ⚡ z=+2.80 SHORT  →  ✗ REJECTED
+  [66/150]        ALL / BK  —  No signal  (|z| = 0.86)
+  [67/150]       FTV / IEX  ⚡ z=-2.07  LONG  →  ✗ REJECTED
+  [68/150]      ALL / NDAQ  ⚡ z=+3.05 SHORT  →  ✗ REJECTED
+  [69/150]       ADM / HSY  ⚡ z=+2.91 SHORT  →  ✗ REJECTED
+  [70/150]      ATO / EVRG  ⚡ z=-2.24  LONG  →  ✗ REJECTED
+  [71/150]         DE / WM  ⚡ z=+2.27 SHORT  →  ✗ REJECTED
+  [72/150]       CMI / LUV  —  No signal  (|z| = 1.56)
+  [73/150]       ABT / BSX  ⚡ z=+2.77 SHORT  →  ✗ REJECTED
+  [74/150]       CPB / GIS  —  No signal  (|z| = 0.25)
+  [75/150]      CBOE / HIG  —  No signal  (|z| = 0.75)
+  [76/150]      NEM / STLD  —  No signal  (|z| = 0.78)
+  [77/150]        BK / TRV  —  No signal  (|z| = 0.88)
+  [78/150]         J / URI  —  No signal  (|z| = 1.44)
+  [79/150]     HBAN / NDAQ  —  No signal  (|z| = 1.27)
+  [80/150]     FISV / MRSH  —  No signal  (|z| = 1.18)
+  [81/150]      ANET / HPE  —  No signal  (|z| = 1.81)
+  [82/150]      ALL / CBOE  ⚡ z=-2.77  LONG  →  ✗ REJECTED
+  [83/150]       TFC / USB  —  No signal  (|z| = 1.02)
+  [84/150]        KEY / RF  —  No signal  (|z| = 1.50)
+  [85/150]      CHRW / LUV  —  No signal  (|z| = 1.31)
+  [86/150]        BG / HSY  ⚡ z=+2.85 SHORT  →  ✗ REJECTED
+  [87/150]        GL / STT  —  No signal  (|z| = 1.54)
+  [88/150]      COF / NDAQ  —  No signal  (|z| = 0.08)
+  [89/150]      AME / CHRW  —  No signal  (|z| = 1.74)
+  [90/150]       DTE / EXC  —  No signal  (|z| = 1.89)
+  [91/150]       LNT / ATO  —  No signal  (|z| = 1.73)
+  [92/150]      INTC / WDC  ⚡ z=+2.34 SHORT  →  ✗ REJECTED
+  [93/150]      ALL / IBKR  —  No signal  (|z| = 0.75)
+  [94/150]      ADSK / GEN  —  No signal  (|z| = 1.64)
+  [95/150]      IBKR / WFC  —  No signal  (|z| = 1.50)
+  [96/150]       GL / NDAQ  —  No signal  (|z| = 1.26)
+  [97/150]       EQR / EXR  ⚡ z=-2.09  LONG  →  ✗ REJECTED
+  [98/150]       CVS / MCK  ⚡ z=-2.78  LONG  →  ✗ REJECTED
+  [99/150]          GS / L  —  No signal  (|z| = 0.34)
+  [100/150]      AVGO / TEL  —  No signal  (|z| = 0.12)
+  [101/150]       ESS / UDR  —  No signal  (|z| = 1.07)
+  [102/150]     CIEN / KEYS  ⚡ z=-2.15  LONG  →  ✗ REJECTED
+  [103/150]       MTB / USB  —  No signal  (|z| = 1.46)
+  [104/150]       CMS / PPL  —  No signal  (|z| = 0.87)
+  [105/150]      BRK-B / GL  —  No signal  (|z| = 1.61)
+  [106/150]        GS / STT  —  No signal  (|z| = 1.08)
+  [107/150]       GL / NTRS  —  No signal  (|z| = 1.23)
+  [108/150]      AMCR / IFF  —  No signal  (|z| = 1.70)
+  [109/150]         GL / GS  —  No signal  (|z| = 1.33)
+  [110/150]       LNT / DUK  ⚡ z=+2.12 SHORT  →  ✗ REJECTED
+  [111/150]       MTD / TMO  —  No signal  (|z| = 0.77)
+  [112/150]        CBOE / L  ⚡ z=+2.89 SHORT  →  ✗ REJECTED
+  [113/150]           C / L  —  No signal  (|z| = 0.39)
+  [114/150]       GEV / JCI  —  No signal  (|z| = 0.03)
+  [115/150]      CSCO / JBL  —  No signal  (|z| = 0.81)
+  [116/150]      CINF / TRV  —  No signal  (|z| = 0.21)
+  [117/150]      NDAQ / WFC  —  No signal  (|z| = 1.44)
+  [118/150]     INTC / KLAC  ⚡ z=+2.31 SHORT  →  ✗ REJECTED
+  [119/150]       ALL / JPM  —  No signal  (|z| = 1.67)
+  [120/150]       ATO / XEL  —  No signal  (|z| = 1.52)
+  [121/150]         GL / MS  —  No signal  (|z| = 1.18)
+  [122/150]      AMAT / TER  ⚡ z=+2.31 SHORT  →  ✗ REJECTED
+  [123/150]        AEE / NI  ⚡ z=-2.99  LONG  →  ✗ REJECTED
+  [124/150]      FOXA / TKO  —  No signal  (|z| = 0.86)
+  [125/150]        ALB / DD  ⚡ z=+2.01 SHORT  →  ✗ REJECTED
+  [126/150]       ALL / TRV  —  No signal  (|z| = 0.52)
+  [127/150]       KEY / USB  —  No signal  (|z| = 0.61)
+  [128/150]      INTC / STX  ⚡ z=+2.26 SHORT  →  ✗ REJECTED
+  [129/150]        CLX / PG  —  No signal  (|z| = 1.43)
+  [130/150]       FIX / LHX  —  No signal  (|z| = 1.98)
+  [131/150]      IBKR / JPM  —  No signal  (|z| = 1.84)
+  [132/150]      INTC / TER  ⚡ z=+2.28 SHORT  →  ✗ REJECTED
+  [133/150]        AME / PH  —  No signal  (|z| = 1.66)
+  [134/150]      ADBE / HPQ  —  No signal  (|z| = 0.79)
+  [135/150]       AMP / APO  —  No signal  (|z| = 1.73)
+  [136/150]      ABT / PODD  ⚡ z=+2.17 SHORT  →  ✗ REJECTED
+  [137/150]      CSX / HUBB  —  No signal  (|z| = 0.74)
+  [138/150]       PNC / USB  —  No signal  (|z| = 1.26)
+  [139/150]       JCI / RTX  —  No signal  (|z| = 0.60)
+  [140/150]        MS / STT  —  No signal  (|z| = 0.67)
+  [141/150]        F / ULTA  —  No signal  (|z| = 1.01)
+  [142/150]       AME / CAT  —  No signal  (|z| = 1.08)
+  [143/150]       AMP / MET  —  No signal  (|z| = 1.31)
+  [144/150]     INTC / LRCX  ⚡ z=+3.03 SHORT  →  ✗ REJECTED
+  [145/150]     ANET / NVDA  —  No signal  (|z| = 1.35)
+  [146/150]        AVY / CE  —  No signal  (|z| = 1.62)
+  [147/150]       AME / FIX  —  No signal  (|z| = 1.67)
+  [148/150]        BLK / GL  —  No signal  (|z| = 1.57)
+  [149/150]          GL / L  —  No signal  (|z| = 0.03)
+  [150/150]     AVGO / NVDA  —  No signal  (|z| = 0.92)
+
+
+════════════════════════════════════════════════════════════════
+  SCAN COMPLETE
+════════════════════════════════════════════════════════════════
+  Pairs scanned   : 150
+  No live signal  : 111
+  Download errors : 0
+  Signals found   : 39
+    ◆ Diamond     : 0
+    ✗ Rejected    : 39
+════════════════════════════════════════════════════════════════
+
+  No diamond signals today.
+
+
+  ── Rejected Signals (had live z, failed backtest) ──
+
+  KLAC / STX:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.07 SHORT | BT: 30 trades, WR 43%, PF 0.76x, P&L $-111
+       Gates: WR 43.3% < 50.0% | PF 0.76x < 1.3x | P&L $-111.33 ≤ $50 | Sharpe -0.53 < 0.5 | Max DD $-250 < $-200 | Sortino -0.80 < 0.5 | Avg P&L $-3.71 < $5.00 | Failed H2 P&L ($-141 < $20) | Low Recent Momentum: last 5 trades P&L=$-134 | Walk-Forward OOS: Sharpe=-3.65, P&L=$-213.00 | Low Recent Cointegration: ADF p=0.472 > 0.2
+
+  ADI / MU:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.18 SHORT | BT: 35 trades, WR 43%, PF 0.67x, P&L $-313
+       Gates: WR 42.9% < 50.0% | PF 0.67x < 1.3x | P&L $-312.74 ≤ $50 | Sharpe -0.54 < 0.5 | Max DD $-516 < $-200 | Sortino -0.59 < 0.5 | Avg P&L $-8.94 < $5.00 | Failed H1 P&L ($-102 < $20) | Failed H2 P&L ($-211 < $20) | Low Recent Momentum: last 5 trades P&L=$-362 | Walk-Forward OOS: Sharpe=-0.41, P&L=$-167.77
+
+  ADSK / PANW:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.07 SHORT | BT: 33 trades, WR 36%, PF 0.70x, P&L $-126
+       Gates: WR 36.4% < 50.0% | PF 0.70x < 1.3x | P&L $-126.23 ≤ $50 | Sharpe -0.70 < 0.5 | Sortino -1.28 < 0.5 | Avg P&L $-3.83 < $5.00 | Failed H1 P&L ($-112 < $20) | Failed H2 P&L ($-14 < $20) | Low Recent Cointegration: ADF p=0.426 > 0.2
+
+  DTE / DUK:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.36 SHORT | BT: 28 trades, WR 46%, PF 0.62x, P&L $-51
+       Gates: WR 46.4% < 50.0% | PF 0.62x < 1.3x | P&L $-51.11 ≤ $50 | Sharpe -0.89 < 0.5 | Sortino -1.37 < 0.5 | Avg P&L $-1.83 < $5.00 | Failed H1 P&L ($-10 < $20) | Failed H2 P&L ($-42 < $20) | Walk-Forward OOS: Sharpe=-0.59, P&L=$-7.28 | Low Recent Cointegration: ADF p=0.340 > 0.2
+
+  GILD / DGX:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.82 SHORT | BT: 29 trades, WR 38%, PF 0.67x, P&L $-115
+       Gates: WR 37.9% < 50.0% | PF 0.67x < 1.3x | P&L $-114.76 ≤ $50 | Sharpe -0.73 < 0.5 | Sortino -1.00 < 0.5 | Avg P&L $-3.96 < $5.00 | Failed H2 P&L ($-173 < $20) | Walk-Forward OOS: Sharpe=-1.04, P&L=$-28.67 | Low Recent Cointegration: ADF p=0.485 > 0.2
+
+  CDNS / MSFT:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.97 LONG | BT: 27 trades, WR 48%, PF 1.23x, P&L $+40
+       Gates: WR 48.1% < 50.0% | PF 1.23x < 1.3x | P&L $+39.54 ≤ $50 | Sharpe +0.33 < 0.5 | Sortino +0.49 < 0.5 | Avg P&L $+1.46 < $5.00 | Failed H1 P&L ($+4 < $20) | Low Recent Momentum: last 5 trades P&L=$-10
+
+  NI / PPL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.38 SHORT | BT: 28 trades, WR 36%, PF 0.41x, P&L $-85
+       Gates: WR 35.7% < 50.0% | PF 0.41x < 1.3x | P&L $-85.38 ≤ $50 | Sharpe -1.48 < 0.5 | Sortino -1.89 < 0.5 | Avg P&L $-3.05 < $5.00 | Failed H1 P&L ($-62 < $20) | Failed H2 P&L ($-23 < $20) | Low Recent Momentum: last 5 trades P&L=$-0 | Walk-Forward OOS: Sharpe=-1.62, P&L=$-19.49
+
+  ADI / WDC:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.40 SHORT | BT: 35 trades, WR 51%, PF 0.89x, P&L $-61
+       Gates: PF 0.89x < 1.3x | P&L $-61.35 ≤ $50 | Sharpe -0.21 < 0.5 | Max DD $-217 < $-200 | Sortino -0.21 < 0.5 | Avg P&L $-1.75 < $5.00 | Failed H1 P&L ($-109 < $20) | Low Recent Momentum: last 5 trades P&L=$-123
+
+  CHRW / CAT:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=+2.30 SHORT | BT: 31 trades, WR 45%, PF 1.29x, P&L $+67
+       Gates: WR 45.2% < 50.0% | PF 1.29x < 1.3x | Sharpe +0.43 < 0.5 | Avg P&L $+2.15 < $5.00 | Low Recent Momentum: last 5 trades P&L=$-16 | Low Recent Cointegration: ADF p=0.617 > 0.2
+
+  ALL / CME:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=-2.57 LONG | BT: 31 trades, WR 35%, PF 0.47x, P&L $-156
+       Gates: WR 35.5% < 50.0% | PF 0.47x < 1.3x | P&L $-156.38 ≤ $50 | Sharpe -1.20 < 0.5 | Sortino -1.53 < 0.5 | Avg P&L $-5.04 < $5.00 | Failed H1 P&L ($+11 < $20) | Failed H2 P&L ($-167 < $20) | Low Recent Momentum: last 5 trades P&L=$-28 | Walk-Forward OOS: Sharpe=-1.24, P&L=$-53.41 | Low Recent Correlation: ρ=0.30 < 0.65
+
+  NTRS / STT:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.09 LONG | BT: 28 trades, WR 36%, PF 0.52x, P&L $-99
+       Gates: WR 35.7% < 50.0% | PF 0.52x < 1.3x | P&L $-98.80 ≤ $50 | Sharpe -1.07 < 0.5 | Sortino -1.66 < 0.5 | Avg P&L $-3.53 < $5.00 | Failed H1 P&L ($-59 < $20) | Failed H2 P&L ($-40 < $20) | Low Recent Momentum: last 5 trades P&L=$-6
+
+  ADI / STX:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.42 SHORT | BT: 34 trades, WR 50%, PF 0.90x, P&L $-65
+       Gates: PF 0.90x < 1.3x | P&L $-64.53 ≤ $50 | Sharpe -0.17 < 0.5 | Max DD $-312 < $-200 | Sortino -0.17 < 0.5 | Avg P&L $-1.90 < $5.00 | Failed H1 P&L ($+17 < $20) | Failed H2 P&L ($-81 < $20) | Low Recent Momentum: last 5 trades P&L=$-128 | Walk-Forward OOS: Sharpe=-0.49, P&L=$-83.26
+
+  CBOE / TRV:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=+2.83 SHORT | BT: 37 trades, WR 38%, PF 0.30x, P&L $-259
+       Gates: WR 37.8% < 50.0% | PF 0.30x < 1.3x | P&L $-258.56 ≤ $50 | Sharpe -2.10 < 0.5 | Max DD $-291 < $-200 | Sortino -2.23 < 0.5 | Avg P&L $-6.99 < $5.00 | Failed H1 P&L ($-62 < $20) | Failed H2 P&L ($-196 < $20) | Low Recent Momentum: last 5 trades P&L=$-63 | Walk-Forward OOS: Sharpe=-2.69, P&L=$-148.34 | Low Recent Correlation: ρ=0.65 < 0.65
+
+  AEE / PPL:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.19 SHORT | BT: 30 trades, WR 40%, PF 0.44x, P&L $-82
+       Gates: WR 40.0% < 50.0% | PF 0.44x < 1.3x | P&L $-81.73 ≤ $50 | Sharpe -1.29 < 0.5 | Sortino -1.73 < 0.5 | Avg P&L $-2.72 < $5.00 | Failed H1 P&L ($-75 < $20) | Failed H2 P&L ($-7 < $20) | Walk-Forward OOS: Sharpe=-0.14, P&L=$-3.33 | Low Recent Cointegration: ADF p=0.756 > 0.2
+
+  INTC / MU:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.84 SHORT | BT: 33 trades, WR 55%, PF 0.81x, P&L $-134
+       Gates: PF 0.81x < 1.3x | P&L $-133.58 ≤ $50 | Sharpe -0.40 < 0.5 | Max DD $-331 < $-200 | Sortino -0.63 < 0.5 | Avg P&L $-4.05 < $5.00 | Failed H1 P&L ($-88 < $20) | Failed H2 P&L ($-46 < $20)
+
+  GNRC / HUBB:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.64 SHORT | BT: 30 trades, WR 43%, PF 1.63x, P&L $+228
+       Gates: WR 43.3% < 50.0% | Failed H1 P&L ($+10 < $20) | Low Recent Cointegration: ADF p=0.656 > 0.2
+
+  ES / FE:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.80 SHORT | BT: 41 trades, WR 32%, PF 0.52x, P&L $-174
+       Gates: WR 31.7% < 50.0% | PF 0.52x < 1.3x | P&L $-173.55 ≤ $50 | Sharpe -1.16 < 0.5 | Max DD $-264 < $-200 | Sortino -1.39 < 0.5 | Avg P&L $-4.23 < $5.00 | Failed H2 P&L ($-208 < $20) | Low Recent Momentum: last 5 trades P&L=$-54 | Walk-Forward OOS: Sharpe=-3.56, P&L=$-146.34
+
+  FTV / IEX:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.07 LONG | BT: 28 trades, WR 57%, PF 0.99x, P&L $-1
+       Gates: PF 0.99x < 1.3x | P&L $-1.36 ≤ $50 | Sharpe -0.01 < 0.5 | Sortino -0.01 < 0.5 | Avg P&L $-0.05 < $5.00 | Failed H1 P&L ($-40 < $20) | Low Recent Momentum: last 5 trades P&L=$-2 | Low Recent Cointegration: ADF p=0.459 > 0.2
+
+  ALL / NDAQ:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=+3.05 SHORT | BT: 26 trades, WR 46%, PF 0.62x, P&L $-156
+       Gates: WR 46.2% < 50.0% | PF 0.62x < 1.3x | P&L $-155.80 ≤ $50 | Sharpe -0.75 < 0.5 | Max DD $-214 < $-200 | Sortino -0.79 < 0.5 | Avg P&L $-5.99 < $5.00 | Failed H1 P&L ($-99 < $20) | Failed H2 P&L ($-57 < $20) | Low Recent Momentum: last 5 trades P&L=$-144 | Walk-Forward OOS: Sharpe=-1.70, P&L=$-120.98 | Low Recent Cointegration: ADF p=0.399 > 0.2 | Low Recent Correlation: ρ=-0.40 < 0.65
+
+  ADM / HSY:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.91 SHORT | BT: 37 trades, WR 46%, PF 0.82x, P&L $-65
+       Gates: WR 45.9% < 50.0% | PF 0.82x < 1.3x | P&L $-64.82 ≤ $50 | Sharpe -0.36 < 0.5 | Sortino -0.65 < 0.5 | Avg P&L $-1.75 < $5.00 | Failed H2 P&L ($-157 < $20) | Low Recent Momentum: last 5 trades P&L=$-46 | Walk-Forward OOS: Sharpe=-2.64, P&L=$-133.59 | Low Recent Cointegration: ADF p=0.248 > 0.2
+
+  ATO / EVRG:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.24 LONG | BT: 37 trades, WR 38%, PF 0.68x, P&L $-59
+       Gates: WR 37.8% < 50.0% | PF 0.68x < 1.3x | P&L $-59.41 ≤ $50 | Sharpe -0.64 < 0.5 | Sortino -0.96 < 0.5 | Avg P&L $-1.61 < $5.00 | Failed H1 P&L ($-94 < $20) | Walk-Forward OOS: Sharpe=-0.67, P&L=$-23.29 | Low Recent Cointegration: ADF p=0.673 > 0.2
+
+  DE / WM:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=+2.27 SHORT | BT: 30 trades, WR 67%, PF 2.04x, P&L $+155
+       Gates: Low Recent Cointegration: ADF p=0.463 > 0.2
+
+  ABT / BSX:
+    ✗  REJECTED: Failed Cointegration / ADF
+       Live z=+2.77 SHORT | BT: 30 trades, WR 47%, PF 1.37x, P&L $+68
+       Gates: WR 46.7% < 50.0% | Sharpe +0.44 < 0.5 | Avg P&L $+2.25 < $5.00 | Low Recent Cointegration: ADF p=0.245 > 0.2
+
+  ALL / CBOE:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=-2.77 LONG | BT: 35 trades, WR 40%, PF 0.32x, P&L $-231
+       Gates: WR 40.0% < 50.0% | PF 0.32x < 1.3x | P&L $-230.77 ≤ $50 | Sharpe -1.76 < 0.5 | Max DD $-238 < $-200 | Sortino -1.78 < 0.5 | Avg P&L $-6.59 < $5.00 | Failed H1 P&L ($-90 < $20) | Failed H2 P&L ($-140 < $20) | Low Recent Momentum: last 5 trades P&L=$-59 | Walk-Forward OOS: Sharpe=-0.67, P&L=$-36.74 | Low Recent Correlation: ρ=0.19 < 0.65
+
+  BG / HSY:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.85 SHORT | BT: 28 trades, WR 46%, PF 1.26x, P&L $+97
+       Gates: WR 46.4% < 50.0% | PF 1.26x < 1.3x | Sharpe +0.36 < 0.5 | Avg P&L $+3.45 < $5.00 | Failed H2 P&L ($-134 < $20) | Low Recent Momentum: last 5 trades P&L=$-6 | Walk-Forward OOS: Sharpe=-1.35, P&L=$-151.02 | Low Recent Cointegration: ADF p=0.368 > 0.2
+
+  INTC / WDC:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.34 SHORT | BT: 33 trades, WR 42%, PF 0.41x, P&L $-500
+       Gates: WR 42.4% < 50.0% | PF 0.41x < 1.3x | P&L $-500.36 ≤ $50 | Sharpe -1.65 < 0.5 | Max DD $-530 < $-200 | Sortino -1.90 < 0.5 | Avg P&L $-15.16 < $5.00 | Failed H1 P&L ($-95 < $20) | Failed H2 P&L ($-405 < $20) | Low Recent Momentum: last 5 trades P&L=$-83 | Walk-Forward OOS: Sharpe=-2.22, P&L=$-228.86
+
+  EQR / EXR:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=-2.09 LONG | BT: 29 trades, WR 17%, PF 0.27x, P&L $-205
+       Gates: WR 17.2% < 50.0% | PF 0.27x < 1.3x | P&L $-204.63 ≤ $50 | Sharpe -2.52 < 0.5 | Sortino -3.81 < 0.5 | Avg P&L $-7.06 < $5.00 | Failed H1 P&L ($-67 < $20) | Failed H2 P&L ($-138 < $20) | Low Recent Momentum: last 5 trades P&L=$-43 | Walk-Forward OOS: Sharpe=-1.85, P&L=$-59.90 | Low Recent Correlation: ρ=0.57 < 0.65
+
+  CVS / MCK:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=-2.78 LONG | BT: 21 trades, WR 43%, PF 1.03x, P&L $+13
+       Gates: WR 42.9% < 50.0% | PF 1.03x < 1.3x | P&L $+12.77 ≤ $50 | Sharpe +0.04 < 0.5 | Sortino +0.06 < 0.5 | Avg P&L $+0.61 < $5.00 | Failed H2 P&L ($-35 < $20) | Low Recent Momentum: last 5 trades P&L=$-74 | Walk-Forward OOS: Sharpe=-2.42, P&L=$-92.72 | Low Recent Correlation: ρ=-0.09 < 0.65
+
+  CIEN / KEYS:
+    ✗  REJECTED: Failed Walk-Forward OOS
+       Live z=-2.15 LONG | BT: 45 trades, WR 58%, PF 1.59x, P&L $+273
+       Gates: Walk-Forward OOS: Sharpe=-1.74, P&L=$-78.08
+
+  LNT / DUK:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.12 SHORT | BT: 34 trades, WR 26%, PF 0.27x, P&L $-163
+       Gates: WR 26.5% < 50.0% | PF 0.27x < 1.3x | P&L $-162.84 ≤ $50 | Sharpe -2.46 < 0.5 | Sortino -2.93 < 0.5 | Avg P&L $-4.79 < $5.00 | Failed H1 P&L ($-87 < $20) | Failed H2 P&L ($-76 < $20) | Low Recent Momentum: last 5 trades P&L=$-18 | Walk-Forward OOS: Sharpe=-0.58, P&L=$-8.90
+
+  CBOE / L:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=+2.89 SHORT | BT: 42 trades, WR 40%, PF 0.85x, P&L $-49
+       Gates: WR 40.5% < 50.0% | PF 0.85x < 1.3x | P&L $-49.43 ≤ $50 | Sharpe -0.28 < 0.5 | Sortino -0.44 < 0.5 | Avg P&L $-1.18 < $5.00 | Failed H2 P&L ($-117 < $20) | Low Recent Momentum: last 5 trades P&L=$-16 | Walk-Forward OOS: Sharpe=-2.57, P&L=$-99.15 | Low Recent Correlation: ρ=0.56 < 0.65
+
+  INTC / KLAC:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.31 SHORT | BT: 36 trades, WR 39%, PF 0.39x, P&L $-604
+       Gates: WR 38.9% < 50.0% | PF 0.39x < 1.3x | P&L $-603.87 ≤ $50 | Sharpe -1.64 < 0.5 | Max DD $-661 < $-200 | Sortino -1.86 < 0.5 | Avg P&L $-16.77 < $5.00 | Failed H1 P&L ($-454 < $20) | Failed H2 P&L ($-150 < $20) | Low Recent Momentum: last 5 trades P&L=$-65 | Walk-Forward OOS: Sharpe=-3.61, P&L=$-217.98
+
+  AMAT / TER:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.31 SHORT | BT: 29 trades, WR 45%, PF 0.90x, P&L $-51
+       Gates: WR 44.8% < 50.0% | PF 0.90x < 1.3x | P&L $-51.15 ≤ $50 | Sharpe -0.16 < 0.5 | Max DD $-213 < $-200 | Sortino -0.20 < 0.5 | Avg P&L $-1.76 < $5.00 | Failed H1 P&L ($-166 < $20) | Low Recent Momentum: last 5 trades P&L=$-139 | Walk-Forward OOS: Sharpe=-0.70, P&L=$-85.02
+
+  AEE / NI:
+    ✗  REJECTED: Failed Split-Half
+       Live z=-2.99 LONG | BT: 32 trades, WR 50%, PF 0.65x, P&L $-36
+       Gates: PF 0.65x < 1.3x | P&L $-36.28 ≤ $50 | Sharpe -0.77 < 0.5 | Sortino -1.00 < 0.5 | Avg P&L $-1.13 < $5.00 | Failed H1 P&L ($-13 < $20) | Failed H2 P&L ($-24 < $20) | Low Recent Momentum: last 5 trades P&L=$-12 | Walk-Forward OOS: Sharpe=-2.78, P&L=$-37.29
+
+  ALB / DD:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.01 SHORT | BT: 32 trades, WR 41%, PF 0.67x, P&L $-207
+       Gates: WR 40.6% < 50.0% | PF 0.67x < 1.3x | P&L $-207.25 ≤ $50 | Sharpe -0.74 < 0.5 | Max DD $-354 < $-200 | Sortino -1.04 < 0.5 | Avg P&L $-6.48 < $5.00 | Failed H2 P&L ($-299 < $20) | Low Recent Momentum: last 5 trades P&L=$-42 | Walk-Forward OOS: Sharpe=-3.63, P&L=$-303.30 | Low Recent Cointegration: ADF p=0.437 > 0.2
+
+  INTC / STX:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.26 SHORT | BT: 31 trades, WR 45%, PF 0.44x, P&L $-650
+       Gates: WR 45.2% < 50.0% | PF 0.44x < 1.3x | P&L $-649.67 ≤ $50 | Sharpe -1.37 < 0.5 | Max DD $-727 < $-200 | Sortino -1.66 < 0.5 | Avg P&L $-20.96 < $5.00 | Failed H1 P&L ($-186 < $20) | Failed H2 P&L ($-463 < $20) | Walk-Forward OOS: Sharpe=-2.04, P&L=$-118.75
+
+  INTC / TER:
+    ✗  REJECTED: Correlation Breakdown
+       Live z=+2.28 SHORT | BT: 32 trades, WR 28%, PF 0.36x, P&L $-686
+       Gates: WR 28.1% < 50.0% | PF 0.36x < 1.3x | P&L $-685.60 ≤ $50 | Sharpe -1.69 < 0.5 | Max DD $-623 < $-200 | Sortino -2.44 < 0.5 | Avg P&L $-21.43 < $5.00 | Failed H1 P&L ($-63 < $20) | Failed H2 P&L ($-623 < $20) | Low Recent Momentum: last 5 trades P&L=$-313 | Walk-Forward OOS: Sharpe=-3.71, P&L=$-439.30 | Low Recent Correlation: ρ=0.64 < 0.65
+
+  ABT / PODD:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+2.17 SHORT | BT: 38 trades, WR 47%, PF 1.20x, P&L $+75
+       Gates: WR 47.4% < 50.0% | PF 1.20x < 1.3x | Sharpe +0.36 < 0.5 | Max DD $-228 < $-200 | Avg P&L $+1.96 < $5.00 | Failed H2 P&L ($-162 < $20) | Walk-Forward OOS: Sharpe=-0.47, P&L=$-19.64 | Low Recent Cointegration: ADF p=0.526 > 0.2
+
+  INTC / LRCX:
+    ✗  REJECTED: Failed Split-Half
+       Live z=+3.03 SHORT | BT: 38 trades, WR 37%, PF 0.43x, P&L $-479
+       Gates: WR 36.8% < 50.0% | PF 0.43x < 1.3x | P&L $-478.87 ≤ $50 | Sharpe -1.51 < 0.5 | Max DD $-422 < $-200 | Sortino -1.87 < 0.5 | Avg P&L $-12.60 < $5.00 | Failed H1 P&L ($-129 < $20) | Failed H2 P&L ($-350 < $20) | Low Recent Momentum: last 5 trades P&L=$-140 | Walk-Forward OOS: Sharpe=-3.88, P&L=$-266.75
+
+
+  ✓ system_log.csv updated (0 diamond, 39 rejected)
+
+  ════════════════════════════════════════════════════════════
+    DAILY RESULTS  (Standard + Split-Half + ADF90 + Momentum)
+  ════════════════════════════════════════════════════════════
+    Pairs scanned   : 150
+    No live signal  : 111
+    Download errors : 0
+    ◆ Diamond       : 0
+    ✗ Rejected      : 39
+
+  No diamond signals today.
+
+  ── Rejected (39 pairs: had live signal, failed regime gates) ──
+    ✗   KLAC/STX     SHORT  z=+2.07  WR=43%  PF=0.76x  P&L=$-111
+    ✗    ADI/MU      SHORT  z=+3.18  WR=43%  PF=0.67x  P&L=$-313
+    ✗   ADSK/PANW    SHORT  z=+2.07  WR=36%  PF=0.70x  P&L=$-126
+    ✗    DTE/DUK     SHORT  z=+2.36  WR=46%  PF=0.62x  P&L=$-51
+    ✗   GILD/DGX     SHORT  z=+2.82  WR=38%  PF=0.67x  P&L=$-115
+    ✗   CDNS/MSFT     LONG  z=-2.97  WR=48%  PF=1.23x  P&L=$+40
+    ✗     NI/PPL     SHORT  z=+2.38  WR=36%  PF=0.41x  P&L=$-85
+    ✗    ADI/WDC     SHORT  z=+2.40  WR=51%  PF=0.89x  P&L=$-61
+    ✗   CHRW/CAT     SHORT  z=+2.30  WR=45%  PF=1.29x  P&L=$+67
+    ✗    ALL/CME      LONG  z=-2.57  WR=35%  PF=0.47x  P&L=$-156
+    ✗   NTRS/STT      LONG  z=-2.09  WR=36%  PF=0.52x  P&L=$-99
+    ✗    ADI/STX     SHORT  z=+2.42  WR=50%  PF=0.90x  P&L=$-65
+    ✗   CBOE/TRV     SHORT  z=+2.83  WR=38%  PF=0.30x  P&L=$-259
+    ✗    AEE/PPL     SHORT  z=+2.19  WR=40%  PF=0.44x  P&L=$-82
+    ✗   INTC/MU      SHORT  z=+2.84  WR=55%  PF=0.81x  P&L=$-134
+    ✗   GNRC/HUBB    SHORT  z=+2.64  WR=43%  PF=1.63x  P&L=$+228
+    ✗     ES/FE      SHORT  z=+2.80  WR=32%  PF=0.52x  P&L=$-174
+    ✗    FTV/IEX      LONG  z=-2.07  WR=57%  PF=0.99x  P&L=$-1
+    ✗    ALL/NDAQ    SHORT  z=+3.05  WR=46%  PF=0.62x  P&L=$-156
+    ✗    ADM/HSY     SHORT  z=+2.91  WR=46%  PF=0.82x  P&L=$-65
+    ✗    ATO/EVRG     LONG  z=-2.24  WR=38%  PF=0.68x  P&L=$-59
+    ✗     DE/WM      SHORT  z=+2.27  WR=67%  PF=2.04x  P&L=$+155
+    ✗    ABT/BSX     SHORT  z=+2.77  WR=47%  PF=1.37x  P&L=$+68
+    ✗    ALL/CBOE     LONG  z=-2.77  WR=40%  PF=0.32x  P&L=$-231
+    ✗     BG/HSY     SHORT  z=+2.85  WR=46%  PF=1.26x  P&L=$+97
+    ✗   INTC/WDC     SHORT  z=+2.34  WR=42%  PF=0.41x  P&L=$-500
+    ✗    EQR/EXR      LONG  z=-2.09  WR=17%  PF=0.27x  P&L=$-205
+    ✗    CVS/MCK      LONG  z=-2.78  WR=43%  PF=1.03x  P&L=$+13
+    ✗   CIEN/KEYS     LONG  z=-2.15  WR=58%  PF=1.59x  P&L=$+273
+    ✗    LNT/DUK     SHORT  z=+2.12  WR=26%  PF=0.27x  P&L=$-163
+    ✗   CBOE/L       SHORT  z=+2.89  WR=40%  PF=0.85x  P&L=$-49
+    ✗   INTC/KLAC    SHORT  z=+2.31  WR=39%  PF=0.39x  P&L=$-604
+    ✗   AMAT/TER     SHORT  z=+2.31  WR=45%  PF=0.90x  P&L=$-51
+    ✗    AEE/NI       LONG  z=-2.99  WR=50%  PF=0.65x  P&L=$-36
+    ✗    ALB/DD      SHORT  z=+2.01  WR=41%  PF=0.67x  P&L=$-207
+    ✗   INTC/STX     SHORT  z=+2.26  WR=45%  PF=0.44x  P&L=$-650
+    ✗   INTC/TER     SHORT  z=+2.28  WR=28%  PF=0.36x  P&L=$-686
+    ✗    ABT/PODD    SHORT  z=+2.17  WR=47%  PF=1.20x  P&L=$+75
+    ✗   INTC/LRCX    SHORT  z=+3.03  WR=37%  PF=0.43x  P&L=$-479
+
+  --- PHASE 3 — Momentum Strategy ---
+
+  VIX: 27.4  |  Pairs diamonds: 0  |  Mode: complement
+
+------------------------------------------------------------
+  MOMENTUM SCANNER
+  Run date : 2026-04-07
+------------------------------------------------------------
+
+[STEP 1] Building universe ...
+[STEP 1] Scraped 503 S&P 500 tickers + sectors from Wikipedia.
+[STEP 1b] Scraped 101 Nasdaq-100 tickers + sectors from Wikipedia.
+  [SCAN] Universe: 517 unique tickers (S&P 500 + Nasdaq-100).
+
+[STEP 2] Downloading OHLCV data ...
+  [SCAN] Downloading OHLCV for 517 tickers (2024-04-07 -> 2026-04-07) in batches of 50 ...
+  [DATA] Batch 1/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 2/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 3/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 4/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 5/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 6/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 7/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 8/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 9/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 10/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 11/11 (17 tickers) ... OK (17 cols)
+
+[STEP 3] Cleaning data ...
+[STEP 3] Dropped 2 tickers (>10% missing).  Remaining: 515 tickers.
+
+  [DATA] 515 tickers after cleaning.
+
+[STEP 4] Checking market regime ...
+  [REGIME] Fetching S&P 500 and VIX data ...
+  [REGIME] S&P 500 price=6611.8  EMA50=6712.2  EMA200=6590.7  above_200EMA=Y
+  [REGIME] VIX=27.66  scale=1.00  -> ELEVATED
+  [REGIME] VIX overridden to 27.44
+
+[STEP 5] Computing blended momentum scores ...
+  [SCAN] Momentum scores computed for 515 tickers.
+
+[STEP 6] Computing technical indicators ...
+  [SCAN] Technical indicators computed for 515 tickers.
+
+[STEP 7] Merging candidates ...
+  [SCAN] 515 candidates before entry filters.
+
+[STEP 8] Applying entry filters ...
+  [FILTER] price >= 10.0: removed 1 (514 remain)
+  [FILTER] avg_vol_20d >= 500,000: removed 19 (495 remain)
+  [FILTER] top 10% mom_score: removed 445 (50 remain)
+  [FILTER] 52w_high_pct >= 0.9: removed 18 (32 remain)
+  [FILTER] vol_ratio >= 1.2: removed 26 (6 remain)
+  [FILTER] ADX >= 20: removed 2 (4 remain)
+  [FILTER] 515 -> 4 after all filters.
+
+  [SCAN] Exported 4 candidates -> C:\Users\User\Desktop\adf bot\momentum_candidates.csv
+
+------------------------------------------------------------
+  MOMENTUM SCAN COMPLETE
+  Regime   : ELEVATED
+  VIX      : 27.440000534057617
+  VIX scale: 1.00
+  Candidates passed: 4
+
+  Top 5 momentum candidates:
+  Ticker   Sector                        MomScore    RSI    ADX
+  -------  ---------------------------  --------- ------ ------
+  HAL      Energy                           0.442   56.1   22.6
+  VLO      Energy                           0.385   61.4   32.0
+  APA      Energy                           0.371   73.4   49.2
+  CF       Materials                        0.366   60.8   30.0
+------------------------------------------------------------
+  [REGIME] Fetching S&P 500 and VIX data ...
+  [REGIME] S&P 500 price=6611.8  EMA50=6712.2  EMA200=6590.7  above_200EMA=Y
+  [REGIME] VIX=27.71  scale=1.00  -> ELEVATED
+  [MOM-SIG] Processing 4 momentum candidates ...
+  ------------------------------------------------------------
+    [REJECT]     VLO  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+    [REJECT]      CF  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+  ------------------------------------------------------------
+  [MOM-SIG] Results: 0 diamonds, 2 rejected, 2 no signal, 0 errors
+
+  ============================================================
+    MOMENTUM RESULTS
+  ============================================================
+    Candidates      : 4
+    No live signal  : 2
+    Errors          : 0
+    * Mom Diamond   : 0
+    x Rejected      : 2
+
+  -- Momentum Rejected (2) --
+    x    VLO  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+    x     CF  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+
+  --- PHASE 4 — Bear Market Module ---
+
+  VIX: 27.4 > 25.0 -- bear module active
+
+
+  [BEAR] =======================================================
+  [BEAR] Bear Market Signal Engine
+  [BEAR] 2026-04-07 20:09:39
+  [BEAR] =======================================================
+
+  [BEAR] Regime: ELEVATED
+  [BEAR] SPY: $658.93  50SMA: $674.40  200SMA: $659.38
+  [BEAR] SPY 20d return: -1.7%
+  [BEAR] VIX: 27.4  Scale: 1.00
+
+  [BOUNCE] --------------------------------------------------
+  [BOUNCE] Checking RSI(2) + IBS on SPY ...
+  [BOUNCE] No signal: rsi_oversold, ibs_low
+
+  [BOUNCE] --------------------------------------------------
+  [BOUNCE] Checking RSI(2) + IBS on QQQ ...
+  [BOUNCE] No signal: rsi_oversold, ibs_low
+
+  [BOUNCE] --------------------------------------------------
+  [BOUNCE] Checking RSI(2) + IBS on IWM ...
+  [BOUNCE] No signal: rsi_oversold, ibs_low
+
+  [SHORT] --------------------------------------------------
+  [SHORT] Checking inverse ETF trend signal (SH) ...
+  [SHORT] No signal: negative_momentum
+
+  [BEAR] =======================================================
+  [BEAR] Results: 0 bounce diamond(s), 0 short diamond(s)
+  [BEAR] =======================================================
+
+
+  ============================================================
+    BEAR MODULE RESULTS
+  ============================================================
+    Bounce diamonds : 0
+    Bounce rejected : 0
+    Short diamonds  : 0
+    Short rejected  : 0
+
+
+  Log     → C:\Users\User\Desktop\adf bot\logs\2026-04-07_200603.log
+  Journal → C:\Users\User\Desktop\adf bot\system_log.csv
+  Errors  → C:\Users\User\Desktop\adf bot\error.log
+

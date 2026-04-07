@@ -1,0 +1,77 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-04-07 21:16:26                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 150
+    Scanner Age      : 0d old
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=20d
+    Quality Gates    : WR>55.0% | PF>1.5x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  ═══ PHASE 0 — Portfolio Update ═══
+
+  No positions closed today.
+
+  -- Live Portfolio -------------------------------------------
+    No open positions.
+
+    Positions open   : 0 / 10
+    Total live P&L   : $+0.00
+    Peak P&L         : $+0.00
+    System drawdown  : $+0.00  (limit $-1500)
+  ------------------------------------------------------------
+  --- PHASE 0b — Momentum Portfolio Update ---
+
+  No momentum positions closed today.
+
+  -- Momentum Portfolio ---------------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  --- PHASE 0c — Bear Portfolio Update ---
+
+  No bear positions closed today.
+
+  -- Bear Module Portfolio ------------------------------------
+    Open positions : 0 / 2
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  Scanner skipped (candidates 0d old, refresh every 3d). Use --scan to force.
+
+  ═══ PHASE 2 — Master Signal (live + backtest) ═══
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
+║  Run : 2026-04-07 21:16:28                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+  Loaded 150 pairs from daily_candidates.csv
+  Strategy: β=60d | z=20d | Entry |z|>2.0 | Exit z→0.0 | Stop |z|>3.0 | Hold≤20d
+  Quality gates: WR>55.0% | PF>1.5x | P&L>$0
+  Slippage: 0.15% on notional (entry+exit, both legs) | Capital: $1,000/trade
+  Execution: 1-bar delay (signal@close → trade@next close)
+
+
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ⚠  VIX REGIME BLOCK: 26.0 > 25.0
+  Signals shown but flagged BLOCKED. No new entries advised.
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  [1/150]        ALL / GL  —  No signal  (|z| = 1.42)
+  [2/150]       PPL / WEC  
+  ✗ Master signal failed: [Errno 22] Invalid argument
+Exception ignored on flushing sys.stdoutException ignored in sys.unraisablehook: <built-in function unraisablehook>

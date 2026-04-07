@@ -1,0 +1,847 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-03-24 01:00:48                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 150
+    Scanner Age      : 3d old
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=30d
+    Quality Gates    : WR>50.0% | PF>1.3x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  ═══ PHASE 0 — Portfolio Update ═══
+
+  No positions closed today.
+
+  -- Live Portfolio -------------------------------------------
+    No open positions.
+
+    Positions open   : 0 / 10
+    Total live P&L   : $+0.00
+    Peak P&L         : $+0.00
+    System drawdown  : $+0.00  (limit $-1500)
+  ------------------------------------------------------------
+
+  ═══ PHASE 1 — Refreshing Candidates (nightly_scanner) ═══
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  NIGHTLY SCANNER v2 — Cointegration + Sector Filtering      ║
+║  Run : 2026-03-24 01:00:49                                ║
+╚══════════════════════════════════════════════════════════════╝
+
+[STEP 1] Wikipedia scrape failed (HTTPSConnectionPool(host='en.wikipedia.org', port=443): Max retries exceeded with url: /wiki/List_of_S%26P_500_companies (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); using hardcoded list.
+[STEP 1] Using hardcoded list of 366 tickers with sectors.
+[STEP 1b] Using hardcoded list of 67 Nasdaq-100 tickers.
+[STEP 1] Using hardcoded list of 366 tickers with sectors.
+[STEP 1c] Wikipedia changes scrape failed (HTTPSConnectionPool(host='en.wikipedia.org', port=443): Max retries exceeded with url: /wiki/List_of_S%26P_500_companies (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); skipping historical constituents.
+[STEP 1] Historical constituents: 366 current + 0 historical = 366 total tickers.
+[STEP 1b] Wikipedia Nasdaq-100 scrape failed (HTTPSConnectionPool(host='en.wikipedia.org', port=443): Max retries exceeded with url: /wiki/Nasdaq-100 (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); using hardcoded list.
+[STEP 1b] Using hardcoded list of 67 Nasdaq-100 tickers.
+[STEP 1b] Combined universe: 374 unique tickers (S&P 500 + Nasdaq-100).
+
+
+[STEP 2] Downloading 374 tickers  (2024-03-24 → 2026-03-24) in batches of 50 …
+  Batch 1/8  (50 tickers) … Failed to get ticker 'BK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'INTU' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'ADI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ADI: possibly delisted; no timezone found
+Failed to get ticker 'PNC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'MS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PNC: possibly delisted; no timezone found
+$MS: possibly delisted; no timezone found
+Failed to get ticker 'USB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$USB: possibly delisted; no timezone found
+Failed to get ticker 'HBAN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HBAN: possibly delisted; no timezone found
+Failed to get ticker 'BLK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BLK: possibly delisted; no timezone found
+Failed to get ticker 'BRK-B' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BRK-B: possibly delisted; no timezone found
+Failed to get ticker 'AMAT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AMAT: possibly delisted; no timezone found
+Failed to get ticker 'BAC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BAC: possibly delisted; no timezone found
+Failed to get ticker 'CMA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CMA: possibly delisted; no timezone found
+Failed to get ticker 'AMD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AMD: possibly delisted; no timezone found
+Failed to get ticker 'AXP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AXP: possibly delisted; no timezone found
+Failed to get ticker 'HPQ' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HPQ: possibly delisted; no timezone found
+Failed to get ticker 'GS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GS: possibly delisted; no timezone found
+Failed to get ticker 'ZION' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ZION: possibly delisted; no timezone found
+Failed to get ticker 'C' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$C: possibly delisted; no timezone found
+Failed to get ticker 'WFC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WFC: possibly delisted; no timezone found
+Failed to get ticker 'ADBE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ADBE: possibly delisted; no timezone found
+Failed to get ticker 'CFG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CFG: possibly delisted; no timezone found
+Failed to get ticker 'STT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$STT: possibly delisted; no timezone found
+Failed to get ticker 'ENPH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ENPH: possibly delisted; no timezone found
+Failed to get ticker 'RF' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$RF: possibly delisted; no timezone found
+Failed to get ticker 'APH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$APH: possibly delisted; no timezone found
+Failed to get ticker 'KEY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KEY: possibly delisted; no timezone found
+Failed to get ticker 'SCHW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SCHW: possibly delisted; no timezone found
+Failed to get ticker 'ACN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ACN: possibly delisted; no timezone found
+Failed to get ticker 'TFC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TFC: possibly delisted; no timezone found
+Failed to get ticker 'GPN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GPN: possibly delisted; no timezone found
+Failed to get ticker 'JPM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$JPM: possibly delisted; no timezone found
+Failed to get ticker 'CDNS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CDNS: possibly delisted; no timezone found
+Failed to get ticker 'AVGO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'CRM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AVGO: possibly delisted; no timezone found
+$CRM: possibly delisted; no timezone found
+Failed to get ticker 'FTNT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FTNT: possibly delisted; no timezone found
+Failed to get ticker 'CTSH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CTSH: possibly delisted; no timezone found
+Failed to get ticker 'HPE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HPE: possibly delisted; no timezone found
+Failed to get ticker 'FISV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FISV: possibly delisted; no timezone found
+Failed to get ticker 'COF' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$COF: possibly delisted; no timezone found
+Failed to get ticker 'AAPL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AAPL: possibly delisted; no timezone found
+Failed to get ticker 'ANET' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ANET: possibly delisted; no timezone found
+Failed to get ticker 'SYF' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SYF: possibly delisted; no timezone found
+Failed to get ticker 'IBM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IBM: possibly delisted; no timezone found
+Failed to get ticker 'FFIV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FFIV: possibly delisted; no timezone found
+Failed to get ticker 'IT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IT: possibly delisted; no timezone found
+Failed to get ticker 'FITB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FITB: possibly delisted; no timezone found
+Failed to get ticker 'CSCO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'KEYS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CSCO: possibly delisted; no timezone found
+$KEYS: possibly delisted; no timezone found
+Failed to get ticker 'INTC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$INTC: possibly delisted; no timezone found
+Failed to get ticker 'NTRS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NTRS: possibly delisted; no timezone found
+
+50 Failed downloads:
+['BK', 'INTU']: ProxyError('Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+['ADI', 'PNC', 'MS', 'USB', 'HBAN', 'BLK', 'BRK-B', 'AMAT', 'BAC', 'CMA', 'AMD', 'AXP', 'HPQ', 'GS', 'ZION', 'C', 'WFC', 'ADBE', 'CFG', 'STT', 'ENPH', 'RF', 'APH', 'KEY', 'SCHW', 'ACN', 'TFC', 'GPN', 'JPM', 'CDNS', 'AVGO', 'CRM', 'FTNT', 'CTSH', 'HPE', 'FISV', 'COF', 'AAPL', 'ANET', 'SYF', 'IBM', 'FFIV', 'IT', 'FITB', 'CSCO', 'KEYS', 'INTC', 'NTRS']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 2/8  (50 tickers) … Failed to get ticker 'PNW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PNW: possibly delisted; no timezone found
+Failed to get ticker 'SRE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SRE: possibly delisted; no timezone found
+Failed to get ticker 'SNPS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SNPS: possibly delisted; no timezone found
+Failed to get ticker 'SO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SO: possibly delisted; no timezone found
+Failed to get ticker 'ATO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ATO: possibly delisted; no timezone found
+Failed to get ticker 'TEL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TEL: possibly delisted; no timezone found
+Failed to get ticker 'DTE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DTE: possibly delisted; no timezone found
+Failed to get ticker 'PEG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PEG: possibly delisted; no timezone found
+Failed to get ticker 'D' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$D: possibly delisted; no timezone found
+Failed to get ticker 'PANW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PANW: possibly delisted; no timezone found
+Failed to get ticker 'LNT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LNT: possibly delisted; no timezone found
+Failed to get ticker 'XEL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$XEL: possibly delisted; no timezone found
+Failed to get ticker 'AES' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AES: possibly delisted; no timezone found
+Failed to get ticker 'WDC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WDC: possibly delisted; no timezone found
+Failed to get ticker 'MSFT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MSFT: possibly delisted; no timezone found
+Failed to get ticker 'NXPI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NXPI: possibly delisted; no timezone found
+Failed to get ticker 'MCHP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MCHP: possibly delisted; no timezone found
+Failed to get ticker 'ED' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ED: possibly delisted; no timezone found
+Failed to get ticker 'EIX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EIX: possibly delisted; no timezone found
+Failed to get ticker 'ORCL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ORCL: possibly delisted; no timezone found
+Failed to get ticker 'AEE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AEE: possibly delisted; no timezone found
+Failed to get ticker 'QCOM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$QCOM: possibly delisted; no timezone found
+Failed to get ticker 'ABBV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ABBV: possibly delisted; no timezone found
+Failed to get ticker 'LRCX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LRCX: possibly delisted; no timezone found
+Failed to get ticker 'AEP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AEP: possibly delisted; no timezone found
+Failed to get ticker 'TXN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TXN: possibly delisted; no timezone found
+Failed to get ticker 'MA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MA: possibly delisted; no timezone found
+Failed to get ticker 'CEG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CEG: possibly delisted; no timezone found
+Failed to get ticker 'CMS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CMS: possibly delisted; no timezone found
+Failed to get ticker 'ON' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ON: possibly delisted; no timezone found
+Failed to get ticker 'FE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FE: possibly delisted; no timezone found
+Failed to get ticker 'PPL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'MU' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PPL: possibly delisted; no timezone found
+$MU: possibly delisted; no timezone found
+Failed to get ticker 'MSI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MSI: possibly delisted; no timezone found
+Failed to get ticker 'PYPL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PYPL: possibly delisted; no timezone found
+Failed to get ticker 'V' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$V: possibly delisted; no timezone found
+Failed to get ticker 'PCG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PCG: possibly delisted; no timezone found
+Failed to get ticker 'NRG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NRG: possibly delisted; no timezone found
+Failed to get ticker 'CNP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CNP: possibly delisted; no timezone found
+Failed to get ticker 'KLAC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KLAC: possibly delisted; no timezone found
+Failed to get ticker 'NI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NI: possibly delisted; no timezone found
+Failed to get ticker 'WEC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WEC: possibly delisted; no timezone found
+Failed to get ticker 'MPWR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MPWR: possibly delisted; no timezone found
+Failed to get ticker 'NEE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NEE: possibly delisted; no timezone found
+Failed to get ticker 'ETR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ETR: possibly delisted; no timezone found
+Failed to get ticker 'EVRG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EVRG: possibly delisted; no timezone found
+Failed to get ticker 'ES' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ES: possibly delisted; no timezone found
+Failed to get ticker 'EXC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EXC: possibly delisted; no timezone found
+Failed to get ticker 'STX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$STX: possibly delisted; no timezone found
+Failed to get ticker 'DUK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DUK: possibly delisted; no timezone found
+
+50 Failed downloads:
+['PNW', 'SRE', 'SNPS', 'SO', 'ATO', 'TEL', 'DTE', 'PEG', 'D', 'PANW', 'LNT', 'XEL', 'AES', 'WDC', 'MSFT', 'NXPI', 'MCHP', 'ED', 'EIX', 'ORCL', 'AEE', 'QCOM', 'ABBV', 'LRCX', 'AEP', 'TXN', 'MA', 'CEG', 'CMS', 'ON', 'FE', 'PPL', 'MU', 'MSI', 'PYPL', 'V', 'PCG', 'NRG', 'CNP', 'KLAC', 'NI', 'WEC', 'MPWR', 'NEE', 'ETR', 'EVRG', 'ES', 'EXC', 'STX', 'DUK']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 3/8  (50 tickers) … Failed to get ticker 'SYK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SYK: possibly delisted; no timezone found
+Failed to get ticker 'WAT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WAT: possibly delisted; no timezone found
+Failed to get ticker 'ABT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ABT: possibly delisted; no timezone found
+Failed to get ticker 'JNJ' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$JNJ: possibly delisted; no timezone found
+Failed to get ticker 'RMD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$RMD: possibly delisted; no timezone found
+Failed to get ticker 'BDX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BDX: possibly delisted; no timezone found
+Failed to get ticker 'IQV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IQV: possibly delisted; no timezone found
+Failed to get ticker 'UHS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$UHS: possibly delisted; no timezone found
+Failed to get ticker 'PFE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PFE: possibly delisted; no timezone found
+Failed to get ticker 'AME' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AME: possibly delisted; no timezone found
+Failed to get ticker 'CHRW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CHRW: possibly delisted; no timezone found
+Failed to get ticker 'CNC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CNC: possibly delisted; no timezone found
+Failed to get ticker 'HCA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HCA: possibly delisted; no timezone found
+Failed to get ticker 'REGN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$REGN: possibly delisted; no timezone found
+Failed to get ticker 'TMO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TMO: possibly delisted; no timezone found
+Failed to get ticker 'VRTX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VRTX: possibly delisted; no timezone found
+Failed to get ticker 'ALGN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ALGN: possibly delisted; no timezone found
+Failed to get ticker 'BIO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BIO: possibly delisted; no timezone found
+Failed to get ticker 'CRL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CRL: possibly delisted; no timezone found
+Failed to get ticker 'ISRG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ISRG: possibly delisted; no timezone found
+Failed to get ticker 'BAX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BAX: possibly delisted; no timezone found
+Failed to get ticker 'LLY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LLY: possibly delisted; no timezone found
+Failed to get ticker 'ZTS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ZTS: possibly delisted; no timezone found
+Failed to get ticker 'IDXX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IDXX: possibly delisted; no timezone found
+Failed to get ticker 'MDT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MDT: possibly delisted; no timezone found
+Failed to get ticker 'AMGN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AMGN: possibly delisted; no timezone found
+Failed to get ticker 'MRNA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'CAT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MRNA: possibly delisted; no timezone found
+$CAT: possibly delisted; no timezone found
+Failed to get ticker 'DXCM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DXCM: possibly delisted; no timezone found
+Failed to get ticker 'HOLX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HOLX: possibly delisted; no timezone found
+Failed to get ticker 'LH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LH: possibly delisted; no timezone found
+Failed to get ticker 'AON' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AON: possibly delisted; no timezone found
+Failed to get ticker 'CMI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CMI: possibly delisted; no timezone found
+Failed to get ticker 'ALLE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ALLE: possibly delisted; no timezone found
+Failed to get ticker 'CI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CI: possibly delisted; no timezone found
+Failed to get ticker 'MRK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MRK: possibly delisted; no timezone found
+Failed to get ticker 'BIIB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BIIB: possibly delisted; no timezone found
+Failed to get ticker 'ILMN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ILMN: possibly delisted; no timezone found
+Failed to get ticker 'GILD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GILD: possibly delisted; no timezone found
+Failed to get ticker 'STE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$STE: possibly delisted; no timezone found
+Failed to get ticker 'BA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BA: possibly delisted; no timezone found
+Failed to get ticker 'INCY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$INCY: possibly delisted; no timezone found
+Failed to get ticker 'BSX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BSX: possibly delisted; no timezone found
+Failed to get ticker 'CAH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CAH: possibly delisted; no timezone found
+Failed to get ticker 'ZBH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ZBH: possibly delisted; no timezone found
+Failed to get ticker 'HUM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HUM: possibly delisted; no timezone found
+Failed to get ticker 'CVS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CVS: possibly delisted; no timezone found
+Failed to get ticker 'UNH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$UNH: possibly delisted; no timezone found
+Failed to get ticker 'MCK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MCK: possibly delisted; no timezone found
+Failed to get ticker 'EW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EW: possibly delisted; no timezone found
+
+50 Failed downloads:
+['SYK', 'WAT', 'ABT', 'JNJ', 'RMD', 'BDX', 'IQV', 'UHS', 'PFE', 'AME', 'CHRW', 'CNC', 'HCA', 'REGN', 'TMO', 'VRTX', 'ALGN', 'BIO', 'CRL', 'ISRG', 'BAX', 'LLY', 'ZTS', 'IDXX', 'MDT', 'AMGN', 'MRNA', 'CAT', 'DXCM', 'HOLX', 'LH', 'AON', 'CMI', 'ALLE', 'CI', 'MRK', 'BIIB', 'ILMN', 'GILD', 'STE', 'BA', 'INCY', 'BSX', 'CAH', 'ZBH', 'HUM', 'CVS', 'UNH', 'MCK', 'EW']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 4/8  (50 tickers) … Failed to get ticker 'JBHT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$JBHT: possibly delisted; no timezone found
+Failed to get ticker 'SNA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SNA: possibly delisted; no timezone found
+Failed to get ticker 'APTV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$APTV: possibly delisted; no timezone found
+Failed to get ticker 'ITW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ITW: possibly delisted; no timezone found
+Failed to get ticker 'ROP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ROP: possibly delisted; no timezone found
+Failed to get ticker 'MMM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MMM: possibly delisted; no timezone found
+Failed to get ticker 'ODFL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ODFL: possibly delisted; no timezone found
+Failed to get ticker 'PCAR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PCAR: possibly delisted; no timezone found
+Failed to get ticker 'PWR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PWR: possibly delisted; no timezone found
+Failed to get ticker 'TDY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TDY: possibly delisted; no timezone found
+Failed to get ticker 'CTAS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CTAS: possibly delisted; no timezone found
+Failed to get ticker 'DE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DE: possibly delisted; no timezone found
+Failed to get ticker 'CSX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CSX: possibly delisted; no timezone found
+Failed to get ticker 'ROK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ROK: possibly delisted; no timezone found
+Failed to get ticker 'CPRT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'MAS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CPRT: possibly delisted; no timezone found
+$MAS: possibly delisted; no timezone found
+Failed to get ticker 'ROL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ROL: possibly delisted; no timezone found
+Failed to get ticker 'TXT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TXT: possibly delisted; no timezone found
+Failed to get ticker 'PH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PH: possibly delisted; no timezone found
+Failed to get ticker 'GWW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GWW: possibly delisted; no timezone found
+Failed to get ticker 'AZO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AZO: possibly delisted; no timezone found
+Failed to get ticker 'IR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IR: possibly delisted; no timezone found
+Failed to get ticker 'DOV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DOV: possibly delisted; no timezone found
+Failed to get ticker 'EXPD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EXPD: possibly delisted; no timezone found
+Failed to get ticker 'FAST' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FAST: possibly delisted; no timezone found
+Failed to get ticker 'TDG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TDG: possibly delisted; no timezone found
+Failed to get ticker 'LHX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LHX: possibly delisted; no timezone found
+Failed to get ticker 'UPS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$UPS: possibly delisted; no timezone found
+Failed to get ticker 'RTX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$RTX: possibly delisted; no timezone found
+Failed to get ticker 'HWM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HWM: possibly delisted; no timezone found
+Failed to get ticker 'NOC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NOC: possibly delisted; no timezone found
+Failed to get ticker 'GD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GD: possibly delisted; no timezone found
+Failed to get ticker 'DAL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DAL: possibly delisted; no timezone found
+Failed to get ticker 'UNP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$UNP: possibly delisted; no timezone found
+Failed to get ticker 'NSC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NSC: possibly delisted; no timezone found
+Failed to get ticker 'LMT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LMT: possibly delisted; no timezone found
+Failed to get ticker 'BBY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BBY: possibly delisted; no timezone found
+Failed to get ticker 'WAB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WAB: possibly delisted; no timezone found
+Failed to get ticker 'GE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GE: possibly delisted; no timezone found
+Failed to get ticker 'OTIS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$OTIS: possibly delisted; no timezone found
+Failed to get ticker 'EMR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EMR: possibly delisted; no timezone found
+Failed to get ticker 'FDX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FDX: possibly delisted; no timezone found
+Failed to get ticker 'JCI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$JCI: possibly delisted; no timezone found
+Failed to get ticker 'WM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WM: possibly delisted; no timezone found
+Failed to get ticker 'URI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$URI: possibly delisted; no timezone found
+Failed to get ticker 'AMZN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AMZN: possibly delisted; no timezone found
+Failed to get ticker 'RSG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$RSG: possibly delisted; no timezone found
+Failed to get ticker 'PNR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PNR: possibly delisted; no timezone found
+Failed to get ticker 'J' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$J: possibly delisted; no timezone found
+Failed to get ticker 'ETN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ETN: possibly delisted; no timezone found
+
+50 Failed downloads:
+['JBHT', 'SNA', 'APTV', 'ITW', 'ROP', 'MMM', 'ODFL', 'PCAR', 'PWR', 'TDY', 'CTAS', 'DE', 'CSX', 'ROK', 'CPRT', 'MAS', 'ROL', 'TXT', 'PH', 'GWW', 'AZO', 'IR', 'DOV', 'EXPD', 'FAST', 'TDG', 'LHX', 'UPS', 'RTX', 'HWM', 'NOC', 'GD', 'DAL', 'UNP', 'NSC', 'LMT', 'BBY', 'WAB', 'GE', 'OTIS', 'EMR', 'FDX', 'JCI', 'WM', 'URI', 'AMZN', 'RSG', 'PNR', 'J', 'ETN']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 5/8  (50 tickers) … Failed to get ticker 'NCLH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NCLH: possibly delisted; no timezone found
+Failed to get ticker 'DG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DG: possibly delisted; no timezone found
+Failed to get ticker 'F' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$F: possibly delisted; no timezone found
+Failed to get ticker 'MGM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MGM: possibly delisted; no timezone found
+Failed to get ticker 'DHI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DHI: possibly delisted; no timezone found
+Failed to get ticker 'ORLY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ORLY: possibly delisted; no timezone found
+Failed to get ticker 'PHM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PHM: possibly delisted; no timezone found
+Failed to get ticker 'LOW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LOW: possibly delisted; no timezone found
+Failed to get ticker 'WYNN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WYNN: possibly delisted; no timezone found
+Failed to get ticker 'CHTR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CHTR: possibly delisted; no timezone found
+Failed to get ticker 'DPZ' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DPZ: possibly delisted; no timezone found
+Failed to get ticker 'VFC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VFC: possibly delisted; no timezone found
+Failed to get ticker 'DLTR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DLTR: possibly delisted; no timezone found
+Failed to get ticker 'RL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$RL: possibly delisted; no timezone found
+Failed to get ticker 'MCD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MCD: possibly delisted; no timezone found
+Failed to get ticker 'CZR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CZR: possibly delisted; no timezone found
+Failed to get ticker 'ROST' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ROST: possibly delisted; no timezone found
+Failed to get ticker 'BWA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BWA: possibly delisted; no timezone found
+Failed to get ticker 'LEN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LEN: possibly delisted; no timezone found
+Failed to get ticker 'NKE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NKE: possibly delisted; no timezone found
+Failed to get ticker 'HD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HD: possibly delisted; no timezone found
+Failed to get ticker 'RCL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$RCL: possibly delisted; no timezone found
+Failed to get ticker 'KMX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KMX: possibly delisted; no timezone found
+Failed to get ticker 'WHR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WHR: possibly delisted; no timezone found
+Failed to get ticker 'NVR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NVR: possibly delisted; no timezone found
+Failed to get ticker 'BKNG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BKNG: possibly delisted; no timezone found
+Failed to get ticker 'PVH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PVH: possibly delisted; no timezone found
+Failed to get ticker 'MHK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MHK: possibly delisted; no timezone found
+Failed to get ticker 'MAR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MAR: possibly delisted; no timezone found
+Failed to get ticker 'ULTA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ULTA: possibly delisted; no timezone found
+Failed to get ticker 'TPR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TPR: possibly delisted; no timezone found
+Failed to get ticker 'ETSY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ETSY: possibly delisted; no timezone found
+Failed to get ticker 'HAS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HAS: possibly delisted; no timezone found
+Failed to get ticker 'CMCSA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CMCSA: possibly delisted; no timezone found
+Failed to get ticker 'CMG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CMG: possibly delisted; no timezone found
+Failed to get ticker 'GM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GM: possibly delisted; no timezone found
+Failed to get ticker 'TSLA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TSLA: possibly delisted; no timezone found
+Failed to get ticker 'POOL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$POOL: possibly delisted; no timezone found
+Failed to get ticker 'SBUX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SBUX: possibly delisted; no timezone found
+Failed to get ticker 'DRI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'LVS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DRI: possibly delisted; no timezone found
+$LVS: possibly delisted; no timezone found
+Failed to get ticker 'GPC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GPC: possibly delisted; no timezone found
+Failed to get ticker 'EBAY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EBAY: possibly delisted; no timezone found
+Failed to get ticker 'TJX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TJX: possibly delisted; no timezone found
+Failed to get ticker 'TKO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TKO: possibly delisted; no timezone found
+Failed to get ticker 'EXPE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'GRMN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EXPE: possibly delisted; no timezone found
+$GRMN: possibly delisted; no timezone found
+Failed to get ticker 'CCL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'YUM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CCL: possibly delisted; no timezone found
+$YUM: possibly delisted; no timezone found
+Failed to get ticker 'LKQ' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LKQ: possibly delisted; no timezone found
+
+50 Failed downloads:
+['NCLH', 'DG', 'F', 'MGM', 'DHI', 'ORLY', 'PHM', 'LOW', 'WYNN', 'CHTR', 'DPZ', 'VFC', 'DLTR', 'RL', 'MCD', 'CZR', 'ROST', 'BWA', 'LEN', 'NKE', 'HD', 'RCL', 'KMX', 'WHR', 'NVR', 'BKNG', 'PVH', 'MHK', 'MAR', 'ULTA', 'TPR', 'ETSY', 'HAS', 'CMCSA', 'CMG', 'GM', 'TSLA', 'POOL', 'SBUX', 'DRI', 'LVS', 'GPC', 'EBAY', 'TJX', 'TKO', 'EXPE', 'GRMN', 'CCL', 'YUM', 'LKQ']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 6/8  (50 tickers) … Failed to get ticker 'EL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EL: possibly delisted; no timezone found
+Failed to get ticker 'KDP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KDP: possibly delisted; no timezone found
+Failed to get ticker 'PG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PG: possibly delisted; no timezone found
+Failed to get ticker 'MKC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MKC: possibly delisted; no timezone found
+Failed to get ticker 'BKR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BKR: possibly delisted; no timezone found
+Failed to get ticker 'CAG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CAG: possibly delisted; no timezone found
+Failed to get ticker 'FOXA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FOXA: possibly delisted; no timezone found
+Failed to get ticker 'TMUS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TMUS: possibly delisted; no timezone found
+Failed to get ticker 'WBD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WBD: possibly delisted; no timezone found
+Failed to get ticker 'KHC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KHC: possibly delisted; no timezone found
+Failed to get ticker 'EA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EA: possibly delisted; no timezone found
+Failed to get ticker 'KO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KO: possibly delisted; no timezone found
+Failed to get ticker 'KMB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KMB: possibly delisted; no timezone found
+Failed to get ticker 'PM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PM: possibly delisted; no timezone found
+Failed to get ticker 'META' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$META: possibly delisted; no timezone found
+Failed to get ticker 'CPB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CPB: possibly delisted; no timezone found
+Failed to get ticker 'SYY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SYY: possibly delisted; no timezone found
+Failed to get ticker 'APA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$APA: possibly delisted; no timezone found
+Failed to get ticker 'GOOGL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GOOGL: possibly delisted; no timezone found
+Failed to get ticker 'LYV' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LYV: possibly delisted; no timezone found
+Failed to get ticker 'KR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KR: possibly delisted; no timezone found
+Failed to get ticker 'DIS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DIS: possibly delisted; no timezone found
+Failed to get ticker 'TTWO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TTWO: possibly delisted; no timezone found
+Failed to get ticker 'TAP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TAP: possibly delisted; no timezone found
+Failed to get ticker 'T' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$T: possibly delisted; no timezone found
+Failed to get ticker 'BF-B' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BF-B: possibly delisted; no timezone found
+Failed to get ticker 'CL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CL: possibly delisted; no timezone found
+Failed to get ticker 'HSY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HSY: possibly delisted; no timezone found
+Failed to get ticker 'MDLZ' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MDLZ: possibly delisted; no timezone found
+Failed to get ticker 'GOOG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GOOG: possibly delisted; no timezone found
+Failed to get ticker 'CHD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CHD: possibly delisted; no timezone found
+Failed to get ticker 'NWSA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NWSA: possibly delisted; no timezone found
+Failed to get ticker 'TSN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TSN: possibly delisted; no timezone found
+Failed to get ticker 'COST' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$COST: possibly delisted; no timezone found
+Failed to get ticker 'COP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$COP: possibly delisted; no timezone found
+Failed to get ticker 'OMC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$OMC: possibly delisted; no timezone found
+Failed to get ticker 'CLX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CLX: possibly delisted; no timezone found
+Failed to get ticker 'GIS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GIS: possibly delisted; no timezone found
+Failed to get ticker 'MO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MO: possibly delisted; no timezone found
+Failed to get ticker 'MTCH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MTCH: possibly delisted; no timezone found
+Failed to get ticker 'SJM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SJM: possibly delisted; no timezone found
+Failed to get ticker 'NFLX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NFLX: possibly delisted; no timezone found
+Failed to get ticker 'ADM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ADM: possibly delisted; no timezone found
+Failed to get ticker 'FOX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FOX: possibly delisted; no timezone found
+Failed to get ticker 'NWS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NWS: possibly delisted; no timezone found
+Failed to get ticker 'HRL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HRL: possibly delisted; no timezone found
+Failed to get ticker 'PEP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PEP: possibly delisted; no timezone found
+Failed to get ticker 'MNST' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MNST: possibly delisted; no timezone found
+Failed to get ticker 'VZ' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VZ: possibly delisted; no timezone found
+Failed to get ticker 'WMT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WMT: possibly delisted; no timezone found
+
+50 Failed downloads:
+['EL', 'KDP', 'PG', 'MKC', 'BKR', 'CAG', 'FOXA', 'TMUS', 'WBD', 'KHC', 'EA', 'KO', 'KMB', 'PM', 'META', 'CPB', 'SYY', 'APA', 'GOOGL', 'LYV', 'KR', 'DIS', 'TTWO', 'TAP', 'T', 'BF-B', 'CL', 'HSY', 'MDLZ', 'GOOG', 'CHD', 'NWSA', 'TSN', 'COST', 'COP', 'OMC', 'CLX', 'GIS', 'MO', 'MTCH', 'SJM', 'NFLX', 'ADM', 'FOX', 'NWS', 'HRL', 'PEP', 'MNST', 'VZ', 'WMT']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 7/8  (50 tickers) … Failed to get ticker 'AMT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AMT: possibly delisted; no timezone found
+Failed to get ticker 'CCI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CCI: possibly delisted; no timezone found
+Failed to get ticker 'EQT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EQT: possibly delisted; no timezone found
+Failed to get ticker 'PSX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'OXY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PSX: possibly delisted; no timezone found
+$OXY: possibly delisted; no timezone found
+Failed to get ticker 'VLO' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VLO: possibly delisted; no timezone found
+Failed to get ticker 'SBAC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SBAC: possibly delisted; no timezone found
+Failed to get ticker 'PSA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PSA: possibly delisted; no timezone found
+Failed to get ticker 'UDR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$UDR: possibly delisted; no timezone found
+Failed to get ticker 'MAA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MAA: possibly delisted; no timezone found
+Failed to get ticker 'VTR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VTR: possibly delisted; no timezone found
+Failed to get ticker 'MPC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MPC: possibly delisted; no timezone found
+Failed to get ticker 'AVY' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AVY: possibly delisted; no timezone found
+Failed to get ticker 'CVX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CVX: possibly delisted; no timezone found
+Failed to get ticker 'CPT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'FRT' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CPT: possibly delisted; no timezone found
+$FRT: possibly delisted; no timezone found
+Failed to get ticker 'OKE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$OKE: possibly delisted; no timezone found
+Failed to get ticker 'PLD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PLD: possibly delisted; no timezone found
+Failed to get ticker 'AMCR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AMCR: possibly delisted; no timezone found
+Failed to get ticker 'AVB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$AVB: possibly delisted; no timezone found
+Failed to get ticker 'WMB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WMB: possibly delisted; no timezone found
+Failed to get ticker 'ARE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ARE: possibly delisted; no timezone found
+Failed to get ticker 'ESS' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ESS: possibly delisted; no timezone found
+Failed to get ticker 'ALB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ALB: possibly delisted; no timezone found
+Failed to get ticker 'VICI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VICI: possibly delisted; no timezone found
+Failed to get ticker 'DVN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DVN: possibly delisted; no timezone found
+Failed to get ticker 'SPG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SPG: possibly delisted; no timezone found
+Failed to get ticker 'CE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CE: possibly delisted; no timezone found
+Failed to get ticker 'CTRA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CTRA: possibly delisted; no timezone found
+Failed to get ticker 'EQIX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EQIX: possibly delisted; no timezone found
+Failed to get ticker 'KIM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KIM: possibly delisted; no timezone found
+Failed to get ticker 'CBRE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CBRE: possibly delisted; no timezone found
+Failed to get ticker 'IRM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IRM: possibly delisted; no timezone found
+Failed to get ticker 'WELL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$WELL: possibly delisted; no timezone found
+Failed to get ticker 'TRGP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$TRGP: possibly delisted; no timezone found
+Failed to get ticker 'FANG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FANG: possibly delisted; no timezone found
+Failed to get ticker 'KMI' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$KMI: possibly delisted; no timezone found
+Failed to get ticker 'INVH' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$INVH: possibly delisted; no timezone found
+Failed to get ticker 'REG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$REG: possibly delisted; no timezone found
+Failed to get ticker 'HAL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HAL: possibly delisted; no timezone found
+Failed to get ticker 'DD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DD: possibly delisted; no timezone found
+Failed to get ticker 'EOG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EOG: possibly delisted; no timezone found
+Failed to get ticker 'EQR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EQR: possibly delisted; no timezone found
+Failed to get ticker 'CF' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$CF: possibly delisted; no timezone found
+Failed to get ticker 'O' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$O: possibly delisted; no timezone found
+Failed to get ticker 'APD' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$APD: possibly delisted; no timezone found
+Failed to get ticker 'XOM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$XOM: possibly delisted; no timezone found
+Failed to get ticker 'SLB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SLB: possibly delisted; no timezone found
+Failed to get ticker 'BG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BG: possibly delisted; no timezone found
+Failed to get ticker 'BXP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$BXP: possibly delisted; no timezone found
+
+50 Failed downloads:
+['AMT', 'CCI', 'EQT', 'PSX', 'OXY', 'VLO', 'SBAC', 'PSA', 'UDR', 'MAA', 'VTR', 'MPC', 'AVY', 'CVX', 'CPT', 'FRT', 'OKE', 'PLD', 'AMCR', 'AVB', 'WMB', 'ARE', 'ESS', 'ALB', 'VICI', 'DVN', 'SPG', 'CE', 'CTRA', 'EQIX', 'KIM', 'CBRE', 'IRM', 'WELL', 'TRGP', 'FANG', 'KMI', 'INVH', 'REG', 'HAL', 'DD', 'EOG', 'EQR', 'CF', 'O', 'APD', 'XOM', 'SLB', 'BG', 'BXP']: possibly delisted; no timezone found
+OK  (50 cols)
+  Batch 8/8  (24 tickers) … Failed to get ticker 'ECL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ECL: possibly delisted; no timezone found
+Failed to get ticker 'NVDA' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NVDA: possibly delisted; no timezone found
+Failed to get ticker 'LYB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LYB: possibly delisted; no timezone found
+Failed to get ticker 'FSLR' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FSLR: possibly delisted; no timezone found
+Failed to get ticker 'LIN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$LIN: possibly delisted; no timezone found
+Failed to get ticker 'EMN' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$EMN: possibly delisted; no timezone found
+Failed to get ticker 'NEM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NEM: possibly delisted; no timezone found
+Failed to get ticker 'FCX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FCX: possibly delisted; no timezone found
+Failed to get ticker 'VRSK' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VRSK: possibly delisted; no timezone found
+Failed to get ticker 'IP' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IP: possibly delisted; no timezone found
+Failed to get ticker 'ABNB' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$ABNB: possibly delisted; no timezone found
+Failed to get ticker 'GEHC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$GEHC: possibly delisted; no timezone found
+Failed to get ticker 'SHW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$SHW: possibly delisted; no timezone found
+Failed to get ticker 'IFF' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$IFF: possibly delisted; no timezone found
+Failed to get ticker 'PAYX' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PAYX: possibly delisted; no timezone found
+Failed to get ticker 'MRVL' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MRVL: possibly delisted; no timezone found
+Failed to get ticker 'PKG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$PKG: possibly delisted; no timezone found
+Failed to get ticker 'MLM' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$MLM: possibly delisted; no timezone found
+Failed to get ticker 'NUE' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$NUE: possibly delisted; no timezone found
+Failed to get ticker 'DOW' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$DOW: possibly delisted; no timezone found
+Failed to get ticker 'HON' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+Failed to get ticker 'PPG' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$HON: possibly delisted; no timezone found
+$PPG: possibly delisted; no timezone found
+Failed to get ticker 'FMC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$FMC: possibly delisted; no timezone found
+Failed to get ticker 'VMC' reason: Failed to perform, curl: (56) CONNECT tunnel failed, response 403. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+$VMC: possibly delisted; no timezone found
+
+24 Failed downloads:
+['ECL', 'NVDA', 'LYB', 'FSLR', 'LIN', 'EMN', 'NEM', 'FCX', 'VRSK', 'IP', 'ABNB', 'GEHC', 'SHW', 'IFF', 'PAYX', 'MRVL', 'PKG', 'MLM', 'NUE', 'DOW', 'HON', 'PPG', 'FMC', 'VMC']: possibly delisted; no timezone found
+OK  (24 cols)
+[STEP 2] Raw price matrix: 0 days × 374 tickers.
+
+[STEP 3] Dropped 0 tickers (>10% missing).  Remaining: 374 tickers.
+
+[STEP 4] Same-sector correlation pre-filter …
+         Same-sector pairs with ρ ≥ 0.8: 0
+
+[STEP 5] Running Engle-Granger cointegration on 0 pairs …
+         Tested: 0  |  Cointegrated (p < 0.05): 0
+
+  ⚠  No cointegrated pairs found. CSV will be empty.
+     Consider lowering CORR_PRE_FILTER or COINT_PVAL_THRESH.
+
+
+  ✓ Scanner completed.
+
+  ✗ No candidates available. Run with --scan first.
+

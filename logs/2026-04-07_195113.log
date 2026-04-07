@@ -1,15 +1,15 @@
 
 Traceback (most recent call last):
-  File "C:\Users\User\Desktop\adf bot\run_system.py", line 441, in <module>
+  File "C:\Users\User\Desktop\adf bot\run_system.py", line 996, in <module>
     main()
     ~~~~^^
-  File "C:\Users\User\Desktop\adf bot\run_system.py", line 325, in main
+  File "C:\Users\User\Desktop\adf bot\run_system.py", line 403, in main
     print_header(now)
     ~~~~~~~~~~~~^^^^^
-  File "C:\Users\User\Desktop\adf bot\run_system.py", line 222, in print_header
+  File "C:\Users\User\Desktop\adf bot\run_system.py", line 262, in print_header
     print(f"  {CY}{B}╔══════════════════════════════════════════════════════════════╗{RST}")
     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\Desktop\adf bot\run_system.py", line 76, in write
+  File "C:\Users\User\Desktop\adf bot\run_system.py", line 96, in write
     self.terminal.write(msg)
     ~~~~~~~~~~~~~~~~~~~^^^^^
   File "C:\Users\User\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
