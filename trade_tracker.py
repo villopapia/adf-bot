@@ -230,7 +230,8 @@ def log_entry(diamond: dict) -> str:
     live     = diamond["live"]
     bt       = diamond["bt"]
     kelly_capital, kelly_scale = _kelly_capital(bt)
-    half     = kelly_capital / 2.0
+    vol_scale = bt.get("vol_scale", 1.0) if isinstance(bt, dict) else 1.0
+    half     = (kelly_capital * vol_scale) / 2.0
     shares_a = round(half / live["price_a"])
     shares_b = round(half / live["price_b"])
     capital  = shares_a * live["price_a"] + shares_b * live["price_b"]

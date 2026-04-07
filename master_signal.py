@@ -78,16 +78,19 @@ from config import (
     MIN_WIN_RATE, MIN_PROFIT_FACTOR, MIN_TOTAL_PNL, MIN_SHARPE, MAX_DRAWDOWN,
     MIN_TRADES, BETA_STABILITY_MAX,
     MIN_SORTINO, MIN_AVG_PNL,
+    MAX_SHARPE_OVERFIT, MAX_PROFIT_FACTOR_OVERFIT,
+    OOS_SHARPE_RATIO_MIN,
     MAX_RETRIES, RETRY_DELAY, ERROR_LOG,
     SPLIT_HALF_ENABLED, SPLIT_HALF_MIN_PNL,
     RECENT_ADF_WINDOW, RECENT_ADF_PVAL,
     RECENT_MOMENTUM_N,
     RECENT_CORR_WINDOW, MIN_RECENT_CORR,
     VIX_MAX_ENTRY,
-    WALK_FORWARD_SPLIT,
+    WALK_FORWARD_SPLIT, MIN_OOS_TRADES,
     AV_API_KEY, AV_RATE_DELAY,
     FMP_API_KEY, EARNINGS_BLACKOUT_DAYS,
     BORROW_COST_PCT,
+    VOL_TARGET_DAILY, VOL_LOOKBACK_DAYS, VOL_SIZE_FLOOR, VOL_SIZE_CAP,
 )
 
 # ── Volatility floor — prevents z-score explosion when std collapses ────────
@@ -443,6 +446,9 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     shares_a   = 0.0
     shares_b   = 0.0
 
+    vol_scale  = 1.0
+    spread     = signals["spread"].values
+
     # ── Signal on bar i → execute at bar i+1 ─────────────────────────────
     for i in range(n - 1):
         if np.isnan(z[i]):
@@ -458,14 +464,40 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
             # ── Entry signals ────────────────────────────────────────────
             if z[i] < -Z_ENTRY:
                 # Long spread: long A, short B
-                half     = CAPITAL_PER_TRADE / 2.0
+                # Vol-adjusted sizing
+                vol_start = max(0, exec_bar - VOL_LOOKBACK_DAYS)
+                spread_slice = spread[vol_start:exec_bar]
+                valid_spread = spread_slice[~np.isnan(spread_slice)]
+                if len(valid_spread) > 1:
+                    spread_vol = np.std(np.diff(valid_spread), ddof=1)
+                    if spread_vol > 1e-8:
+                        vol_scale = np.clip(VOL_TARGET_DAILY / spread_vol,
+                                            VOL_SIZE_FLOOR, VOL_SIZE_CAP)
+                    else:
+                        vol_scale = 1.0
+                else:
+                    vol_scale = 1.0
+                half = (CAPITAL_PER_TRADE * vol_scale) / 2.0
                 shares_a = half / price_a[exec_bar]
                 shares_b = half / price_b[exec_bar]
                 position  = 1
                 entry_bar = exec_bar
             elif z[i] > Z_ENTRY:
                 # Short spread: short A, long B
-                half     = CAPITAL_PER_TRADE / 2.0
+                # Vol-adjusted sizing
+                vol_start = max(0, exec_bar - VOL_LOOKBACK_DAYS)
+                spread_slice = spread[vol_start:exec_bar]
+                valid_spread = spread_slice[~np.isnan(spread_slice)]
+                if len(valid_spread) > 1:
+                    spread_vol = np.std(np.diff(valid_spread), ddof=1)
+                    if spread_vol > 1e-8:
+                        vol_scale = np.clip(VOL_TARGET_DAILY / spread_vol,
+                                            VOL_SIZE_FLOOR, VOL_SIZE_CAP)
+                    else:
+                        vol_scale = 1.0
+                else:
+                    vol_scale = 1.0
+                half = (CAPITAL_PER_TRADE * vol_scale) / 2.0
                 shares_a = half / price_a[exec_bar]
                 shares_b = half / price_b[exec_bar]
                 position  = -1
@@ -530,6 +562,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                     "gross_pnl":   gross,
                     "net_pnl":     net_pnl,
                     "cost":        cost,
+                    "vol_scale":   vol_scale,
                 })
                 position = 0
                 shares_a = 0.0
@@ -564,6 +597,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
             "gross_pnl":   gross,
             "net_pnl":     gross - cost - borrow,
             "cost":        cost,
+            "vol_scale":   vol_scale,
         })
 
     # ── Compute metrics ──────────────────────────────────────────────────
@@ -574,7 +608,8 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
                 "avg_hold": 0.0, "max_dd": 0.0, "beta_cv": 0.0,
                 "recent_corr": None, "pass": False,
                 "reason": "No historical trades",
-                "h1_pnl": 0.0, "h2_pnl": 0.0, "recent_pnl": 0.0}
+                "h1_pnl": 0.0, "h2_pnl": 0.0, "recent_pnl": 0.0,
+                "vol_scale": 1.0}
 
     pnls     = np.array([t["net_pnl"] for t in trades])
     wins     = pnls[pnls > 0]
@@ -622,11 +657,14 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         reasons.append(f"P&L ${total_pnl:+.2f} \u2264 ${MIN_TOTAL_PNL:.0f}")
     if sharpe < MIN_SHARPE:
         reasons.append(f"Sharpe {sharpe:+.2f} < {MIN_SHARPE}")
+    if sharpe > MAX_SHARPE_OVERFIT:
+        reasons.append(f"Overfit: Sharpe {sharpe:.2f} > {MAX_SHARPE_OVERFIT}")
+    if profit_factor > MAX_PROFIT_FACTOR_OVERFIT:
+        reasons.append(f"Overfit: PF {profit_factor:.2f}x > {MAX_PROFIT_FACTOR_OVERFIT}x")
     if max_dd < MAX_DRAWDOWN:
         reasons.append(f"Max DD ${max_dd:+.0f} < ${MAX_DRAWDOWN:+.0f}")
-    # Beta CV: soft warning only — redundant with Sharpe/P&L/walk-forward gates
-    # if beta_cv > BETA_STABILITY_MAX:
-    #     reasons.append(f"Unstable Beta: CV={beta_cv:.2f} > {BETA_STABILITY_MAX}")
+    if beta_cv > BETA_STABILITY_MAX:
+        reasons.append(f"Unstable Beta: CV={beta_cv:.2f} > {BETA_STABILITY_MAX}")
     if sortino < MIN_SORTINO:
         reasons.append(f"Sortino {sortino:+.2f} < {MIN_SORTINO}")
     if avg_pnl < MIN_AVG_PNL:
@@ -670,9 +708,12 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
     #    OOS Sharpe must be > 0 and OOS total P&L must be > 0.
     oos_sharpe = 0.0
     oos_pnl    = 0.0
-    split_idx  = int(len(trades) * WALK_FORWARD_SPLIT)
-    if len(trades) >= MIN_TRADES and split_idx > 0 and split_idx < len(trades):
-        oos_trades = trades[split_idx:]
+    split_bar  = int(n * WALK_FORWARD_SPLIT)
+    if len(trades) >= MIN_TRADES and split_bar > 0 and split_bar < n:
+        oos_trades = [t for t in trades if t["entry_bar"] >= split_bar]
+        if len(oos_trades) < MIN_OOS_TRADES:
+            reasons.append(
+                f"Insufficient OOS trades ({len(oos_trades)} < {MIN_OOS_TRADES})")
         oos_pnls   = np.array([t["net_pnl"] for t in oos_trades])
         oos_pnl    = float(oos_pnls.sum())
         if len(oos_pnls) > 1:
@@ -681,12 +722,27 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
             oos_hold = np.mean([t["hold_days"] for t in oos_trades])
             oos_tpy  = 250 / max(oos_hold, 1)
             oos_sharpe = float((oos_avg / oos_std) * np.sqrt(oos_tpy))
+        # Compute IS Sharpe for consistency check
+        is_trades = [t for t in trades if t["entry_bar"] < split_bar]
+        is_sharpe = 0.0
+        if len(is_trades) > 1:
+            is_pnls = np.array([t["net_pnl"] for t in is_trades])
+            is_avg  = is_pnls.mean()
+            is_std  = is_pnls.std(ddof=1) if len(is_pnls) > 1 else 1e-12
+            is_hold = np.mean([t["hold_days"] for t in is_trades])
+            is_tpy  = 250 / max(is_hold, 1)
+            is_sharpe = float((is_avg / is_std) * np.sqrt(is_tpy))
+        if is_sharpe > 0 and oos_sharpe / is_sharpe < OOS_SHARPE_RATIO_MIN:
+            reasons.append(
+                f"IS/OOS decay: OOS={oos_sharpe:.2f} vs IS={is_sharpe:.2f}")
         if oos_sharpe <= 0 or oos_pnl <= 0:
             reasons.append(
                 f"Walk-Forward OOS: Sharpe={oos_sharpe:+.2f}, "
                 f"P&L=${oos_pnl:+.2f}")
 
     passed = len(reasons) == 0
+
+    last_vol_scale = trades[-1]["vol_scale"] if trades else 1.0
 
     return {
         "n_trades":      n_trades,
@@ -707,6 +763,7 @@ def backtest_pair(signals: pd.DataFrame) -> dict:
         "h1_pnl":        h1_pnl_val,
         "h2_pnl":        h2_pnl_val,
         "recent_pnl":    recent_pnl,
+        "vol_scale":     last_vol_scale,
     }
 
 
@@ -962,6 +1019,8 @@ def main() -> dict:
             if len(pa_recent) >= RECENT_CORR_WINDOW and len(pb_recent) >= RECENT_CORR_WINDOW:
                 try:
                     recent_corr = float(np.corrcoef(pa_recent, pb_recent)[0, 1])
+                    if np.isnan(recent_corr):
+                        recent_corr = 0.0
                     bt["recent_corr"] = recent_corr
                     if recent_corr < MIN_RECENT_CORR:
                         bt["pass"] = False
@@ -971,7 +1030,11 @@ def main() -> dict:
                         bt["reason"] = (f"{old_reason} | {corr_msg}"
                                         if old_reason else corr_msg)
                 except Exception:
-                    pass   # correlation can fail on degenerate data — don't block
+                    bt["recent_corr"] = 0.0
+                    bt["pass"] = False
+                    old_reason = bt.get("reason", "")
+                    bt["reason"] = (f"{old_reason} | Correlation calc failed"
+                                    if old_reason else "Correlation calc failed")
 
             if bt["pass"]:
                 if vix_blocked:

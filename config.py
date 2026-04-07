@@ -20,11 +20,11 @@ ROLLING_Z_WIN      = 20            # z-score lookback (days)
 Z_ENTRY            = 2.0           # entry threshold (both sides)
 Z_EXIT             = 0.0           # mean-reversion target
 Z_STOP             = 3.0           # stop-loss threshold
-MAX_HOLD           = 30            # max holding period (days)
+MAX_HOLD           = 20            # max holding period (days)
 
 # ── Capital & Costs ─────────────────────────────────────────────────────────
 CAPITAL_PER_TRADE  = 1000.0        # dollars per trade
-SLIPPAGE_PCT       = 0.001         # 0.10% per leg
+SLIPPAGE_PCT       = 0.0015        # 0.15% round-trip for S&P 500 pairs
 
 # Kelly position sizing
 KELLY_FRACTION     = 0.5           # fraction of full Kelly (0.5 = half-Kelly)
@@ -32,17 +32,26 @@ KELLY_MIN_SCALE    = 0.5           # minimum position as fraction of CAPITAL_PER
 KELLY_MAX_SCALE    = 2.0           # maximum position as fraction of CAPITAL_PER_TRADE
 
 # ── Backtest Quality Gates ──────────────────────────────────────────────────
-MIN_WIN_RATE       = 50.0          # minimum win rate (%)
-MIN_PROFIT_FACTOR  = 1.3           # minimum profit factor
+MIN_WIN_RATE       = 55.0          # minimum win rate (%)
+MIN_PROFIT_FACTOR  = 1.5           # minimum profit factor
 MIN_TOTAL_PNL      = 50.0          # minimum total P&L ($) over full backtest
-MIN_SHARPE         = 0.5           # minimum annualised Sharpe ratio
+MIN_SHARPE         = 1.0           # minimum annualised Sharpe ratio
 MAX_DRAWDOWN       = -200.0        # maximum allowable peak-to-trough drawdown ($)
 MIN_TRADES         = 10            # minimum backtest trades for statistical validity
 BETA_STABILITY_MAX = 0.60          # max hedge-ratio coefficient of variation (std/|mean|)
-MIN_SORTINO        = 0.5           # minimum annualised Sortino ratio
-MIN_AVG_PNL        = 5.0           # minimum average net P&L per trade ($)
+MIN_SORTINO        = 1.0           # minimum annualised Sortino ratio
+MIN_AVG_PNL        = 8.0           # minimum average net P&L per trade ($)
+MAX_SHARPE_OVERFIT      = 4.0       # reject if backtest Sharpe suspiciously high (overfitting)
+MAX_PROFIT_FACTOR_OVERFIT = 5.0     # reject if PF suspiciously high (overfitting)
+OOS_SHARPE_RATIO_MIN    = 0.25      # OOS Sharpe must be >= 25% of IS Sharpe
 RECENT_CORR_WINDOW = 90            # days for recent correlation check
-MIN_RECENT_CORR    = 0.65          # minimum recent correlation required (Gate D)
+MIN_RECENT_CORR    = 0.70          # minimum recent correlation required (Gate D)
+
+# ── Spread Volatility-Adjusted Sizing ──────────────────────────────────────
+VOL_TARGET_DAILY        = 0.02      # target 2% daily volatility on spread P&L
+VOL_LOOKBACK_DAYS       = 60        # window for realized spread volatility
+VOL_SIZE_FLOOR          = 0.3       # never go below 30% of CAPITAL_PER_TRADE
+VOL_SIZE_CAP            = 2.0       # never go above 200% of CAPITAL_PER_TRADE
 
 # ── Scanner ─────────────────────────────────────────────────────────────────
 SCANNER_INTERVAL_DAYS = 3          # days between auto-refresh
@@ -53,7 +62,7 @@ ENABLE_HISTORICAL_CONSTITUENTS  = True   # include past S&P 500 members in unive
 HISTORICAL_SECTOR_YFINANCE_MAX  = 20     # max yfinance fast_info lookups per scan run
 
 # ── Scanner — Half-Life Filter ─────────────────────────────────────────────
-MAX_HALF_LIFE      = 30            # reject pairs with half-life > this (days)
+MAX_HALF_LIFE      = 20            # reject pairs with half-life > this (days)
                                    # should match or be <= MAX_HOLD
 
 # ── Scanner — Advanced ──────────────────────────────────────────────────────
@@ -69,20 +78,21 @@ RETRY_DELAY        = 2             # seconds between retries
 # These reduce "past ≠ future" risk by detecting pairs that are already
 # showing signs of regime change or deteriorating cointegration.
 SPLIT_HALF_ENABLED   = True        # require BOTH halves profitable independently
-SPLIT_HALF_MIN_PNL   = 20.0        # each half must clear this P&L floor ($), not just > $0
+SPLIT_HALF_MIN_PNL   = 30.0        # each half must clear this P&L floor ($), not just > $0
 RECENT_ADF_WINDOW    = 90          # days for recent cointegration check
-RECENT_ADF_PVAL      = 0.20        # max ADF p-value on recent spread
+RECENT_ADF_PVAL      = 0.10        # max ADF p-value on recent spread
 RECENT_MOMENTUM_N    = 5           # how many recent trades to check
                                    # reject if combined P&L of last N <= $0
 VIX_MAX_ENTRY        = 25.0        # block new entries when VIX exceeds this level
 WALK_FORWARD_SPLIT   = 0.70        # train/test split for walk-forward validation (70/30)
+MIN_OOS_TRADES     = 5              # minimum OOS trades for walk-forward validity
 
 # ── External APIs ────────────────────────────────────────────────────────────
 # WARNING: do not commit real keys to a public repo — use a secrets.py instead
 AV_API_KEY         = "KCUX8R91HIPN7296"  # Alpha Vantage key (DAILY_ADJUSTED needs paid plan)
 AV_RATE_DELAY      = 12.0               # secs between AV calls (12 = free 5/min; 0.8 = paid)
 FMP_API_KEY        = "VRe6WPJFJWPY7TZ2kz99DB8blWgx1YyR"  # Financial Modeling Prep key
-EARNINGS_BLACKOUT_DAYS = 7             # block entry if earnings within this many days (±)
+EARNINGS_BLACKOUT_DAYS = 14            # block entry if earnings within this many days (±)
 
 # ── Live Trade Tracking ───────────────────────────────────────────────────────
 LIVE_TRADES_CSV          = "live_trades.csv"   # paper trade journal
@@ -126,15 +136,15 @@ MOM_TAKE_PROFIT_PCT      = 0.25          # take profit at +25%
 
 # ── Momentum — Capital & Costs ────────────────────────────────────────────
 MOM_CAPITAL_PER_TRADE    = 1000.0        # same as pairs for consistency
-MOM_SLIPPAGE_PCT         = 0.001         # 0.10% per trade
+MOM_SLIPPAGE_PCT         = 0.0015        # 0.15% per trade
 MOM_MAX_POSITIONS        = 5             # max concurrent momentum positions
 
 # ── Momentum — Backtest Quality Gates ─────────────────────────────────────
 MOM_MIN_TRADES           = 15            # minimum backtest trades
-MOM_MIN_WIN_RATE         = 45.0          # lower than pairs (momentum wins fewer, bigger)
-MOM_MIN_PROFIT_FACTOR    = 1.2           # lower than pairs
-MOM_MIN_SHARPE           = 0.3           # annualised Sharpe on backtest
-MOM_MIN_TOTAL_PNL        = 30.0          # minimum total P&L ($)
+MOM_MIN_WIN_RATE         = 48.0          # lower than pairs (momentum wins fewer, bigger)
+MOM_MIN_PROFIT_FACTOR    = 1.4           # lower than pairs
+MOM_MIN_SHARPE           = 0.6           # annualised Sharpe on backtest
+MOM_MIN_TOTAL_PNL        = 50.0          # minimum total P&L ($)
 MOM_MAX_MOM_DRAWDOWN     = -300.0        # maximum drawdown ($)
 MOM_MIN_AVG_GAIN_LOSS    = 1.5           # avg win / avg loss ratio > 1.5
 MOM_WALK_FORWARD_SPLIT   = 0.70          # 70/30 train/test
