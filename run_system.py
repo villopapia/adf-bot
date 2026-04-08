@@ -51,13 +51,17 @@ from config import (
     BEAR_MODULE_ENABLED, BEAR_VIX_ACTIVATE,
     BEAR_MAX_POSITIONS,
     EARN_MODULE_ENABLED, EARN_MAX_POSITIONS,
+    SHOCK_MODULE_ENABLED, SHOCK_MAX_POSITIONS,
+    GLOBAL_RISK_ENABLED,
     LIVE_TRADING_ENABLED, ALPACA_SYNC_ON_STARTUP,
 )
 import trade_tracker
 import momentum_tracker
 import bear_tracker
 import earnings_tracker
+import shock_tracker
 import excel_tracker
+import global_risk
 
 # ── Broker (lazy init to avoid import errors if alpaca-py not installed) ────
 _broker = None
@@ -616,11 +620,93 @@ def main():
             print(f"  {R}   Reason : {earn_ks_reason}{RST}")
             print(f"  {D}   To reset: earnings_tracker.reset_earn_kill_switch(){RST}\n")
 
+    # ── Phase 0e: Shock Portfolio Update ────────────────────────────────
+    if SHOCK_MODULE_ENABLED:
+        print(f"  {CY}{B}--- PHASE 0e --- Shock Portfolio Update ---{RST}\n")
+        shock_closed = shock_tracker.check_shock_exits()
+        if shock_closed:
+            print(f"  {G}Shock positions closed today:{RST}")
+            for t in shock_closed:
+                pnl  = float(t.get("net_pnl", 0))
+                pc   = G if pnl > 0 else R
+                icon = "+" if pnl > 0 else "-"
+                print(f"    {pc}{icon}{RST} {t['ticker']}  "
+                      f"exit={t.get('exit_reason', '')}  "
+                      f"hold={t.get('hold_days', '')}d  "
+                      f"P&L={pc}${pnl:>+.2f}{RST}")
+            print()
+        else:
+            print(f"  {D}No shock positions closed today.{RST}\n")
+
+        shock_tracker.print_shock_portfolio_status()
+        shock_tracker.print_shock_performance_report()
+
+        shock_ks, shock_ks_reason = shock_tracker.is_shock_kill_switch()
+        if shock_ks:
+            print(f"\n  {R}{B}!! SHOCK KILL SWITCH ACTIVE{RST}")
+            print(f"  {R}   Reason : {shock_ks_reason}{RST}")
+            print(f"  {D}   To reset: shock_tracker.reset_shock_kill_switch(){RST}\n")
+
+        # Broker: emergency liquidation if kill switch
+        if LIVE_TRADING_ENABLED and shock_ks:
+            try:
+                broker = _get_broker()
+                if broker.is_active:
+                    open_shock = shock_tracker.get_open_shock_trades()
+                    if open_shock:
+                        liq = broker.liquidate_all(
+                            [t["trade_id"] for t in open_shock], "shock")
+                        print(f"  {R}Shock emergency liquidation: "
+                              f"{liq['positions_closed']} positions closed{RST}")
+            except Exception:
+                pass
+
     # ── Excel Tracker: update prices & process close requests ────────────
     try:
         excel_tracker.update_all()
     except Exception as e:
         print(f"  {Y}Excel tracker update failed: {e}{RST}\n")
+
+    # ── Global Risk Assessment ──────────────────────────────────────────
+    # Runs after all exit phases, before any new entry phases.
+    # Determines whether the portfolio can accept new trades.
+    global_tier = "ALLOW"
+    if GLOBAL_RISK_ENABLED:
+        print(f"  {CY}{B}--- Global Risk Assessment ---{RST}\n")
+        risk_result = global_risk.run_global_risk_check(verbose=True)
+        global_tier = risk_result["tier"]
+
+        if global_tier == "LIQUIDATE":
+            print(f"  {R}{B}!! GLOBAL RISK: LIQUIDATE TIER ACTIVE{RST}")
+            print(f"  {R}   Closing all positions across all modules.{RST}\n")
+            if LIVE_TRADING_ENABLED:
+                try:
+                    broker = _get_broker()
+                    if broker.is_active:
+                        # Gather all open trade IDs from every module
+                        all_open_ids = []
+                        for t in trade_tracker.get_open_trades():
+                            all_open_ids.append(t["trade_id"])
+                        for t in momentum_tracker.get_open_mom_trades():
+                            all_open_ids.append(t["trade_id"])
+                        for t in bear_tracker.get_open_bear_trades():
+                            all_open_ids.append(t["trade_id"])
+                        for t in earnings_tracker.get_open_earn_trades():
+                            all_open_ids.append(t["trade_id"])
+                        for t in shock_tracker.get_open_shock_trades():
+                            all_open_ids.append(t["trade_id"])
+                        if all_open_ids:
+                            liq = broker.liquidate_all(all_open_ids, "global_risk")
+                            print(f"  {R}Global liquidation: "
+                                  f"{liq['positions_closed']} positions closed{RST}")
+                except Exception as e:
+                    print(f"  {R}Global liquidation failed: {e}{RST}")
+            print(f"  {R}To reset: global_risk.reset_liquidation(){RST}\n")
+
+        elif global_tier == "FREEZE":
+            print(f"  {Y}{B}!! GLOBAL RISK: FREEZE TIER ACTIVE{RST}")
+            print(f"  {Y}   All new entries blocked. Exit logic still runs.{RST}")
+            print(f"  {D}   To reset: global_risk.reset_freeze(){RST}\n")
 
     # ── Phase 1: Scanner ─────────────────────────────────────────────────
     if should_run_scanner(args.scan or args.scan_only):
@@ -702,14 +788,24 @@ def main():
         if diamonds:
             ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
             logged, skipped_cap, skipped_ks, skipped_corr = [], [], [], []
+            skipped_global = []
             for d in diamonds:
-                if ks_active:
+                if global_tier != "ALLOW":
+                    skipped_global.append(d)
+                elif ks_active:
                     skipped_ks.append(d)
                 elif trade_tracker.at_portfolio_cap():
                     skipped_cap.append(d)
                 elif trade_tracker.is_correlated_with_open(d["a"], d["b"]):
                     skipped_corr.append(d)
                 else:
+                    # Global risk gatekeeper check
+                    gr_ok, gr_reason = global_risk.may_enter(
+                        d["a"], d["live"]["direction"],
+                        float(d["bt"].get("total_pnl", 1000)), "pairs")
+                    if not gr_ok:
+                        skipped_global.append(d)
+                        continue
                     tid = trade_tracker.log_entry(d)
                     try:
                         excel_tracker.log_pair_entry(d)
@@ -746,6 +842,9 @@ def main():
                 for d in skipped_corr:
                     print(f"    {Y}-{RST} {d['a']}/{d['b']}  "
                           f"{d['live']['direction']}")
+            if skipped_global:
+                print(f"  {Y}Skipped {len(skipped_global)} signal(s) — "
+                      f"global risk limit{RST}")
             print()
 
         # ── Rejected summary ─────────────────────────────────────────────
@@ -843,8 +942,11 @@ def main():
                         if mom_diamonds:
                             mom_ks, _ = momentum_tracker.is_mom_kill_switch()
                             m_logged, m_skip_cap, m_skip_ks, m_skip_corr = [], [], [], []
+                            m_skip_global = []
                             for d in mom_diamonds:
-                                if mom_ks:
+                                if global_tier != "ALLOW":
+                                    m_skip_global.append(d)
+                                elif mom_ks:
                                     m_skip_ks.append(d)
                                 elif momentum_tracker.at_mom_cap():
                                     m_skip_cap.append(d)
@@ -852,6 +954,11 @@ def main():
                                         d["ticker"]):
                                     m_skip_corr.append(d)
                                 else:
+                                    gr_ok, gr_reason = global_risk.may_enter(
+                                        d["ticker"], "LONG", 1000.0, "momentum")
+                                    if not gr_ok:
+                                        m_skip_global.append(d)
+                                        continue
                                     tid = momentum_tracker.log_mom_entry(
                                         d, vix_scale=vix_scale)
                                     try:
@@ -888,6 +995,9 @@ def main():
                             if m_skip_corr:
                                 print(f"  {Y}Skipped {len(m_skip_corr)} — "
                                       f"correlated with open position(s){RST}")
+                            if m_skip_global:
+                                print(f"  {Y}Skipped {len(m_skip_global)} — "
+                                      f"global risk limit{RST}")
                             print()
 
                         # Rejected summary
@@ -947,6 +1057,10 @@ def main():
 
                     # Auto-log bounce diamonds
                     for d in bear_result.get("bounce_verified", []):
+                        if global_tier != "ALLOW":
+                            print(f"  {Y}Skipped bounce -- "
+                                  f"global risk {global_tier}{RST}")
+                            break
                         bear_ks, _ = bear_tracker.is_bear_kill_switch()
                         if bear_ks:
                             print(f"  {R}Skipped bounce -- "
@@ -957,6 +1071,11 @@ def main():
                                   f"bear at cap "
                                   f"({BEAR_MAX_POSITIONS} positions){RST}")
                             break
+                        gr_ok, gr_reason = global_risk.may_enter(
+                            d["ticker"], "LONG", 1000.0, "bear")
+                        if not gr_ok:
+                            print(f"  {Y}Skipped bounce -- {gr_reason}{RST}")
+                            continue
                         regime = bear_result["regime"]
                         tid = bear_tracker.log_bear_entry(
                             d, module="bounce",
@@ -986,6 +1105,10 @@ def main():
 
                     # Auto-log short diamonds
                     for d in bear_result.get("short_verified", []):
+                        if global_tier != "ALLOW":
+                            print(f"  {Y}Skipped short -- "
+                                  f"global risk {global_tier}{RST}")
+                            break
                         bear_ks, _ = bear_tracker.is_bear_kill_switch()
                         if bear_ks:
                             print(f"  {R}Skipped short -- "
@@ -996,6 +1119,11 @@ def main():
                                   f"bear at cap "
                                   f"({BEAR_MAX_POSITIONS} positions){RST}")
                             break
+                        gr_ok, gr_reason = global_risk.may_enter(
+                            d["ticker"], "LONG", 500.0, "bear")
+                        if not gr_ok:
+                            print(f"  {Y}Skipped short -- {gr_reason}{RST}")
+                            continue
                         regime = bear_result["regime"]
                         tid = bear_tracker.log_bear_entry(
                             d, module="short",
@@ -1077,6 +1205,9 @@ def main():
 
                     # Auto-log verified diamonds
                     for d in earn_result.get("verified", []):
+                        if global_tier != "ALLOW":
+                            print(f"  {Y}Skipped -- global risk {global_tier}{RST}")
+                            break
                         earn_ks, _ = earnings_tracker.is_earn_kill_switch()
                         if earn_ks:
                             print(f"  {R}Skipped -- earnings kill switch active{RST}")
@@ -1086,6 +1217,11 @@ def main():
                                   f"earnings at cap "
                                   f"({EARN_MAX_POSITIONS} positions){RST}")
                             break
+                        gr_ok, gr_reason = global_risk.may_enter(
+                            d["ticker"], "LONG", 1000.0, "earnings")
+                        if not gr_ok:
+                            print(f"  {Y}Skipped {d['ticker']} -- {gr_reason}{RST}")
+                            continue
                         tid = earnings_tracker.log_earn_entry(d)
                         try:
                             excel_tracker.log_earn_entry(d)
@@ -1109,6 +1245,104 @@ def main():
 
             except Exception as e:
                 print(f"\n  {R}Earnings phase failed: {e}{RST}")
+                traceback.print_exc()
+                print()
+
+    # ── Phase 6: Policy Shock Bounce (unconditional) ────────────────────
+    if SHOCK_MODULE_ENABLED:
+        print(f"  {CY}{B}--- PHASE 6 --- Policy Shock Bounce ---{RST}\n")
+
+        shock_ks, _ = shock_tracker.is_shock_kill_switch()
+        if shock_ks:
+            print(f"  {R}Shock kill switch active -- skipping new entries.{RST}\n")
+        else:
+            try:
+                import importlib
+                shock_mod = importlib.import_module("shock_signal")
+                importlib.reload(shock_mod)
+
+                open_shock_tickers = {
+                    t["ticker"]
+                    for t in shock_tracker.get_open_shock_trades()
+                }
+                _shock_vix = result.get("vix") if result else None
+                shock_result = shock_mod.main(
+                    vix_level=_shock_vix,
+                    open_tickers=open_shock_tickers)
+
+                if shock_result:
+                    n_verified = len(shock_result.get("verified", []))
+                    n_rejected = len(shock_result.get("rejected", []))
+
+                    print()
+                    print(f"  {B}{W}{'=' * 60}{RST}")
+                    print(f"  {B}{W}  POLICY SHOCK BOUNCE RESULTS{RST}")
+                    print(f"  {B}{W}{'=' * 60}{RST}")
+                    print(f"    Verified signals : {G}{B}{n_verified}{RST}")
+                    print(f"    Rejected         : {n_rejected}")
+                    print()
+
+                    # Auto-log verified diamonds
+                    for d in shock_result.get("verified", []):
+                        if global_tier != "ALLOW":
+                            print(f"  {Y}Skipped -- global risk {global_tier}{RST}")
+                            break
+                        shock_ks, _ = shock_tracker.is_shock_kill_switch()
+                        if shock_ks:
+                            print(f"  {R}Skipped -- shock kill switch active{RST}")
+                            break
+                        if shock_tracker.at_shock_cap():
+                            print(f"  {Y}Skipped {d['ticker']} -- "
+                                  f"shock at cap "
+                                  f"({SHOCK_MAX_POSITIONS} positions){RST}")
+                            break
+
+                        gr_ok, gr_reason = global_risk.may_enter(
+                            d["ticker"], "LONG", 1000.0, "shock")
+                        if not gr_ok:
+                            print(f"  {Y}Skipped {d['ticker']} -- {gr_reason}{RST}")
+                            continue
+
+                        vix_scale = shock_mod.get_shock_vix_scale(
+                            shock_result.get("vix"))
+                        tid = shock_tracker.log_shock_entry(
+                            d, vix_scale=vix_scale)
+                        try:
+                            excel_tracker.log_shock_entry(
+                                d, vix_scale=vix_scale)
+                        except Exception:
+                            pass
+                        print(f"  {G}+ Shock trade logged: "
+                              f"{d['ticker']}  [{tid}]{RST}")
+
+                        # Broker: submit shock entry
+                        if LIVE_TRADING_ENABLED:
+                            broker = _get_broker()
+                            if broker.is_active:
+                                pt = [t for t in
+                                      shock_tracker.get_open_shock_trades()
+                                      if t["trade_id"] == tid]
+                                if pt:
+                                    broker.submit_entry_single(
+                                        tid, d["ticker"],
+                                        float(pt[0]["shares"]),
+                                        "buy", "shock")
+
+                    # Rejected summary
+                    shock_rejected = shock_result.get("rejected", [])
+                    if shock_rejected:
+                        print(f"\n  {D}-- Shock Rejected "
+                              f"({len(shock_rejected)}) --{RST}")
+                        for r in shock_rejected[:5]:
+                            print(f"    {R}x{RST} {r['ticker']:>6}  "
+                                  f"{r['bt'].get('reason', '')}")
+                        if len(shock_rejected) > 5:
+                            print(f"    {D}... and "
+                                  f"{len(shock_rejected) - 5} more{RST}")
+                        print()
+
+            except Exception as e:
+                print(f"\n  {R}Shock phase failed: {e}{RST}")
                 traceback.print_exc()
                 print()
 

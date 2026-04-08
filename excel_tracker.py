@@ -3,7 +3,7 @@
  EXCEL TRACKER  -  Simple Excel-Based Paper Trading Journal
 ================================================================================
  Zero-setup paper trading via an Excel file (paper_trades.xlsx).
- Three sheets: Pairs, Momentum, Bear.
+ Sheets: Pairs, Momentum, Bear, Earnings, Shock.
 
  How it works:
    1. When diamond signals fire, entries are auto-logged with entry price/date.
@@ -51,6 +51,16 @@ BEAR_HEADERS = [
     "Hold Days", "Notes",
 ]
 
+SHOCK_HEADERS = [
+    "Trade ID", "Date Opened", "Ticker", "Direction",
+    "Entry Price", "Shares", "Capital Deployed",
+    "Shock Drop%", "VIX Spike",
+    "Status",
+    "Current Price", "Unrealized P/L",
+    "Date Closed", "Exit Price", "Realized P/L",
+    "Hold Days", "Notes",
+]
+
 EARN_HEADERS = [
     "Trade ID", "Date Opened", "Ticker", "Direction",
     "Entry Price", "Shares", "Capital Deployed",
@@ -90,6 +100,7 @@ def _get_workbook():
         "Momentum": MOM_HEADERS,
         "Bear":     BEAR_HEADERS,
         "Earnings": EARN_HEADERS,
+        "Shock":    SHOCK_HEADERS,
     }
     first = True
     for name, headers in sheets.items():
@@ -546,6 +557,115 @@ def update_earn_prices():
     return closed_ids
 
 
+# ── Shock ────────────────────────────────────────────────────────────────────
+
+def log_shock_entry(signal: dict, vix_scale: float = 1.0) -> str:
+    """Log a shock bounce diamond to the Shock sheet. Returns trade_id."""
+    wb = _get_workbook()
+    ws = _ensure_sheet(wb, "Shock", SHOCK_HEADERS)
+
+    today    = datetime.date.today().strftime("%Y-%m-%d")
+    ticker   = signal["ticker"]
+    live     = signal["live"]
+    price    = float(live["price"])
+    capital  = 1000.0 * vix_scale
+    shares   = round(capital / price, 4)
+    trade_id = f"{today.replace('-', '')}_shock_{ticker}"
+
+    shock_drop = round(float(live.get("shock_return", 0)) * 100, 1)
+    vix_spike  = round(float(live.get("vix_spike", 0)), 1)
+
+    # Columns: Trade ID, Date Opened, Ticker, Direction,
+    #  Entry Price, Shares, Capital Deployed,
+    #  Shock Drop%, VIX Spike,
+    #  Status, Current Price, Unrealized P/L,
+    #  Date Closed, Exit Price, Realized P/L,
+    #  Hold Days, Notes
+    row = [
+        trade_id, today, ticker, "LONG",
+        round(price, 4), shares, round(capital, 2),
+        shock_drop, vix_spike,
+        "OPEN",
+        round(price, 4), 0.0,
+        "", "", "",
+        0, "",
+    ]
+    ws.append(row)
+    _style_data_row(ws, ws.max_row, "OPEN")
+    _save(wb)
+    return trade_id
+
+
+def update_shock_prices():
+    """Update current prices and unrealized P/L for all OPEN shock trades."""
+    wb = _get_workbook()
+    ws = _ensure_sheet(wb, "Shock", SHOCK_HEADERS)
+    today = datetime.date.today().strftime("%Y-%m-%d")
+    closed_ids = []
+
+    # Column layout (1-indexed):
+    #  1=Trade ID, 2=Date Opened, 3=Ticker, 4=Direction
+    #  5=Entry Price, 6=Shares, 7=Capital Deployed
+    #  8=Shock Drop%, 9=VIX Spike
+    #  10=Status, 11=Current Price, 12=Unrealized P/L
+    #  13=Date Closed, 14=Exit Price, 15=Realized P/L
+    #  16=Hold Days, 17=Notes
+
+    for row_idx in range(2, ws.max_row + 1):
+        status = str(ws.cell(row=row_idx, column=10).value or "").strip().upper()
+        if status == "OPEN":
+            ticker    = ws.cell(row=row_idx, column=3).value
+            entry     = float(ws.cell(row=row_idx, column=5).value or 0)
+            shares    = float(ws.cell(row=row_idx, column=6).value or 0)
+            date_open = str(ws.cell(row=row_idx, column=2).value or today)
+
+            cur = _fetch_price(ticker)
+            if cur is not None:
+                ws.cell(row=row_idx, column=11, value=round(cur, 4))
+            c   = cur if cur else entry
+            pnl = round(shares * (c - entry), 2)
+            ws.cell(row=row_idx, column=12, value=pnl)
+            _color_pnl(ws, row_idx, 12, pnl)
+
+            try:
+                d_open = datetime.datetime.strptime(date_open[:10], "%Y-%m-%d").date()
+                ws.cell(row=row_idx, column=16,
+                        value=(datetime.date.today() - d_open).days)
+            except ValueError:
+                pass
+
+        elif status == "CLOSE":
+            ticker    = ws.cell(row=row_idx, column=3).value
+            entry     = float(ws.cell(row=row_idx, column=5).value or 0)
+            shares    = float(ws.cell(row=row_idx, column=6).value or 0)
+            date_open = str(ws.cell(row=row_idx, column=2).value or today)
+
+            exit_price = (_fetch_price(ticker)
+                          or float(ws.cell(row=row_idx, column=11).value or entry))
+            pnl = round(shares * (exit_price - entry), 2)
+
+            ws.cell(row=row_idx, column=10, value="CLOSED")
+            ws.cell(row=row_idx, column=11, value=round(exit_price, 4))
+            ws.cell(row=row_idx, column=12, value="")
+            ws.cell(row=row_idx, column=13, value=today)
+            ws.cell(row=row_idx, column=14, value=round(exit_price, 4))
+            ws.cell(row=row_idx, column=15, value=round(pnl, 2))
+            _color_pnl(ws, row_idx, 15, pnl)
+            _style_data_row(ws, row_idx, "CLOSED")
+
+            try:
+                d_open = datetime.datetime.strptime(date_open[:10], "%Y-%m-%d").date()
+                ws.cell(row=row_idx, column=16,
+                        value=(datetime.date.today() - d_open).days)
+            except ValueError:
+                pass
+
+            closed_ids.append(ws.cell(row=row_idx, column=1).value)
+
+    _save(wb)
+    return closed_ids
+
+
 # ── Summary sheet ────────────────────────────────────────────────────────────
 
 def update_summary():
@@ -564,7 +684,7 @@ def update_summary():
     ws["A2"].font = Font(italic=True, color="808080")
 
     row = 4
-    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings"]:
+    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings", "Shock"]:
         if sheet_name not in wb.sheetnames:
             continue
         src = wb[sheet_name]
@@ -573,6 +693,8 @@ def update_summary():
             status_col, unreal_col, real_col = 11, 14, 18
         elif sheet_name == "Earnings":
             status_col, unreal_col, real_col = 11, 13, 16
+        elif sheet_name == "Shock":
+            status_col, unreal_col, real_col = 10, 12, 15
         else:
             status_col, unreal_col, real_col = 8, 10, 13
 
@@ -708,16 +830,27 @@ def update_all():
         for tid in c:
             print(f"    [Earnings] CLOSED: {tid}")
 
+    c = update_shock_prices()
+    if c:
+        closed.extend(c)
+        for tid in c:
+            print(f"    [Shock] CLOSED: {tid}")
+
     update_summary()
 
     # Count open positions
     wb = _get_workbook()
     total_open = 0
-    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings"]:
+    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings", "Shock"]:
         if sheet_name not in wb.sheetnames:
             continue
         src = wb[sheet_name]
-        status_col = 11 if sheet_name in ("Pairs", "Earnings") else 8
+        if sheet_name in ("Pairs", "Earnings"):
+            status_col = 11
+        elif sheet_name == "Shock":
+            status_col = 10
+        else:
+            status_col = 8
         for r in range(2, src.max_row + 1):
             s = str(src.cell(row=r, column=status_col).value or "").strip().upper()
             if s == "OPEN":

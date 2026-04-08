@@ -71,13 +71,13 @@ def get_earnings_universe() -> set:
     tickers = set()
     try:
         sp500_df = get_sp500_with_sectors()
-        tickers.update(sp500_df["ticker"].tolist())
+        tickers.update(sp500_df["Symbol"].tolist())
     except Exception as exc:
         _logger.warning(f"[earnings_scanner] S&P 500 fetch failed: {exc}")
 
     try:
         ndx100_df = get_nasdaq100_tickers()
-        tickers.update(ndx100_df["ticker"].tolist())
+        tickers.update(ndx100_df["Symbol"].tolist())
     except Exception as exc:
         _logger.warning(f"[earnings_scanner] Nasdaq-100 fetch failed: {exc}")
 
@@ -108,7 +108,7 @@ def fetch_earnings_calendar(from_date: str, to_date: str) -> list:
         return []
 
     url = (
-        f"https://financialmodelingprep.com/stable/earning_calendar"
+        f"https://financialmodelingprep.com/stable/earnings-calendar"
         f"?from={from_date}&to={to_date}&apikey={FMP_API_KEY}"
     )
     try:

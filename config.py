@@ -301,6 +301,94 @@ EARN_TRADES_CSV              = "earnings_trades.csv"
 EARN_STATE_JSON              = "earnings_state.json"
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  POLICY SHOCK BOUNCE MODULE
+# ══════════════════════════════════════════════════════════════════════════════
+# Detects rapid market drawdowns (tariff announcements, geopolitical shocks)
+# and enters long SPY/QQQ betting on the walkback/reversal pattern.
+# Runs unconditionally (shocks happen in any VIX regime).
+SHOCK_MODULE_ENABLED         = True
+
+# -- Shock Detection Parameters -----------------------------------------------
+SHOCK_INSTRUMENTS            = ["SPY", "QQQ"]       # instruments to trade the bounce
+SHOCK_LOOKBACK_DAYS          = 3             # detect drop over this window
+SHOCK_DROP_THRESHOLD         = -0.03         # -3% over lookback = shock detected
+SHOCK_VIX_SPIKE_MIN          = 3.0           # VIX must jump >= 3 points in 3 days
+SHOCK_COOLDOWN_DAYS          = 5             # min days between shock entries (same ticker)
+
+# -- Entry Filters (avoid catching falling knives) ----------------------------
+SHOCK_WAIT_DAYS              = 1             # wait N days after shock before entry
+SHOCK_RSI_MAX                = 40            # RSI(14) must be < 40 (still oversold)
+SHOCK_ABOVE_200SMA           = False         # do NOT require above 200d SMA (shocks break it)
+
+# -- Exit Parameters ----------------------------------------------------------
+SHOCK_TAKE_PROFIT_PCT        = 0.04          # take profit at +4% (partial recovery)
+SHOCK_STOP_LOSS_PCT          = 0.03          # stop loss at -3% from entry
+SHOCK_MAX_HOLD               = 10            # max hold 10 trading days
+SHOCK_EXIT_VIX_DECLINE       = 0.15          # exit when VIX drops 15% from shock peak
+
+# -- Position Sizing ----------------------------------------------------------
+SHOCK_CAPITAL_PER_TRADE      = 1000.0        # base capital per trade
+SHOCK_SLIPPAGE_PCT           = 0.001         # 0.10% slippage per side
+SHOCK_VIX_TIERS              = {20: 1.0, 25: 0.75, 30: 0.50, 35: 0.25}
+
+# -- Risk Controls -------------------------------------------------------------
+SHOCK_MAX_POSITIONS          = 3             # max concurrent shock trades
+SHOCK_KILL_SWITCH_LOSSES     = 4             # kill after N consecutive losses
+SHOCK_KILL_SWITCH_DD         = -600.0        # kill at drawdown from peak
+
+# -- Trade Tracking ------------------------------------------------------------
+SHOCK_TRADES_CSV             = "shock_trades.csv"
+SHOCK_STATE_JSON             = "shock_state.json"
+
+# -- Backtest Quality Gates ----------------------------------------------------
+SHOCK_BT_MIN_TRADES          = 8             # fewer events than other modules
+SHOCK_BT_MIN_WIN_RATE        = 55.0          # majority of shocks do reverse
+SHOCK_BT_MIN_PROFIT_FACTOR   = 1.3
+SHOCK_BT_MIN_SHARPE          = 0.4
+SHOCK_BT_MIN_TOTAL_PNL       = 20.0
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  GLOBAL RISK MANAGER
+# ══════════════════════════════════════════════════════════════════════════════
+# Cross-module portfolio risk layer.  Three escalation tiers:
+#   Tier 1 (GATEKEEPER): block new entries when exposure limits are breached
+#   Tier 2 (FREEZE):     halt all new entries/exits when drawdown is severe
+#   Tier 3 (LIQUIDATE):  emergency close ALL positions on catastrophic loss
+GLOBAL_RISK_ENABLED          = True
+
+# -- Tier 1: Gatekeeper (blocks new entries) -----------------------------------
+GLOBAL_MAX_CAPITAL_DEPLOYED  = 8000.0        # max $ across all modules combined
+GLOBAL_MAX_POSITIONS         = 15            # max open positions across all modules
+GLOBAL_MAX_TICKER_OVERLAP    = 2             # max times same ticker can appear across modules
+GLOBAL_MAX_DIRECTIONAL_PCT   = 0.80          # max 80% of deployed capital in same direction
+                                             # (prevents "all long US equities" scenario)
+
+# -- Tier 2: Freeze (halts all activity except existing stops) -----------------
+GLOBAL_FREEZE_DRAWDOWN       = -2000.0       # combined realized + unrealized P&L from peak
+GLOBAL_FREEZE_DAILY_LOSS     = -500.0        # single-day combined loss triggers freeze
+
+# -- Tier 3: Liquidation (emergency close everything) -------------------------
+GLOBAL_LIQUIDATE_DRAWDOWN    = -3500.0       # catastrophic loss -> close all positions
+                                             # roughly sum of module kill switches
+
+# -- Asset class mapping (Level 2 directional check) --------------------------
+# Tickers are mapped to asset classes.  Modules long in the same asset class
+# count as directional overlap even if the exact tickers differ.
+GLOBAL_EQUITY_TICKERS        = {
+    "US_LARGE_CAP": ["SPY", "QQQ", "IWM", "SH"],  # SH is inverse, handled separately
+}
+GLOBAL_INVERSE_TICKERS       = ["SH"]       # these count as SHORT equity exposure
+
+# -- Correlation (Level 3, auto-activates when enough trades exist) -----------
+GLOBAL_CORR_MIN_TRADES       = 30           # per module, before correlation kicks in
+GLOBAL_CORR_WINDOW           = 20           # rolling trade-count window
+GLOBAL_CORR_WARN_THRESHOLD   = 0.70         # warn when module-pair correlation > this
+GLOBAL_CORR_BLOCK_THRESHOLD  = 0.85         # block entries when correlation > this
+
+# -- State file ----------------------------------------------------------------
+GLOBAL_RISK_STATE_JSON       = "global_risk_state.json"
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  ALPACA BROKER INTEGRATION
 # ══════════════════════════════════════════════════════════════════════════════
 LIVE_TRADING_ENABLED     = False          # master switch (False = paper-only, no broker)
