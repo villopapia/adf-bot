@@ -73,7 +73,9 @@ from config import (
     MOMENTUM_CANDIDATES_CSV,
     MAX_RETRIES, RETRY_DELAY,
     ERROR_LOG,
+    MOM_EARNINGS_BLACKOUT_PRE, MOM_EARNINGS_BLACKOUT_POST,
 )
+import earnings_util
 
 
 # ==============================================================================
@@ -741,6 +743,65 @@ def main(
             if not live["pass"]:
                 no_signal += 1
                 continue
+
+            # ── Earnings Gate (smart conditional) ─────────────────────────
+            #    Post-earnings: ALWAYS block (gap already priced in).
+            #    Pre-earnings: allow if stock has strong beat history.
+            earn_sym, earn_delta = earnings_util.check_earnings_blackout(
+                ticker,
+                MOM_EARNINGS_BLACKOUT_PRE,
+                MOM_EARNINGS_BLACKOUT_POST,
+            )
+            if earn_sym:
+                when = (f"in {earn_delta}d" if earn_delta >= 0
+                        else f"{abs(earn_delta)}d ago")
+
+                if earn_delta <= 0:
+                    # Post-earnings: always block
+                    print(f"    EARNINGS BLOCK  ({earn_sym} earnings {when}"
+                          f" -- post-earnings cooldown)")
+                    rejected.append({"ticker": ticker, "live": live, "bt": {
+                        "pass": False,
+                        "reason": (f"Earnings Blackout (post): "
+                                   f"{earn_sym} earnings {when}"),
+                        "n_trades": 0, "win_rate": 0.0,
+                        "profit_factor": 0.0, "total_pnl": 0.0,
+                        "avg_pnl": 0.0, "sharpe": 0.0, "sortino": 0.0,
+                        "max_dd": 0.0, "avg_hold": 0.0,
+                        "avg_gain_loss": 0.0,
+                        "oos_pnl": 0.0, "oos_sharpe": 0.0,
+                        "oos_trades": 0,
+                    }})
+                    continue
+
+                # Pre-earnings: check quality
+                eq = earnings_util.assess_earnings_quality(ticker)
+                if eq["allow_pre_earnings"]:
+                    n_beats = int(eq["beat_rate"] * eq["quarters_available"])
+                    print(f"    EARNINGS AHEAD but strong beat history "
+                          f"({n_beats}/{eq['quarters_available']} beats, "
+                          f"{eq['avg_eps_surprise_pct']:+.1f}% avg surprise, "
+                          f"trend={eq['eps_trend']}) -- allowing entry")
+                    # Fall through to backtest
+                else:
+                    n_beats = int(eq["beat_rate"] * eq["quarters_available"])
+                    print(f"    EARNINGS BLOCK  ({earn_sym} earnings {when}, "
+                          f"weak history {n_beats}/{eq['quarters_available']}"
+                          f" = {eq['beat_rate']:.0%})")
+                    rejected.append({"ticker": ticker, "live": live, "bt": {
+                        "pass": False,
+                        "reason": (f"Earnings Blackout (pre, weak): "
+                                   f"{earn_sym} {when}, "
+                                   f"beat={eq['beat_rate']:.0%}"),
+                        "n_trades": 0, "win_rate": 0.0,
+                        "profit_factor": 0.0, "total_pnl": 0.0,
+                        "avg_pnl": 0.0, "sharpe": 0.0, "sortino": 0.0,
+                        "max_dd": 0.0, "avg_hold": 0.0,
+                        "avg_gain_loss": 0.0,
+                        "oos_pnl": 0.0, "oos_sharpe": 0.0,
+                        "oos_trades": 0,
+                    }})
+                    continue
 
             # 5. Walk-forward backtest
             bt = backtest_momentum(signals, ticker, vix_scale)

@@ -163,6 +163,11 @@ MOM_ACTIVATION_MODE      = "complement"  # "complement" = only when pairs idle
 # ── Momentum — News/Catalyst Detection ────────────────────────────────────
 MOM_EARNINGS_BOOST       = True          # boost rank if positive earnings surprise
 MOM_EARNINGS_SURPRISE_MIN = 5.0          # min +5% EPS surprise to count as catalyst
+MOM_EARNINGS_BLACKOUT_PRE  = 7           # block entry if earnings upcoming within N days
+MOM_EARNINGS_BLACKOUT_POST = 5           # block entry if earnings reported within last N days (gap already priced in)
+MOM_EARNINGS_BEAT_RATE_MIN   = 0.75     # min beat rate to allow pre-earnings entry (75%)
+MOM_EARNINGS_MIN_QUARTERS    = 3        # min quarters of historical data required
+MOM_EARNINGS_ALLOW_DECLINING = False    # if True, allow entry even with declining EPS trend
 
 # ── Momentum — Scanner ────────────────────────────────────────────────────
 MOM_SCANNER_INTERVAL_DAYS = 1            # rescan daily (momentum changes fast)

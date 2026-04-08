@@ -59,6 +59,7 @@
 
 import warnings, datetime, time, logging, os, requests
 warnings.filterwarnings("ignore")
+import earnings_util
 
 import numpy as np
 import pandas as pd
@@ -122,9 +123,9 @@ _av_cache: dict[str, pd.Series] = {}
 
 
 def _clear_caches() -> None:
-    global _av_cache, _fmp_earnings_cache
+    global _av_cache
     _av_cache = {}
-    _fmp_earnings_cache = {}
+    earnings_util.clear_earnings_cache()
 
 
 def _fetch_av_ticker(symbol: str) -> "pd.Series | None":
@@ -185,62 +186,8 @@ def _fetch_av_ticker(symbol: str) -> "pd.Series | None":
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-#  FMP EARNINGS BLACKOUT — Gate E
+#  FMP EARNINGS BLACKOUT — Gate E  (logic moved to earnings_util.py)
 # ──────────────────────────────────────────────────────────────────────────────
-# Earnings announcements are the single biggest cointegration breaker.
-# If either leg reports within ±EARNINGS_BLACKOUT_DAYS of today, block entry.
-# Results cached per run — each ticker fetched at most once per main() call.
-_fmp_earnings_cache: dict[str, list] = {}
-
-
-def _fetch_earnings_dates(symbol: str) -> list:
-    """
-    Fetch recent + upcoming earnings dates for a ticker from FMP.
-    Returns a list of datetime.date objects (empty on failure or missing key).
-    Cached per run.
-    """
-    global _fmp_earnings_cache
-    if symbol in _fmp_earnings_cache:
-        return _fmp_earnings_cache[symbol]
-    if not FMP_API_KEY:
-        _fmp_earnings_cache[symbol] = []
-        return []
-    try:
-        resp = requests.get(
-            "https://financialmodelingprep.com/stable/earnings",
-            params={"symbol": symbol, "limit": 8, "apikey": FMP_API_KEY},
-            timeout=10,
-        )
-        data = resp.json()
-        if not isinstance(data, list):
-            _fmp_earnings_cache[symbol] = []
-            return []
-        dates = [
-            datetime.date.fromisoformat(row["date"])
-            for row in data if row.get("date")
-        ]
-        _fmp_earnings_cache[symbol] = dates
-        return dates
-    except Exception as e:
-        _err_logger.warning(f"FMP earnings fetch failed for {symbol}: {e}")
-        _fmp_earnings_cache[symbol] = []
-        return []
-
-
-def check_earnings_blackout(a: str, b: str):
-    """
-    Returns (ticker, delta_days) if either leg has earnings within
-    ±EARNINGS_BLACKOUT_DAYS of today, else (None, None).
-    delta_days < 0 means earnings was N days ago; > 0 means N days ahead.
-    """
-    today = datetime.date.today()
-    for symbol in (a, b):
-        for edate in _fetch_earnings_dates(symbol):
-            delta = (edate - today).days
-            if abs(delta) <= EARNINGS_BLACKOUT_DAYS:
-                return symbol, delta
-    return None, None
-
 
 # ──────────────────────────────────────────────────────────────────────────────
 #  VIX REGIME FILTER
@@ -1056,7 +1003,7 @@ def main() -> dict:
             # ── GATE E: Earnings Blackout ─────────────────────────────────
             #    Block entry if either leg reports within ±EARNINGS_BLACKOUT_DAYS.
             #    Checked before the expensive backtest to save computation.
-            earn_sym, earn_delta = check_earnings_blackout(a, b)
+            earn_sym, earn_delta = earnings_util.check_pair_earnings_blackout(a, b)
             if earn_sym:
                 when = (f"in {earn_delta}d" if earn_delta >= 0
                         else f"{abs(earn_delta)}d ago")

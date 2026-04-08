@@ -55,6 +55,7 @@ from config import (
 import trade_tracker
 import momentum_tracker
 import bear_tracker
+import excel_tracker
 
 # ── Broker (lazy init to avoid import errors if alpaca-py not installed) ────
 _broker = None
@@ -586,6 +587,12 @@ def main():
                     print(f"  {R}   [BROKER] Emergency liquidation: "
                           f"{liq['positions_closed']} positions closed{RST}")
 
+    # ── Excel Tracker: update prices & process close requests ────────────
+    try:
+        excel_tracker.update_all()
+    except Exception as e:
+        print(f"  {Y}Excel tracker update failed: {e}{RST}\n")
+
     # ── Phase 1: Scanner ─────────────────────────────────────────────────
     if should_run_scanner(args.scan or args.scan_only):
         run_scanner()
@@ -675,6 +682,10 @@ def main():
                     skipped_corr.append(d)
                 else:
                     tid = trade_tracker.log_entry(d)
+                    try:
+                        excel_tracker.log_pair_entry(d)
+                    except Exception:
+                        pass
                     logged.append((d, tid))
                     # Broker: submit pairs entry to Alpaca
                     if LIVE_TRADING_ENABLED:
@@ -814,6 +825,11 @@ def main():
                                 else:
                                     tid = momentum_tracker.log_mom_entry(
                                         d, vix_scale=vix_scale)
+                                    try:
+                                        excel_tracker.log_momentum_entry(
+                                            d, vix_scale=vix_scale)
+                                    except Exception:
+                                        pass
                                     m_logged.append((d, tid))
                                     # Broker: submit momentum entry
                                     if LIVE_TRADING_ENABLED:
@@ -918,6 +934,12 @@ def main():
                             vix_scale=regime["vix_scale"],
                             capitulation=bear_result.get(
                                 "capitulation", False))
+                        try:
+                            excel_tracker.log_bear_entry(
+                                d, module="bounce",
+                                vix_scale=regime["vix_scale"])
+                        except Exception:
+                            pass
                         print(f"  {G}+ Bounce trade logged: "
                               f"{d['ticker']}  [{tid}]{RST}")
                         # Broker: submit bounce entry
@@ -949,6 +971,12 @@ def main():
                         tid = bear_tracker.log_bear_entry(
                             d, module="short",
                             vix_scale=regime["vix_scale"])
+                        try:
+                            excel_tracker.log_bear_entry(
+                                d, module="short",
+                                vix_scale=regime["vix_scale"])
+                        except Exception:
+                            pass
                         print(f"  {G}+ Short trade logged: "
                               f"{d['ticker']}  [{tid}]{RST}")
                         # Broker: submit short entry
