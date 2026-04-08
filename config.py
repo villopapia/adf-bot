@@ -360,8 +360,8 @@ GLOBAL_RISK_ENABLED          = True
 GLOBAL_MAX_CAPITAL_DEPLOYED  = 8000.0        # max $ across all modules combined
 GLOBAL_MAX_POSITIONS         = 15            # max open positions across all modules
 GLOBAL_MAX_TICKER_OVERLAP    = 2             # max times same ticker can appear across modules
-GLOBAL_MAX_DIRECTIONAL_PCT   = 0.80          # max 80% of deployed capital in same direction
-                                             # (prevents "all long US equities" scenario)
+GLOBAL_MAX_DIRECTIONAL_PCT   = 1.00          # 100% until bear/short positions exist
+                                             # reduce to 0.80 once portfolio has mixed directions
 
 # -- Tier 2: Freeze (halts all activity except existing stops) -----------------
 GLOBAL_FREEZE_DRAWDOWN       = -2000.0       # combined realized + unrealized P&L from peak
