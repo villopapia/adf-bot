@@ -51,6 +51,16 @@ BEAR_HEADERS = [
     "Hold Days", "Notes",
 ]
 
+EARN_HEADERS = [
+    "Trade ID", "Date Opened", "Ticker", "Direction",
+    "Entry Price", "Shares", "Capital Deployed",
+    "Earnings Date", "Beat Rate", "EPS Trend",
+    "Status",
+    "Current Price", "Unrealized P/L",
+    "Date Closed", "Exit Price", "Realized P/L",
+    "Hold Days", "Notes",
+]
+
 # ── Styles ───────────────────────────────────────────────────────────────────
 
 _HEADER_FONT = Font(bold=True, color="FFFFFF", size=11)
@@ -79,6 +89,7 @@ def _get_workbook():
         "Pairs":    PAIRS_HEADERS,
         "Momentum": MOM_HEADERS,
         "Bear":     BEAR_HEADERS,
+        "Earnings": EARN_HEADERS,
     }
     first = True
     for name, headers in sheets.items():
@@ -431,6 +442,110 @@ def update_bear_prices():
     return closed_ids
 
 
+# ── Earnings ─────────────────────────────────────────────────────────────────
+
+def log_earn_entry(signal: dict) -> str:
+    """Log an earnings diamond to the Earnings sheet. Returns trade_id."""
+    wb = _get_workbook()
+    ws = _ensure_sheet(wb, "Earnings", EARN_HEADERS)
+
+    today    = datetime.date.today().strftime("%Y-%m-%d")
+    ticker   = signal["ticker"]
+    live     = signal["live"]
+    price    = float(live["price"])
+    capital  = 1000.0
+    shares   = round(capital / price, 4)
+    trade_id = f"{today.replace('-', '')}_earn_{ticker}"
+
+    beat_rate  = round(float(live.get("beat_rate", 0)) * 100, 1)
+    eps_trend  = str(live.get("eps_trend", ""))
+    earn_date  = str(live.get("earnings_date", ""))
+
+    row = [
+        trade_id, today, ticker, "LONG",
+        round(price, 4), shares, round(capital, 2),
+        earn_date, beat_rate, eps_trend,
+        "OPEN",
+        round(price, 4), 0.0,   # current = entry on day 1
+        "", "", "",              # close fields
+        0, "",                   # hold days, notes
+    ]
+    ws.append(row)
+    _style_data_row(ws, ws.max_row, "OPEN")
+    _save(wb)
+    return trade_id
+
+
+def update_earn_prices():
+    """Update current prices and unrealized P/L for all OPEN earnings trades."""
+    wb = _get_workbook()
+    ws = _ensure_sheet(wb, "Earnings", EARN_HEADERS)
+    today = datetime.date.today().strftime("%Y-%m-%d")
+    closed_ids = []
+
+    # Column layout (1-indexed):
+    #  1=Trade ID, 2=Date Opened, 3=Ticker, 4=Direction
+    #  5=Entry Price, 6=Shares, 7=Capital Deployed
+    #  8=Earnings Date, 9=Beat Rate, 10=EPS Trend
+    #  11=Status, 12=Current Price, 13=Unrealized P/L
+    #  14=Date Closed, 15=Exit Price, 16=Realized P/L
+    #  17=Hold Days, 18=Notes
+
+    for row_idx in range(2, ws.max_row + 1):
+        status = str(ws.cell(row=row_idx, column=11).value or "").strip().upper()
+        if status == "OPEN":
+            ticker    = ws.cell(row=row_idx, column=3).value
+            entry     = float(ws.cell(row=row_idx, column=5).value or 0)
+            shares    = float(ws.cell(row=row_idx, column=6).value or 0)
+            date_open = str(ws.cell(row=row_idx, column=2).value or today)
+
+            cur = _fetch_price(ticker)
+            if cur is not None:
+                ws.cell(row=row_idx, column=12, value=round(cur, 4))
+            c   = cur if cur else entry
+            pnl = round(shares * (c - entry), 2)
+            ws.cell(row=row_idx, column=13, value=pnl)
+            _color_pnl(ws, row_idx, 13, pnl)
+
+            try:
+                d_open = datetime.datetime.strptime(date_open[:10], "%Y-%m-%d").date()
+                ws.cell(row=row_idx, column=17,
+                        value=(datetime.date.today() - d_open).days)
+            except ValueError:
+                pass
+
+        elif status == "CLOSE":
+            ticker    = ws.cell(row=row_idx, column=3).value
+            entry     = float(ws.cell(row=row_idx, column=5).value or 0)
+            shares    = float(ws.cell(row=row_idx, column=6).value or 0)
+            date_open = str(ws.cell(row=row_idx, column=2).value or today)
+
+            exit_price = (_fetch_price(ticker)
+                          or float(ws.cell(row=row_idx, column=12).value or entry))
+            pnl = round(shares * (exit_price - entry), 2)
+
+            ws.cell(row=row_idx, column=11, value="CLOSED")
+            ws.cell(row=row_idx, column=12, value=round(exit_price, 4))
+            ws.cell(row=row_idx, column=13, value="")  # clear unrealized
+            ws.cell(row=row_idx, column=14, value=today)
+            ws.cell(row=row_idx, column=15, value=round(exit_price, 4))
+            ws.cell(row=row_idx, column=16, value=round(pnl, 2))
+            _color_pnl(ws, row_idx, 16, pnl)
+            _style_data_row(ws, row_idx, "CLOSED")
+
+            try:
+                d_open = datetime.datetime.strptime(date_open[:10], "%Y-%m-%d").date()
+                ws.cell(row=row_idx, column=17,
+                        value=(datetime.date.today() - d_open).days)
+            except ValueError:
+                pass
+
+            closed_ids.append(ws.cell(row=row_idx, column=1).value)
+
+    _save(wb)
+    return closed_ids
+
+
 # ── Summary sheet ────────────────────────────────────────────────────────────
 
 def update_summary():
@@ -449,13 +564,15 @@ def update_summary():
     ws["A2"].font = Font(italic=True, color="808080")
 
     row = 4
-    for sheet_name in ["Pairs", "Momentum", "Bear"]:
+    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings"]:
         if sheet_name not in wb.sheetnames:
             continue
         src = wb[sheet_name]
         # Determine column indices based on sheet
         if sheet_name == "Pairs":
             status_col, unreal_col, real_col = 11, 14, 18
+        elif sheet_name == "Earnings":
+            status_col, unreal_col, real_col = 11, 13, 16
         else:
             status_col, unreal_col, real_col = 8, 10, 13
 
@@ -499,12 +616,14 @@ def update_summary():
     row += 1
     # Recalculate
     grand_unreal, grand_real = 0.0, 0.0
-    for sheet_name in ["Pairs", "Momentum", "Bear"]:
+    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings"]:
         if sheet_name not in wb.sheetnames:
             continue
         src = wb[sheet_name]
         if sheet_name == "Pairs":
             status_col, unreal_col, real_col = 11, 14, 18
+        elif sheet_name == "Earnings":
+            status_col, unreal_col, real_col = 11, 13, 16
         else:
             status_col, unreal_col, real_col = 8, 10, 13
         for r in range(2, src.max_row + 1):
@@ -583,16 +702,22 @@ def update_all():
         for tid in c:
             print(f"    [Bear] CLOSED: {tid}")
 
+    c = update_earn_prices()
+    if c:
+        closed.extend(c)
+        for tid in c:
+            print(f"    [Earnings] CLOSED: {tid}")
+
     update_summary()
 
     # Count open positions
     wb = _get_workbook()
     total_open = 0
-    for sheet_name in ["Pairs", "Momentum", "Bear"]:
+    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings"]:
         if sheet_name not in wb.sheetnames:
             continue
         src = wb[sheet_name]
-        status_col = 11 if sheet_name == "Pairs" else 8
+        status_col = 11 if sheet_name in ("Pairs", "Earnings") else 8
         for r in range(2, src.max_row + 1):
             s = str(src.cell(row=r, column=status_col).value or "").strip().upper()
             if s == "OPEN":

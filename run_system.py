@@ -50,11 +50,13 @@ from config import (
     VIX_MAX_ENTRY,
     BEAR_MODULE_ENABLED, BEAR_VIX_ACTIVATE,
     BEAR_MAX_POSITIONS,
+    EARN_MODULE_ENABLED, EARN_MAX_POSITIONS,
     LIVE_TRADING_ENABLED, ALPACA_SYNC_ON_STARTUP,
 )
 import trade_tracker
 import momentum_tracker
 import bear_tracker
+import earnings_tracker
 import excel_tracker
 
 # ── Broker (lazy init to avoid import errors if alpaca-py not installed) ────
@@ -587,6 +589,33 @@ def main():
                     print(f"  {R}   [BROKER] Emergency liquidation: "
                           f"{liq['positions_closed']} positions closed{RST}")
 
+    # ── Phase 0d: Earnings Portfolio Update ────────────────────────────────
+    if EARN_MODULE_ENABLED:
+        print(f"  {CY}{B}--- PHASE 0d --- Earnings Portfolio Update ---{RST}\n")
+        earn_closed = earnings_tracker.check_earn_exits()
+        if earn_closed:
+            print(f"  {G}Earnings positions closed today:{RST}")
+            for t in earn_closed:
+                pnl  = float(t.get("net_pnl", 0))
+                pc   = G if pnl > 0 else R
+                icon = "+" if pnl > 0 else "-"
+                print(f"    {pc}{icon}{RST} {t['ticker']}  "
+                      f"exit={t.get('exit_reason', '')}  "
+                      f"hold={t.get('hold_days', '')}d  "
+                      f"P&L={pc}${pnl:>+.2f}{RST}")
+            print()
+        else:
+            print(f"  {D}No earnings positions closed today.{RST}\n")
+
+        earnings_tracker.print_earn_portfolio_status()
+        earnings_tracker.print_earn_performance_report()
+
+        earn_ks, earn_ks_reason = earnings_tracker.is_earn_kill_switch()
+        if earn_ks:
+            print(f"\n  {R}{B}!! EARNINGS KILL SWITCH ACTIVE{RST}")
+            print(f"  {R}   Reason : {earn_ks_reason}{RST}")
+            print(f"  {D}   To reset: earnings_tracker.reset_earn_kill_switch(){RST}\n")
+
     # ── Excel Tracker: update prices & process close requests ────────────
     try:
         excel_tracker.update_all()
@@ -1013,6 +1042,75 @@ def main():
                            else "N/A")
             print(f"\n  {D}Bear module skipped "
                   f"(VIX {vix_display} <= {BEAR_VIX_ACTIVATE}).{RST}\n")
+
+    # ── Phase 5: Earnings Strategy (unconditional) ────────────────────────
+    if EARN_MODULE_ENABLED:
+        print(f"  {CY}{B}--- PHASE 5 --- Earnings Strategy ---{RST}\n")
+
+        earn_ks, _ = earnings_tracker.is_earn_kill_switch()
+        if earn_ks:
+            print(f"  {R}Earnings kill switch active -- skipping new entries.{RST}\n")
+        else:
+            try:
+                import importlib
+                earn_mod = importlib.import_module("earnings_signal")
+                importlib.reload(earn_mod)
+
+                # Pass currently open tickers so we don't double-enter
+                open_earn_tickers = {
+                    t["ticker"]
+                    for t in earnings_tracker.get_open_earn_trades()
+                }
+                earn_result = earn_mod.main(open_tickers=open_earn_tickers)
+
+                if earn_result:
+                    n_verified = len(earn_result.get("verified", []))
+                    n_rejected = len(earn_result.get("rejected", []))
+
+                    print()
+                    print(f"  {B}{W}{'=' * 60}{RST}")
+                    print(f"  {B}{W}  EARNINGS STRATEGY RESULTS{RST}")
+                    print(f"  {B}{W}{'=' * 60}{RST}")
+                    print(f"    Verified signals : {G}{B}{n_verified}{RST}")
+                    print(f"    Rejected         : {n_rejected}")
+                    print()
+
+                    # Auto-log verified diamonds
+                    for d in earn_result.get("verified", []):
+                        earn_ks, _ = earnings_tracker.is_earn_kill_switch()
+                        if earn_ks:
+                            print(f"  {R}Skipped -- earnings kill switch active{RST}")
+                            break
+                        if earnings_tracker.at_earn_cap():
+                            print(f"  {Y}Skipped {d['ticker']} -- "
+                                  f"earnings at cap "
+                                  f"({EARN_MAX_POSITIONS} positions){RST}")
+                            break
+                        tid = earnings_tracker.log_earn_entry(d)
+                        try:
+                            excel_tracker.log_earn_entry(d)
+                        except Exception:
+                            pass
+                        print(f"  {G}+ Earnings trade logged: "
+                              f"{d['ticker']}  [{tid}]{RST}")
+
+                    # Rejected summary (first 5)
+                    earn_rejected = earn_result.get("rejected", [])
+                    if earn_rejected:
+                        print(f"\n  {D}-- Earnings Rejected "
+                              f"({len(earn_rejected)}) --{RST}")
+                        for r in earn_rejected[:5]:
+                            print(f"    {R}x{RST} {r['ticker']:>6}  "
+                                  f"{r['bt'].get('reason', '')}")
+                        if len(earn_rejected) > 5:
+                            print(f"    {D}... and "
+                                  f"{len(earn_rejected) - 5} more{RST}")
+                        print()
+
+            except Exception as e:
+                print(f"\n  {R}Earnings phase failed: {e}{RST}")
+                traceback.print_exc()
+                print()
 
     # ── Footer ───────────────────────────────────────────────────────────
     print(f"  {D}Log     → {log_path}{RST}")

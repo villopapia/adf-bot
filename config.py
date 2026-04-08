@@ -272,6 +272,35 @@ BEAR_BT_MIN_TOTAL_PNL    = 30.0
 BOUNCE_INSTRUMENTS       = ["SPY", "QQQ", "IWM"]
 
 # ══════════════════════════════════════════════════════════════════════════════
+#  EARNINGS STRATEGY MODULE
+# ══════════════════════════════════════════════════════════════════════════════
+EARN_MODULE_ENABLED          = True
+
+# -- Entry Parameters --------------------------------------------------------
+EARN_ENTRY_DAYS_BEFORE       = 7            # scan earnings up to N days ahead
+EARN_MIN_BEAT_RATE           = 0.75         # minimum historical beat rate (75%)
+EARN_MIN_QUARTERS            = 3            # minimum quarters of earnings data
+EARN_ALLOW_DECLINING         = False        # allow entry with declining EPS trend
+EARN_REQUIRE_ABOVE_200SMA    = True         # stock must be above 200d SMA
+
+# -- Position Sizing ---------------------------------------------------------
+EARN_CAPITAL_PER_TRADE       = 1000.0       # base capital per earnings trade
+EARN_SLIPPAGE_PCT            = 0.001        # 0.10% slippage per side
+
+# -- Exit Parameters ---------------------------------------------------------
+EARN_STOP_PCT                = 5.0          # stop loss: exit if down 5% before earnings
+EARN_MAX_HOLD                = 10           # max hold in trading days (safety net)
+
+# -- Risk Controls -----------------------------------------------------------
+EARN_MAX_POSITIONS           = 5            # max concurrent earnings trades
+EARN_KILL_SWITCH_LOSSES      = 5            # kill after N consecutive losses
+EARN_KILL_SWITCH_DD          = -500.0       # kill at drawdown from peak
+
+# -- Trade Tracking ----------------------------------------------------------
+EARN_TRADES_CSV              = "earnings_trades.csv"
+EARN_STATE_JSON              = "earnings_state.json"
+
+# ══════════════════════════════════════════════════════════════════════════════
 #  ALPACA BROKER INTEGRATION
 # ══════════════════════════════════════════════════════════════════════════════
 LIVE_TRADING_ENABLED     = False          # master switch (False = paper-only, no broker)
