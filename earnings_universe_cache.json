@@ -1,5 +1,5 @@
 {
-  "timestamp": 1775680089.8091118,
+  "timestamp": 1775821128.4670975,
   "tickers": [
     "A",
     "AAPL",
@@ -81,6 +81,7 @@
     "CAG",
     "CAH",
     "CARR",
+    "CASY",
     "CAT",
     "CB",
     "CBOE",
@@ -233,7 +234,6 @@
     "HIG",
     "HII",
     "HLT",
-    "HOLX",
     "HON",
     "HOOD",
     "HPE",

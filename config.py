@@ -282,6 +282,9 @@ EARN_MIN_BEAT_RATE           = 0.75         # minimum historical beat rate (75%)
 EARN_MIN_QUARTERS            = 3            # minimum quarters of earnings data
 EARN_ALLOW_DECLINING         = False        # allow entry with declining EPS trend
 EARN_REQUIRE_ABOVE_200SMA    = True         # stock must be above 200d SMA
+EARN_MAX_RUNUP_PCT           = 8.0          # reject if 10d return > X% (sell-the-news risk)
+EARN_MIN_REV_SURPRISE_PCT    = 0.0          # require avg revenue surprise >= X% (0 = just positive)
+EARN_SHORT_SQUEEZE_SI        = 0.05         # short interest > 5% of float = squeeze potential flag
 
 # -- Position Sizing ---------------------------------------------------------
 EARN_CAPITAL_PER_TRADE       = 1000.0       # base capital per earnings trade
@@ -299,6 +302,13 @@ EARN_KILL_SWITCH_DD          = -500.0       # kill at drawdown from peak
 # -- Trade Tracking ----------------------------------------------------------
 EARN_TRADES_CSV              = "earnings_trades.csv"
 EARN_STATE_JSON              = "earnings_state.json"
+
+# -- Backtest Quality Gates --------------------------------------------------
+EARN_BT_MIN_TRADES           = 6             # ~6 years / 4 per year, need at least 6
+EARN_BT_MIN_WIN_RATE         = 50.0          # lower bar than other modules (earnings are noisy)
+EARN_BT_MIN_PROFIT_FACTOR    = 1.2           # modest edge required
+EARN_BT_MIN_SHARPE           = 0.3           # low bar -- few trades per ticker
+EARN_BT_MIN_TOTAL_PNL        = 0.0           # must be net positive
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  POLICY SHOCK BOUNCE MODULE

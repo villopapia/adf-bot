@@ -2,3 +2,4 @@ trade_id,date_open,ticker,direction,entry_price,shares,capital_deployed,earnings
 20260408_earn_JPM,2026-04-08,JPM,LONG,307.9700,3.2471,1000.00,2026-04-14,6,0.7500,5.05,flat,open,,,,,,
 20260408_earn_WFC,2026-04-08,WFC,LONG,84.6600,11.8120,1000.00,2026-04-14,6,0.7500,5.42,growing,open,,,,,,
 20260408_earn_GS,2026-04-08,GS,LONG,905.7500,1.1041,1000.00,2026-04-13,5,1.0000,14.62,flat,open,,,,,,
+20260410_earn_PEP,2026-04-10,PEP,LONG,157.4900,6.3496,1000.00,2026-04-16,6,0.7500,1.50,growing,open,,,,,,
