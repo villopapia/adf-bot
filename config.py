@@ -125,7 +125,7 @@ MOM_MIN_AVG_VOLUME       = 500_000       # min 500K shares avg daily volume (20d
 # ── Momentum — Entry Signals ──────────────────────────────────────────────
 MOM_TOP_PCT              = 10            # top decile of 12-1 returns
 MOM_52W_HIGH_PCT         = 0.90          # within 10% of 52-week high
-MOM_VOLUME_RATIO_MIN     = 1.2           # recent volume >= 1.2x 50-day avg
+MOM_VOLUME_RATIO_MIN     = 0.9           # filter declining volume, don't require spike
 MOM_RSI_MIN              = 50            # RSI(14) must be > 50 (uptrend)
 MOM_RSI_MAX              = 80            # RSI(14) < 80 (not overbought)
 MOM_ADX_MIN              = 20            # ADX(14) > 20 (trending, not range-bound)
@@ -277,7 +277,8 @@ BOUNCE_INSTRUMENTS       = ["SPY", "QQQ", "IWM"]
 EARN_MODULE_ENABLED          = True
 
 # -- Entry Parameters --------------------------------------------------------
-EARN_ENTRY_DAYS_BEFORE       = 7            # scan earnings up to N days ahead
+EARN_ENTRY_DAYS_BEFORE       = 5            # scan earnings up to N calendar days ahead
+EARN_MIN_DAYS_BEFORE         = 2            # reject if earnings < N calendar days away
 EARN_MIN_BEAT_RATE           = 0.75         # minimum historical beat rate (75%)
 EARN_MIN_QUARTERS            = 3            # minimum quarters of earnings data
 EARN_ALLOW_DECLINING         = False        # allow entry with declining EPS trend

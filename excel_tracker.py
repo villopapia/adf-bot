@@ -15,7 +15,7 @@
 ================================================================================
 """
 
-import os, datetime
+import os, csv, datetime
 import yfinance as yf
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font, PatternFill, Alignment, numbers
@@ -796,6 +796,305 @@ def _color_pnl(ws, row_idx, col, pnl):
     cell.font = _GREEN_FONT if pnl >= 0 else _RED_FONT
 
 
+# ── CSV-to-Excel Sync ───────────────────────────────────────────────────────
+
+def _read_csv_trades(csv_path: str) -> list:
+    """Read a trades CSV into a list of dicts. Returns [] on failure."""
+    if not os.path.exists(csv_path):
+        return []
+    try:
+        with open(csv_path, "r", encoding="utf-8") as f:
+            return list(csv.DictReader(f))
+    except Exception:
+        return []
+
+
+def _sync_earn_csv(wb) -> int:
+    """
+    Sync earnings_trades.csv into the Earnings Excel sheet.
+    - Closed CSV trades with OPEN Excel rows -> mark CLOSED with CSV exit data
+    - CSV trades missing from Excel entirely -> append them
+    Returns count of rows synced.
+    """
+    from config import EARN_TRADES_CSV
+    csv_rows = _read_csv_trades(os.path.join(_SCRIPT_DIR, EARN_TRADES_CSV))
+    if not csv_rows:
+        return 0
+
+    ws = _ensure_sheet(wb, "Earnings", EARN_HEADERS)
+    synced = 0
+
+    excel_ids = {}
+    for row_idx in range(2, ws.max_row + 1):
+        tid = str(ws.cell(row=row_idx, column=1).value or "").strip()
+        if tid:
+            excel_ids[tid] = row_idx
+
+    for cr in csv_rows:
+        tid = cr.get("trade_id", "").strip()
+        csv_status = cr.get("status", "").strip().lower()
+
+        if tid in excel_ids:
+            row_idx = excel_ids[tid]
+            xl_status = str(ws.cell(row=row_idx, column=11).value or "").strip().upper()
+            if xl_status == "OPEN" and csv_status == "closed":
+                exit_price = float(cr.get("exit_price", 0) or 0)
+                net_pnl = float(cr.get("net_pnl", 0) or 0)
+                hold_days = cr.get("hold_days", "")
+                date_close = cr.get("date_close", "")
+                exit_reason = cr.get("exit_reason", "")
+
+                ws.cell(row=row_idx, column=11, value="CLOSED")
+                ws.cell(row=row_idx, column=12, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=13, value="")
+                ws.cell(row=row_idx, column=14, value=date_close)
+                ws.cell(row=row_idx, column=15, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=16, value=round(net_pnl, 2))
+                _color_pnl(ws, row_idx, 16, net_pnl)
+                if hold_days:
+                    ws.cell(row=row_idx, column=17, value=int(hold_days))
+                if exit_reason:
+                    ws.cell(row=row_idx, column=18, value=exit_reason)
+                _style_data_row(ws, row_idx, "CLOSED")
+                synced += 1
+        else:
+            entry_price = float(cr.get("entry_price", 0) or 0)
+            shares = float(cr.get("shares", 0) or 0)
+            capital = float(cr.get("capital_deployed", 0) or 0)
+            beat_rate = float(cr.get("beat_rate", 0) or 0) * 100
+            is_closed = csv_status == "closed"
+
+            row_data = [
+                tid,
+                cr.get("date_open", ""),
+                cr.get("ticker", ""),
+                cr.get("direction", "LONG"),
+                round(entry_price, 4),
+                round(shares, 4),
+                round(capital, 2),
+                cr.get("earnings_date", ""),
+                round(beat_rate, 1),
+                cr.get("eps_trend", ""),
+                "CLOSED" if is_closed else "OPEN",
+                round(float(cr.get("exit_price", 0) or 0), 4) if is_closed else round(entry_price, 4),
+                "" if is_closed else 0.0,
+                cr.get("date_close", "") if is_closed else "",
+                round(float(cr.get("exit_price", 0) or 0), 4) if is_closed else "",
+                round(float(cr.get("net_pnl", 0) or 0), 2) if is_closed else "",
+                int(cr.get("hold_days", 0) or 0) if is_closed else 0,
+                cr.get("exit_reason", "") if is_closed else "",
+            ]
+            ws.append(row_data)
+            status = "CLOSED" if is_closed else "OPEN"
+            _style_data_row(ws, ws.max_row, status)
+            if is_closed:
+                net_pnl = float(cr.get("net_pnl", 0) or 0)
+                _color_pnl(ws, ws.max_row, 16, net_pnl)
+            synced += 1
+
+    return synced
+
+
+def _sync_mom_csv(wb) -> int:
+    """Sync momentum_trades.csv into the Momentum Excel sheet."""
+    from config import MOM_LIVE_TRADES_CSV
+    csv_rows = _read_csv_trades(os.path.join(_SCRIPT_DIR, MOM_LIVE_TRADES_CSV))
+    if not csv_rows:
+        return 0
+
+    ws = _ensure_sheet(wb, "Momentum", MOM_HEADERS)
+    synced = 0
+
+    excel_ids = {}
+    for row_idx in range(2, ws.max_row + 1):
+        tid = str(ws.cell(row=row_idx, column=1).value or "").strip()
+        if tid:
+            excel_ids[tid] = row_idx
+
+    for cr in csv_rows:
+        tid = cr.get("trade_id", "").strip()
+        csv_status = cr.get("status", "").strip().lower()
+
+        if tid in excel_ids:
+            row_idx = excel_ids[tid]
+            xl_status = str(ws.cell(row=row_idx, column=8).value or "").strip().upper()
+            if xl_status == "OPEN" and csv_status == "closed":
+                exit_price = float(cr.get("exit_price", 0) or 0)
+                net_pnl = float(cr.get("net_pnl", 0) or 0)
+                hold_days = cr.get("hold_days", "")
+                date_close = cr.get("date_close", "")
+
+                ws.cell(row=row_idx, column=8, value="CLOSED")
+                ws.cell(row=row_idx, column=9, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=10, value="")
+                ws.cell(row=row_idx, column=11, value=date_close)
+                ws.cell(row=row_idx, column=12, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=13, value=round(net_pnl, 2))
+                _color_pnl(ws, row_idx, 13, net_pnl)
+                if hold_days:
+                    ws.cell(row=row_idx, column=14, value=int(hold_days))
+                _style_data_row(ws, row_idx, "CLOSED")
+                synced += 1
+        else:
+            if csv_status != "closed":
+                continue
+            entry_price = float(cr.get("entry_price", 0) or 0)
+            exit_price = float(cr.get("exit_price", 0) or 0)
+            net_pnl = float(cr.get("net_pnl", 0) or 0)
+            row_data = [
+                tid, cr.get("date_open", ""), cr.get("ticker", ""),
+                cr.get("direction", "LONG"),
+                round(entry_price, 4),
+                round(float(cr.get("shares", 0) or 0), 4),
+                round(float(cr.get("capital_deployed", 0) or 0), 2),
+                "CLOSED", round(exit_price, 4), "",
+                cr.get("date_close", ""), round(exit_price, 4),
+                round(net_pnl, 2),
+                int(cr.get("hold_days", 0) or 0), "",
+            ]
+            ws.append(row_data)
+            _style_data_row(ws, ws.max_row, "CLOSED")
+            _color_pnl(ws, ws.max_row, 13, net_pnl)
+            synced += 1
+
+    return synced
+
+
+def _sync_bear_csv(wb) -> int:
+    """Sync bear_trades.csv into the Bear Excel sheet."""
+    from config import BEAR_TRADES_CSV
+    csv_rows = _read_csv_trades(os.path.join(_SCRIPT_DIR, BEAR_TRADES_CSV))
+    if not csv_rows:
+        return 0
+
+    ws = _ensure_sheet(wb, "Bear", BEAR_HEADERS)
+    synced = 0
+
+    excel_ids = {}
+    for row_idx in range(2, ws.max_row + 1):
+        tid = str(ws.cell(row=row_idx, column=1).value or "").strip()
+        if tid:
+            excel_ids[tid] = row_idx
+
+    for cr in csv_rows:
+        tid = cr.get("trade_id", "").strip()
+        csv_status = cr.get("status", "").strip().lower()
+
+        if tid in excel_ids:
+            row_idx = excel_ids[tid]
+            xl_status = str(ws.cell(row=row_idx, column=8).value or "").strip().upper()
+            if xl_status == "OPEN" and csv_status == "closed":
+                exit_price = float(cr.get("exit_price", 0) or 0)
+                net_pnl = float(cr.get("net_pnl", 0) or 0)
+                hold_days = cr.get("hold_days", "")
+                date_close = cr.get("date_close", "")
+
+                ws.cell(row=row_idx, column=8, value="CLOSED")
+                ws.cell(row=row_idx, column=9, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=10, value="")
+                ws.cell(row=row_idx, column=11, value=date_close)
+                ws.cell(row=row_idx, column=12, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=13, value=round(net_pnl, 2))
+                _color_pnl(ws, row_idx, 13, net_pnl)
+                if hold_days:
+                    ws.cell(row=row_idx, column=14, value=int(hold_days))
+                _style_data_row(ws, row_idx, "CLOSED")
+                synced += 1
+
+    return synced
+
+
+def _sync_shock_csv(wb) -> int:
+    """Sync shock_trades.csv into the Shock Excel sheet."""
+    from config import SHOCK_TRADES_CSV
+    csv_rows = _read_csv_trades(os.path.join(_SCRIPT_DIR, SHOCK_TRADES_CSV))
+    if not csv_rows:
+        return 0
+
+    ws = _ensure_sheet(wb, "Shock", SHOCK_HEADERS)
+    synced = 0
+
+    excel_ids = {}
+    for row_idx in range(2, ws.max_row + 1):
+        tid = str(ws.cell(row=row_idx, column=1).value or "").strip()
+        if tid:
+            excel_ids[tid] = row_idx
+
+    for cr in csv_rows:
+        tid = cr.get("trade_id", "").strip()
+        csv_status = cr.get("status", "").strip().lower()
+
+        if tid in excel_ids:
+            row_idx = excel_ids[tid]
+            xl_status = str(ws.cell(row=row_idx, column=10).value or "").strip().upper()
+            if xl_status == "OPEN" and csv_status == "closed":
+                exit_price = float(cr.get("exit_price", 0) or 0)
+                net_pnl = float(cr.get("net_pnl", 0) or 0)
+                hold_days = cr.get("hold_days", "")
+                date_close = cr.get("date_close", "")
+
+                ws.cell(row=row_idx, column=10, value="CLOSED")
+                ws.cell(row=row_idx, column=11, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=12, value="")
+                ws.cell(row=row_idx, column=13, value=date_close)
+                ws.cell(row=row_idx, column=14, value=round(exit_price, 4))
+                ws.cell(row=row_idx, column=15, value=round(net_pnl, 2))
+                _color_pnl(ws, row_idx, 15, net_pnl)
+                if hold_days:
+                    ws.cell(row=row_idx, column=16, value=int(hold_days))
+                _style_data_row(ws, row_idx, "CLOSED")
+                synced += 1
+
+    return synced
+
+
+def _sync_pairs_csv(wb) -> int:
+    """Sync live_trades.csv into the Pairs Excel sheet."""
+    from config import LIVE_TRADES_CSV
+    csv_rows = _read_csv_trades(os.path.join(_SCRIPT_DIR, LIVE_TRADES_CSV))
+    if not csv_rows:
+        return 0
+
+    ws = _ensure_sheet(wb, "Pairs", PAIRS_HEADERS)
+    synced = 0
+
+    excel_ids = {}
+    for row_idx in range(2, ws.max_row + 1):
+        tid = str(ws.cell(row=row_idx, column=1).value or "").strip()
+        if tid:
+            excel_ids[tid] = row_idx
+
+    for cr in csv_rows:
+        tid = cr.get("trade_id", "").strip()
+        csv_status = cr.get("status", "").strip().lower()
+
+        if tid in excel_ids:
+            row_idx = excel_ids[tid]
+            xl_status = str(ws.cell(row=row_idx, column=11).value or "").strip().upper()
+            if xl_status == "OPEN" and csv_status == "closed":
+                exit_a = float(cr.get("price_a_exit", 0) or 0)
+                exit_b = float(cr.get("price_b_exit", 0) or 0)
+                net_pnl = float(cr.get("net_pnl", 0) or 0)
+                hold_days = cr.get("hold_days", "")
+                date_close = cr.get("date_close", "")
+
+                ws.cell(row=row_idx, column=11, value="CLOSED")
+                ws.cell(row=row_idx, column=12, value=round(exit_a, 4))
+                ws.cell(row=row_idx, column=13, value=round(exit_b, 4))
+                ws.cell(row=row_idx, column=14, value="")
+                ws.cell(row=row_idx, column=15, value=date_close)
+                ws.cell(row=row_idx, column=16, value=round(exit_a, 4))
+                ws.cell(row=row_idx, column=17, value=round(exit_b, 4))
+                ws.cell(row=row_idx, column=18, value=round(net_pnl, 2))
+                _color_pnl(ws, row_idx, 18, net_pnl)
+                if hold_days:
+                    ws.cell(row=row_idx, column=19, value=int(hold_days))
+                _style_data_row(ws, row_idx, "CLOSED")
+                synced += 1
+
+    return synced
+
+
 # ── Master update (called once per daily run) ────────────────────────────────
 
 def update_all():
@@ -804,6 +1103,22 @@ def update_all():
     and refresh the summary dashboard. Called from run_system.py.
     """
     print("  Excel Tracker: updating paper_trades.xlsx ...")
+
+    # Sync CSV closures/missing trades into Excel before price updates
+    try:
+        wb = _get_workbook()
+        total_synced = 0
+        total_synced += _sync_pairs_csv(wb)
+        total_synced += _sync_mom_csv(wb)
+        total_synced += _sync_bear_csv(wb)
+        total_synced += _sync_earn_csv(wb)
+        total_synced += _sync_shock_csv(wb)
+        if total_synced > 0:
+            _save(wb)
+            print(f"    [CSV Sync] {total_synced} trades synced from CSV")
+    except Exception as exc:
+        print(f"    [CSV Sync] Warning: {exc}")
+
     closed = []
 
     c = update_pairs_prices()

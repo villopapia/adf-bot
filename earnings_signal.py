@@ -35,6 +35,7 @@ from config import (
     EARN_ALLOW_DECLINING,
     EARN_REQUIRE_ABOVE_200SMA,
     EARN_ENTRY_DAYS_BEFORE,
+    EARN_MIN_DAYS_BEFORE,
     EARN_MAX_RUNUP_PCT,
     EARN_MIN_REV_SURPRISE_PCT,
     EARN_SHORT_SQUEEZE_SI,
@@ -202,7 +203,11 @@ def backtest_earnings(ticker: str, close: pd.Series, earnings_dates: list) -> di
         earn_bar = earn_idxs[-1]  # last trading day on or before earnings date
 
         # Entry bar: EARN_ENTRY_DAYS_BEFORE trading days before earnings bar
-        entry_bar = earn_bar - EARN_ENTRY_DAYS_BEFORE
+        # Clamp to at least EARN_MIN_DAYS_BEFORE days before (match live gate)
+        entry_offset = min(EARN_ENTRY_DAYS_BEFORE, earn_bar)
+        if entry_offset < EARN_MIN_DAYS_BEFORE:
+            continue
+        entry_bar = earn_bar - entry_offset
         if entry_bar < 0:
             continue
 
@@ -357,6 +362,17 @@ def main(open_tickers: set = None) -> dict:
                        "win_rate": beat_rate * 100, "profit_factor": 0.0, "total_pnl": 0.0},
             })
             print(f"    x {ticker:<8} SKIP  already in open trade")
+            continue
+
+        # Gate 1b: Minimum days before earnings (no same-day or next-day gambles)
+        if days_until < EARN_MIN_DAYS_BEFORE:
+            reason = f"earnings too soon ({days_until}d < {EARN_MIN_DAYS_BEFORE}d minimum)"
+            rejected.append({
+                "ticker": ticker,
+                "bt": {"pass": False, "reason": reason,
+                       "win_rate": beat_rate * 100, "profit_factor": 0.0, "total_pnl": 0.0},
+            })
+            print(f"    x {ticker:<8} FAIL  {reason}")
             continue
 
         # Gate 2: Minimum historical beat rate
