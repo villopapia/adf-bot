@@ -45,6 +45,7 @@ from config import (
     MIN_WIN_RATE, MIN_PROFIT_FACTOR,
     MAX_CONCURRENT_POSITIONS,
     LOG_RETENTION_DAYS,
+    PAIRS_MODULE_ENABLED,
     MOMENTUM_ENABLED, MOM_ACTIVATION_MODE,
     MOM_MAX_POSITIONS, MOM_VIX_MAX_ENTRY,
     VIX_MAX_ENTRY,
@@ -463,48 +464,49 @@ def main():
         except Exception as e:
             print(f"  {R}Broker sync failed: {e}{RST}\n")
 
-    # ── Phase 0: Portfolio Update ─────────────────────────────────────────
-    print(f"  {CY}{B}═══ PHASE 0 — Portfolio Update ═══{RST}\n")
-    newly_closed = trade_tracker.check_exits()
-    if newly_closed:
-        print(f"  {G}Positions closed today:{RST}")
-        for t in newly_closed:
-            pnl   = float(t["net_pnl"])
-            pc    = G if pnl > 0 else R
-            icon  = "+" if pnl > 0 else "-"
-            print(f"    {pc}{icon}{RST} {t['stock_a']}/{t['stock_b']}  "
-                  f"{t['direction']}  exit={t['exit_reason']}  "
-                  f"hold={t['hold_days']}d  "
-                  f"P&L={pc}${pnl:>+.2f}{RST}")
-        print()
-    else:
-        print(f"  {D}No positions closed today.{RST}\n")
-
-    # Broker: close Alpaca positions for closed pairs trades
-    if LIVE_TRADING_ENABLED and newly_closed:
-        broker = _get_broker()
-        if broker.is_active:
+    # ── Phase 0: Portfolio Update (Pairs) ───────────────────────────────
+    if PAIRS_MODULE_ENABLED:
+        print(f"  {CY}{B}═══ PHASE 0 — Portfolio Update ═══{RST}\n")
+        newly_closed = trade_tracker.check_exits()
+        if newly_closed:
+            print(f"  {G}Positions closed today:{RST}")
             for t in newly_closed:
-                res = broker.close_position_pairs(
-                    t["trade_id"], t["stock_a"], t["stock_b"])
-                sc = G + "OK" if res["status"] == "closed" else R + res["status"]
-                print(f"    [BROKER] {t['stock_a']}/{t['stock_b']} "
-                      f"close: {sc}{RST}")
+                pnl   = float(t["net_pnl"])
+                pc    = G if pnl > 0 else R
+                icon  = "+" if pnl > 0 else "-"
+                print(f"    {pc}{icon}{RST} {t['stock_a']}/{t['stock_b']}  "
+                      f"{t['direction']}  exit={t['exit_reason']}  "
+                      f"hold={t['hold_days']}d  "
+                      f"P&L={pc}${pnl:>+.2f}{RST}")
+            print()
+        else:
+            print(f"  {D}No positions closed today.{RST}\n")
 
-    trade_tracker.print_portfolio_status()
-    trade_tracker.print_performance_report()
-
-    ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
-    if ks_active:
-        print(f"\n  {R}{B}!! KILL SWITCH ACTIVE — no new entries will be accepted.{RST}")
-        print(f"  {R}   Reason : {ks_reason}{RST}")
-        print(f"  {D}   To reset: call trade_tracker.reset_kill_switch(){RST}\n")
-        if LIVE_TRADING_ENABLED:
+        # Broker: close Alpaca positions for closed pairs trades
+        if LIVE_TRADING_ENABLED and newly_closed:
             broker = _get_broker()
             if broker.is_active:
-                liq = broker.liquidate_all()
-                print(f"  {R}   [BROKER] Emergency liquidation: "
-                      f"{liq['positions_closed']} positions closed{RST}")
+                for t in newly_closed:
+                    res = broker.close_position_pairs(
+                        t["trade_id"], t["stock_a"], t["stock_b"])
+                    sc = G + "OK" if res["status"] == "closed" else R + res["status"]
+                    print(f"    [BROKER] {t['stock_a']}/{t['stock_b']} "
+                          f"close: {sc}{RST}")
+
+        trade_tracker.print_portfolio_status()
+        trade_tracker.print_performance_report()
+
+        ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
+        if ks_active:
+            print(f"\n  {R}{B}!! KILL SWITCH ACTIVE — no new entries will be accepted.{RST}")
+            print(f"  {R}   Reason : {ks_reason}{RST}")
+            print(f"  {D}   To reset: call trade_tracker.reset_kill_switch(){RST}\n")
+            if LIVE_TRADING_ENABLED:
+                broker = _get_broker()
+                if broker.is_active:
+                    liq = broker.liquidate_all()
+                    print(f"  {R}   [BROKER] Emergency liquidation: "
+                          f"{liq['positions_closed']} positions closed{RST}")
 
     # ── Phase 0b: Momentum Portfolio Update ───────────────────────────────
     if MOMENTUM_ENABLED:
@@ -708,21 +710,24 @@ def main():
             print(f"  {Y}   All new entries blocked. Exit logic still runs.{RST}")
             print(f"  {D}   To reset: global_risk.reset_freeze(){RST}\n")
 
-    # ── Phase 1: Scanner ─────────────────────────────────────────────────
-    if should_run_scanner(args.scan or args.scan_only):
-        run_scanner()
-        # Re-check after scan
-        if os.path.exists(CANDIDATES_PATH):
-            try:
-                import pandas as pd
-                pairs_loaded = len(pd.read_csv(CANDIDATES_PATH))
-                data_ok = pairs_loaded > 0
-            except Exception:
-                pass
-    else:
-        print(f"  {D}Scanner skipped (candidates {scanner_age}, "
-              f"refresh every {SCANNER_INTERVAL_DAYS}d). "
-              f"Use --scan to force.{RST}\n")
+    # ── Phase 1: Scanner (pairs only) ──────────────────────────────────
+    result = None  # initialise for downstream phases
+
+    if PAIRS_MODULE_ENABLED:
+        if should_run_scanner(args.scan or args.scan_only):
+            run_scanner()
+            # Re-check after scan
+            if os.path.exists(CANDIDATES_PATH):
+                try:
+                    import pandas as pd
+                    pairs_loaded = len(pd.read_csv(CANDIDATES_PATH))
+                    data_ok = pairs_loaded > 0
+                except Exception:
+                    pass
+        else:
+            print(f"  {D}Scanner skipped (candidates {scanner_age}, "
+                  f"refresh every {SCANNER_INTERVAL_DAYS}d). "
+                  f"Use --scan to force.{RST}\n")
 
     if args.scan_only:
         print(f"  {Y}--scan-only set. Stopping here.{RST}\n")
@@ -730,131 +735,128 @@ def main():
         _release_lock()
         return
 
-    if not data_ok:
-        print(f"  {R}✗ No candidates available. Run with --scan first.{RST}\n")
+    if PAIRS_MODULE_ENABLED and not data_ok:
+        print(f"  {R}No pair candidates available. Run with --scan first.{RST}\n")
         tee_cleanup()
         _release_lock()
         return
 
-    # ── Phase 2: Master Signal ───────────────────────────────────────────
-    print(f"  {CY}{B}═══ PHASE 2 — Master Signal (live + backtest) ═══{RST}\n")
+    # ── Phase 2: Master Signal (pairs) ───────────────────────────────
+    if PAIRS_MODULE_ENABLED:
+        print(f"  {CY}{B}═══ PHASE 2 — Master Signal (live + backtest) ═══{RST}\n")
 
-    try:
-        import importlib
-        mod = importlib.import_module("master_signal")
-        importlib.reload(mod)
-        result = mod.main()
-    except Exception as e:
-        print(f"\n  {R}✗ Master signal failed: {e}{RST}")
-        traceback.print_exc()
-        result = None
-
-    # ── Phase 3: Log & Dashboard ─────────────────────────────────────────
-    if result:
-        # Append to system_log.csv
         try:
-            append_system_log(result)
-            n_v = len(result.get("verified", []))
-            n_r = len(result.get("rejected", []))
-            print(f"\n  {G}✓ system_log.csv updated "
-                  f"({n_v} diamond, {n_r} rejected){RST}")
+            import importlib
+            mod = importlib.import_module("master_signal")
+            importlib.reload(mod)
+            result = mod.main()
         except Exception as e:
-            print(f"\n  {R}✗ system_log.csv write failed: {e}{RST}")
+            print(f"\n  {R}Master signal failed: {e}{RST}")
+            traceback.print_exc()
+            result = None
 
-        # ── Summary stats ────────────────────────────────────────────────
-        total = (result.get("no_signal", 0)
-                 + len(result.get("verified", []))
-                 + len(result.get("rejected", []))
-                 + result.get("errors", 0))
+        if result:
+            # Append to system_log.csv
+            try:
+                append_system_log(result)
+                n_v = len(result.get("verified", []))
+                n_r = len(result.get("rejected", []))
+                print(f"\n  {G}system_log.csv updated "
+                      f"({n_v} diamond, {n_r} rejected){RST}")
+            except Exception as e:
+                print(f"\n  {R}system_log.csv write failed: {e}{RST}")
 
-        print()
-        print(f"  {B}{W}{'═' * 60}{RST}")
-        print(f"  {B}{W}  DAILY RESULTS  (Standard + Split-Half + ADF90 + Momentum){RST}")
-        print(f"  {B}{W}{'═' * 60}{RST}")
-        print(f"    Pairs scanned   : {total}")
-        print(f"    No live signal  : {result.get('no_signal', 0)}")
-        print(f"    Download errors : {result.get('errors', 0)}")
-        print(f"    {G}◆ Diamond{RST}       : "
-              f"{G}{B}{len(result.get('verified', []))}{RST}")
-        print(f"    {R}✗ Rejected{RST}      : "
-              f"{len(result.get('rejected', []))}")
-        print()
+            # ── Summary stats ────────────────────────────────────────────
+            total = (result.get("no_signal", 0)
+                     + len(result.get("verified", []))
+                     + len(result.get("rejected", []))
+                     + result.get("errors", 0))
 
-        # ── Bright verified table ────────────────────────────────────────
-        print_verified_table(result.get("verified", []))
-
-        # ── Auto-log diamond entries (portfolio cap + kill switch aware) ──
-        diamonds = result.get("verified", [])
-        if diamonds:
-            ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
-            logged, skipped_cap, skipped_ks, skipped_corr = [], [], [], []
-            skipped_global = []
-            for d in diamonds:
-                if global_tier != "ALLOW":
-                    skipped_global.append(d)
-                elif ks_active:
-                    skipped_ks.append(d)
-                elif trade_tracker.at_portfolio_cap():
-                    skipped_cap.append(d)
-                elif trade_tracker.is_correlated_with_open(d["a"], d["b"]):
-                    skipped_corr.append(d)
-                else:
-                    # Global risk gatekeeper check
-                    gr_ok, gr_reason = global_risk.may_enter(
-                        d["a"], d["live"]["direction"],
-                        float(d["bt"].get("total_pnl", 1000)), "pairs")
-                    if not gr_ok:
-                        skipped_global.append(d)
-                        continue
-                    tid = trade_tracker.log_entry(d)
-                    try:
-                        excel_tracker.log_pair_entry(d)
-                    except Exception:
-                        pass
-                    logged.append((d, tid))
-                    # Broker: submit pairs entry to Alpaca
-                    if LIVE_TRADING_ENABLED:
-                        broker = _get_broker()
-                        if broker.is_active:
-                            pt = [t for t in trade_tracker.get_open_trades()
-                                  if t["trade_id"] == tid]
-                            if pt:
-                                broker.submit_entry_pairs(tid, {
-                                    "a": d["a"], "b": d["b"],
-                                    "direction": d["live"]["direction"],
-                                    "shares_a": float(pt[0]["shares_a"]),
-                                    "shares_b": float(pt[0]["shares_b"]),
-                                })
-            if logged:
-                print(f"  {G}Paper trades logged ({len(logged)}):{RST}")
-                for d, tid in logged:
-                    print(f"    {G}+{RST} {d['a']}/{d['b']}  "
-                          f"{d['live']['direction']}  [{tid}]")
-            if skipped_cap:
-                print(f"  {Y}Skipped {len(skipped_cap)} signal(s) — "
-                      f"portfolio at cap ({MAX_CONCURRENT_POSITIONS} positions){RST}")
-            if skipped_ks:
-                print(f"  {R}Skipped {len(skipped_ks)} signal(s) — "
-                      f"kill switch active{RST}")
-            if skipped_corr:
-                print(f"  {Y}Skipped {len(skipped_corr)} signal(s) — "
-                      f"correlated with open position(s){RST}")
-                for d in skipped_corr:
-                    print(f"    {Y}-{RST} {d['a']}/{d['b']}  "
-                          f"{d['live']['direction']}")
-            if skipped_global:
-                print(f"  {Y}Skipped {len(skipped_global)} signal(s) — "
-                      f"global risk limit{RST}")
+            print()
+            print(f"  {B}{W}{'=' * 60}{RST}")
+            print(f"  {B}{W}  DAILY RESULTS  (Standard + Split-Half + ADF90 + Momentum){RST}")
+            print(f"  {B}{W}{'=' * 60}{RST}")
+            print(f"    Pairs scanned   : {total}")
+            print(f"    No live signal  : {result.get('no_signal', 0)}")
+            print(f"    Download errors : {result.get('errors', 0)}")
+            print(f"    {G}* Diamond{RST}       : "
+                  f"{G}{B}{len(result.get('verified', []))}{RST}")
+            print(f"    {R}x Rejected{RST}      : "
+                  f"{len(result.get('rejected', []))}")
             print()
 
-        # ── Rejected summary ─────────────────────────────────────────────
-        print_rejected_summary(result.get("rejected", []))
+            # ── Bright verified table ────────────────────────────────────
+            print_verified_table(result.get("verified", []))
 
-        # ── Desktop notification ──────────────────────────────────────────
-        _notify_diamonds(result.get("verified", []))
+            # ── Auto-log diamond entries ─────────────────────────────────
+            diamonds = result.get("verified", [])
+            if diamonds:
+                ks_active, ks_reason = trade_tracker.is_kill_switch_triggered()
+                logged, skipped_cap, skipped_ks, skipped_corr = [], [], [], []
+                skipped_global = []
+                for d in diamonds:
+                    if global_tier != "ALLOW":
+                        skipped_global.append(d)
+                    elif ks_active:
+                        skipped_ks.append(d)
+                    elif trade_tracker.at_portfolio_cap():
+                        skipped_cap.append(d)
+                    elif trade_tracker.is_correlated_with_open(d["a"], d["b"]):
+                        skipped_corr.append(d)
+                    else:
+                        gr_ok, gr_reason = global_risk.may_enter(
+                            d["a"], d["live"]["direction"],
+                            float(d["bt"].get("total_pnl", 1000)), "pairs")
+                        if not gr_ok:
+                            skipped_global.append(d)
+                            continue
+                        tid = trade_tracker.log_entry(d)
+                        try:
+                            excel_tracker.log_pair_entry(d)
+                        except Exception:
+                            pass
+                        logged.append((d, tid))
+                        if LIVE_TRADING_ENABLED:
+                            broker = _get_broker()
+                            if broker.is_active:
+                                pt = [t for t in trade_tracker.get_open_trades()
+                                      if t["trade_id"] == tid]
+                                if pt:
+                                    broker.submit_entry_pairs(tid, {
+                                        "a": d["a"], "b": d["b"],
+                                        "direction": d["live"]["direction"],
+                                        "shares_a": float(pt[0]["shares_a"]),
+                                        "shares_b": float(pt[0]["shares_b"]),
+                                    })
+                if logged:
+                    print(f"  {G}Paper trades logged ({len(logged)}):{RST}")
+                    for d, tid in logged:
+                        print(f"    {G}+{RST} {d['a']}/{d['b']}  "
+                              f"{d['live']['direction']}  [{tid}]")
+                if skipped_cap:
+                    print(f"  {Y}Skipped {len(skipped_cap)} signal(s) -- "
+                          f"portfolio at cap ({MAX_CONCURRENT_POSITIONS} positions){RST}")
+                if skipped_ks:
+                    print(f"  {R}Skipped {len(skipped_ks)} signal(s) -- "
+                          f"kill switch active{RST}")
+                if skipped_corr:
+                    print(f"  {Y}Skipped {len(skipped_corr)} signal(s) -- "
+                          f"correlated with open position(s){RST}")
+                    for d in skipped_corr:
+                        print(f"    {Y}-{RST} {d['a']}/{d['b']}  "
+                              f"{d['live']['direction']}")
+                if skipped_global:
+                    print(f"  {Y}Skipped {len(skipped_global)} signal(s) -- "
+                          f"global risk limit{RST}")
+                print()
+
+            print_rejected_summary(result.get("rejected", []))
+            _notify_diamonds(result.get("verified", []))
+        else:
+            print(f"\n  {R}System encountered errors. "
+                  f"Check {ERROR_LOG} and log file.{RST}\n")
     else:
-        print(f"\n  {R}System encountered errors. "
-              f"Check {ERROR_LOG} and log file.{RST}\n")
+        print(f"  {D}Pairs module disabled.{RST}\n")
 
     # ── Phase 3: Momentum (conditional) ──────────────────────────────────
     if MOMENTUM_ENABLED:

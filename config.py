@@ -8,6 +8,9 @@
 ═══════════════════════════════════════════════════════════════════════════════
 """
 
+# ── Module Switches ─────────────────────────────────────────────────────────
+PAIRS_MODULE_ENABLED = False           # disabled — 99.8% rejection rate, zero trades since Feb
+
 # ── Data Source ──────────────────────────────────────────────────────────────
 INPUT_CSV          = "daily_candidates.csv"
 LOOKBACK_YEARS     = 5
@@ -141,13 +144,13 @@ MOM_SLIPPAGE_PCT         = 0.0015        # 0.15% per trade
 MOM_MAX_POSITIONS        = 5             # max concurrent momentum positions
 
 # ── Momentum — Backtest Quality Gates ─────────────────────────────────────
-MOM_MIN_TRADES           = 15            # minimum backtest trades
-MOM_MIN_WIN_RATE         = 48.0          # lower than pairs (momentum wins fewer, bigger)
-MOM_MIN_PROFIT_FACTOR    = 1.4           # lower than pairs
-MOM_MIN_SHARPE           = 0.6           # annualised Sharpe on backtest
-MOM_MIN_TOTAL_PNL        = 50.0          # minimum total P&L ($)
+MOM_MIN_TRADES           = 5             # was 15 — unreachable with 42d hold + strict entry
+MOM_MIN_WIN_RATE         = 40.0          # was 48 — momentum wins fewer, bigger
+MOM_MIN_PROFIT_FACTOR    = 1.1           # was 1.4 — just needs positive edge
+MOM_MIN_SHARPE           = 0.3           # was 0.6 — few trades make Sharpe noisy
+MOM_MIN_TOTAL_PNL        = 0.0           # was 50 — just needs to be net positive
 MOM_MAX_MOM_DRAWDOWN     = -300.0        # maximum drawdown ($)
-MOM_MIN_AVG_GAIN_LOSS    = 1.5           # avg win / avg loss ratio > 1.5
+MOM_MIN_AVG_GAIN_LOSS    = 1.2           # was 1.5 — slightly above breakeven
 MOM_WALK_FORWARD_SPLIT   = 0.70          # 70/30 train/test
 
 # ── Momentum — Regime Filter ──────────────────────────────────────────────
@@ -156,7 +159,7 @@ MOM_VIX_SCALE_THRESHOLD  = 25.0          # above this VIX, reduce position size
 MOM_VIX_SCALE_FACTOR     = 0.5           # multiply capital by this when VIX elevated
 
 # ── Momentum — Activation Logic ──────────────────────────────────────────
-MOM_ACTIVATION_MODE      = "complement"  # "complement" = only when pairs idle
+MOM_ACTIVATION_MODE      = "always"      # "complement" = only when pairs idle
                                           # "always" = run independently
                                           # "vix_only" = only when VIX > 25
 
@@ -216,7 +219,7 @@ MOM_DEFENSIVE_MAX_VOL    = 0.35          # base cap 35% ann vol (scales up with 
 # ══════════════════════════════════════════════════════════════════════════════
 #  BEAR MARKET MODULE
 # ══════════════════════════════════════════════════════════════════════════════
-BEAR_MODULE_ENABLED      = True
+BEAR_MODULE_ENABLED      = False         # disabled — only activates when VIX > 25, zero trades
 
 # -- Regime Detection ---------------------------------------------------------
 BEAR_VIX_ACTIVATE        = 25.0          # activate bear module when VIX > this
@@ -278,7 +281,7 @@ EARN_MODULE_ENABLED          = True
 
 # -- Entry Parameters --------------------------------------------------------
 EARN_ENTRY_DAYS_BEFORE       = 5            # scan earnings up to N calendar days ahead
-EARN_MIN_DAYS_BEFORE         = 2            # reject if earnings < N calendar days away
+EARN_MIN_DAYS_BEFORE         = 3            # reject if earnings < N calendar days away (was 2)
 EARN_MIN_BEAT_RATE           = 0.75         # minimum historical beat rate (75%)
 EARN_MIN_QUARTERS            = 3            # minimum quarters of earnings data
 EARN_ALLOW_DECLINING         = False        # allow entry with declining EPS trend
@@ -292,7 +295,7 @@ EARN_CAPITAL_PER_TRADE       = 1000.0       # base capital per earnings trade
 EARN_SLIPPAGE_PCT            = 0.001        # 0.10% slippage per side
 
 # -- Exit Parameters ---------------------------------------------------------
-EARN_STOP_PCT                = 5.0          # stop loss: exit if down 5% before earnings
+EARN_STOP_PCT                = 3.0          # stop loss: exit if down 3% (was 5% — too wide for short holds)
 EARN_MAX_HOLD                = 10           # max hold in trading days (safety net)
 
 # -- Risk Controls -----------------------------------------------------------
@@ -317,7 +320,7 @@ EARN_BT_MIN_TOTAL_PNL        = 0.0           # must be net positive
 # Detects rapid market drawdowns (tariff announcements, geopolitical shocks)
 # and enters long SPY/QQQ betting on the walkback/reversal pattern.
 # Runs unconditionally (shocks happen in any VIX regime).
-SHOCK_MODULE_ENABLED         = True
+SHOCK_MODULE_ENABLED         = False      # disabled — only activates during rare market shocks, zero trades
 
 # -- Shock Detection Parameters -----------------------------------------------
 SHOCK_INSTRUMENTS            = ["SPY", "QQQ"]       # instruments to trade the bounce
