@@ -53,6 +53,14 @@ def _fetch_earnings_raw(symbol: str) -> list[dict]:
             params={"symbol": symbol, "limit": 5, "apikey": FMP_API_KEY},
             timeout=10,
         )
+        if resp.status_code == 402:
+            _logger.debug(f"FMP earnings not available for {symbol} (plan limit)")
+            _fmp_earnings_raw_cache[symbol] = []
+            return []
+        if resp.status_code != 200:
+            _logger.warning(f"FMP earnings HTTP {resp.status_code} for {symbol}")
+            _fmp_earnings_raw_cache[symbol] = []
+            return []
         data = resp.json()
         if not isinstance(data, list):
             _fmp_earnings_raw_cache[symbol] = []
@@ -60,7 +68,7 @@ def _fetch_earnings_raw(symbol: str) -> list[dict]:
         _fmp_earnings_raw_cache[symbol] = data
         return data
     except Exception as exc:
-        _logger.warning(f"FMP earnings raw fetch failed for {symbol}: {exc}")
+        _logger.warning(f"FMP earnings fetch failed for {symbol}: {exc}")
         _fmp_earnings_raw_cache[symbol] = []
         return []
 

@@ -287,7 +287,7 @@ def check_earn_exits() -> list:
         earn_date_str = str(row.get("earnings_date", ""))
 
         open_date = datetime.datetime.strptime(date_open, "%Y-%m-%d").date()
-        hold_days = (today - open_date).days
+        hold_days = int(np.busday_count(open_date, today))
 
         # Parse earnings_date
         try:

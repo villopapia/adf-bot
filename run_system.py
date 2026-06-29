@@ -273,7 +273,7 @@ def run_scanner() -> bool:
 def print_header(now: datetime.datetime):
     print()
     print(f"  {CY}{B}╔══════════════════════════════════════════════════════════════╗{RST}")
-    print(f"  {CY}{B}║     PAIRS TRADING SYSTEM — Daily Orchestration              ║{RST}")
+    print(f"  {CY}{B}║     ADF TRADING SYSTEM  — Daily Orchestration               ║{RST}")
     print(f"  {CY}{B}║     {now.strftime('%Y-%m-%d %H:%M:%S')}                                        ║{RST}")
     print(f"  {CY}{B}╚══════════════════════════════════════════════════════════════╝{RST}")
     print()
@@ -423,7 +423,7 @@ def main():
     pairs_loaded = 0
     data_ok      = False
 
-    if os.path.exists(CANDIDATES_PATH):
+    if PAIRS_MODULE_ENABLED and os.path.exists(CANDIDATES_PATH):
         import pandas as pd
         mod_time = datetime.datetime.fromtimestamp(
             os.path.getmtime(CANDIDATES_PATH))

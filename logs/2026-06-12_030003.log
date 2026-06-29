@@ -1,0 +1,108 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-06-12 03:00:03                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 3
+    Scanner Age      : 0d old
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=20d
+    Quality Gates    : WR>55.0% | PF>1.5x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  --- PHASE 0b — Momentum Portfolio Update ---
+
+  No momentum positions closed today.
+
+  -- Momentum Portfolio ---------------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  --- PHASE 0d --- Earnings Portfolio Update ---
+
+  No earnings positions closed today.
+
+  -- Earnings Module Portfolio --------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $-37.60
+    Total trades   : 10
+    Live win rate  : 40.0%
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+
+  -- Earnings Performance Report -----------------------------
+    Closed trades      : 10
+    Total net P&L      : $-37.58
+    Live win rate      : 40.0%
+    Hist beat rate avg : 85.0%
+    Live avg P&L       : $-3.76
+    Avg win            : $+42.17
+    Avg loss           : $-34.38
+    Profit factor      : 0.82
+    Avg hold (days)    : 7.7
+    Live Sharpe        : -0.44
+    Best trade         : $+78.20
+    Worst trade        : $-77.17
+    Max consec. losses : 4
+    Max drawdown       : $-167.35
+    Exit breakdown:
+      post_earnings    :  10 trades  P&L=$-37.58
+    Verdict            : Edge degrading -- review
+  -------------------------------------------------------------
+
+  Excel Tracker: updating paper_trades.xlsx ...
+    Open positions: 0  |  Newly closed: 0
+    File: C:\Users\User\Desktop\adf bot\paper_trades.xlsx
+
+  --- Global Risk Assessment ---
+
+
+  -- Global Risk Manager --------------------------------------
+    Status             : [OK]  ALLOW
+    Capital deployed   : $    0.00  / $8000
+    Open positions     :   0  / 15
+    Long  exposure     : $    0.00  (0.0%)
+    Short exposure     : $    0.00  (0.0%)
+    Realized P&L       : $-37.58
+    Unrealized P&L     : $+0.00  (estimated at cost)
+    Combined drawdown  : $-63.63  (freeze: $-2000, liq: $-3500)
+    Peak combined P&L  : $+26.05
+
+    MODULE        OPEN    CAPITAL     LONG    SHORT
+    ------------ ----- ---------- -------- --------
+    pairs            0 $     0.00 $   0.00 $   0.00
+    momentum         0 $     0.00 $   0.00 $   0.00
+    bear             0 $     0.00 $   0.00 $   0.00
+    earnings         0 $     0.00 $   0.00 $   0.00
+    shock            0 $     0.00 $   0.00 $   0.00
+  -------------------------------------------------------------
+
+  Pairs module disabled.
+
+  --- PHASE 3 — Momentum Strategy ---
+
+------------------------------------------------------------
+  MOMENTUM SCANNER
+  Run date : 2026-06-12
+------------------------------------------------------------
+
+[STEP 1] Building universe ...
+[STEP 1] Scraped 503 S&P 500 tickers + sectors from Wikipedia.
+[STEP 1b] Scraped 101 Nasdaq-100 tickers + sectors from Wikipedia.
+  [SCAN] Universe: 516 unique tickers (S&P 500 + Nasdaq-100).
+
+[STEP 2] Downloading OHLCV data ...
+  [SCAN] Downloading OHLCV for 516 tickers (2021-06-13 -> 2026-06-12) in batches of 50 ...
+  [DATA] Batch 1/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 2/11 (50 tickers) ... 
+  Momentum phase failed: [Errno 22] Invalid argument
+Exception ignored on flushing sys.stdoutException ignored in sys.unraisablehook: <built-in function unraisablehook>

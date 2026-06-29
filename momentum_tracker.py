@@ -343,9 +343,9 @@ def check_mom_exits() -> list:
             trail_stop = peak_price - MOM_ATR_TRAIL_MULT * current_atr
             trades_df.at[idx, "trail_stop_price"] = f"{trail_stop:.4f}"
 
-            # Hold days
+            # Hold days (trading days — matches backtest bar count)
             open_date = datetime.datetime.strptime(date_open, "%Y-%m-%d").date()
-            hold_days = (today - open_date).days
+            hold_days = int(np.busday_count(open_date, today))
 
             # Evaluate exit conditions in priority order
             exit_reason = ""

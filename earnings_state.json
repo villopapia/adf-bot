@@ -1,11 +1,11 @@
 {
   "consecutive_losses": 0,
-  "consecutive_wins": 0,
-  "total_realized_pnl": 0.0,
-  "peak_pnl": 0.0,
-  "total_trades": 0,
-  "total_wins": 0,
+  "consecutive_wins": 1,
+  "total_realized_pnl": -37.59825662149207,
+  "peak_pnl": 31.213738069831017,
+  "total_trades": 10,
+  "total_wins": 4,
   "kill_switch": false,
   "kill_switch_reason": "",
-  "last_updated": "2026-04-10 12:31:49"
+  "last_updated": "2026-05-14 14:00:08"
 }

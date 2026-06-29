@@ -92,10 +92,10 @@ WALK_FORWARD_SPLIT   = 0.70        # train/test split for walk-forward validatio
 MIN_OOS_TRADES     = 5              # minimum OOS trades for walk-forward validity
 
 # ── External APIs ────────────────────────────────────────────────────────────
-# WARNING: do not commit real keys to a public repo — use a secrets.py instead
-AV_API_KEY         = "KCUX8R91HIPN7296"  # Alpha Vantage key (DAILY_ADJUSTED needs paid plan)
+import os as _os
+AV_API_KEY         = _os.environ.get("AV_API_KEY", "KCUX8R91HIPN7296")
 AV_RATE_DELAY      = 12.0               # secs between AV calls (12 = free 5/min; 0.8 = paid)
-FMP_API_KEY        = "VRe6WPJFJWPY7TZ2kz99DB8blWgx1YyR"  # Financial Modeling Prep key
+FMP_API_KEY        = _os.environ.get("FMP_API_KEY", "VRe6WPJFJWPY7TZ2kz99DB8blWgx1YyR")
 EARNINGS_BLACKOUT_DAYS = 14            # block entry if earnings within this many days (±)
 
 # ── Live Trade Tracking ───────────────────────────────────────────────────────

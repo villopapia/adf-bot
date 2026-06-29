@@ -1,0 +1,356 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
+  ║     2026-06-10 14:00:08                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● ONLINE
+    Pairs Loaded     : 3
+    Scanner Age      : 2d old
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=20d
+    Quality Gates    : WR>55.0% | PF>1.5x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  ═══ PHASE 0 — Portfolio Update ═══
+
+  No positions closed today.
+
+  -- Live Portfolio -------------------------------------------
+    No open positions.
+
+    Positions open   : 0 / 10
+    Total live P&L   : $+0.00
+    Peak P&L         : $+0.00
+    System drawdown  : $+0.00  (limit $-1500)
+  ------------------------------------------------------------
+  --- PHASE 0b — Momentum Portfolio Update ---
+
+  No momentum positions closed today.
+
+  -- Momentum Portfolio ---------------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  --- PHASE 0c — Bear Portfolio Update ---
+
+  No bear positions closed today.
+
+  -- Bear Module Portfolio ------------------------------------
+    Open positions : 0 / 2
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  --- PHASE 0d --- Earnings Portfolio Update ---
+
+  No earnings positions closed today.
+
+  -- Earnings Module Portfolio --------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $-37.60
+    Total trades   : 10
+    Live win rate  : 40.0%
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+
+  -- Earnings Performance Report -----------------------------
+    Closed trades      : 10
+    Total net P&L      : $-37.58
+    Live win rate      : 40.0%
+    Hist beat rate avg : 85.0%
+    Live avg P&L       : $-3.76
+    Avg win            : $+42.17
+    Avg loss           : $-34.38
+    Profit factor      : 0.82
+    Avg hold (days)    : 7.7
+    Live Sharpe        : -0.44
+    Best trade         : $+78.20
+    Worst trade        : $-77.17
+    Max consec. losses : 4
+    Max drawdown       : $-167.35
+    Exit breakdown:
+      post_earnings    :  10 trades  P&L=$-37.58
+    Verdict            : Edge degrading -- review
+  -------------------------------------------------------------
+
+  --- PHASE 0e --- Shock Portfolio Update ---
+
+  No shock positions closed today.
+
+  -- Shock Module Portfolio -----------------------------------
+    Open positions : 0 / 3
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  Excel Tracker: updating paper_trades.xlsx ...
+    Open positions: 0  |  Newly closed: 0
+    File: C:\Users\User\Desktop\adf bot\paper_trades.xlsx
+
+  --- Global Risk Assessment ---
+
+
+  -- Global Risk Manager --------------------------------------
+    Status             : [OK]  ALLOW
+    Capital deployed   : $    0.00  / $8000
+    Open positions     :   0  / 15
+    Long  exposure     : $    0.00  (0.0%)
+    Short exposure     : $    0.00  (0.0%)
+    Realized P&L       : $-37.58
+    Unrealized P&L     : $+0.00  (estimated at cost)
+    Combined drawdown  : $-63.63  (freeze: $-2000, liq: $-3500)
+    Peak combined P&L  : $+26.05
+
+    MODULE        OPEN    CAPITAL     LONG    SHORT
+    ------------ ----- ---------- -------- --------
+    pairs            0 $     0.00 $   0.00 $   0.00
+    momentum         0 $     0.00 $   0.00 $   0.00
+    bear             0 $     0.00 $   0.00 $   0.00
+    earnings         0 $     0.00 $   0.00 $   0.00
+    shock            0 $     0.00 $   0.00 $   0.00
+  -------------------------------------------------------------
+
+  Scanner skipped (candidates 2d old, refresh every 3d). Use --scan to force.
+
+  ═══ PHASE 2 — Master Signal (live + backtest) ═══
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
+║  Run : 2026-06-10 14:00:17                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+  Loaded 3 pairs from daily_candidates.csv
+  Strategy: β=60d | z=20d | Entry |z|>2.0 | Exit z→0.0 | Stop |z|>3.0 | Hold≤20d
+  Quality gates: WR>55.0% | PF>1.5x | P&L>$0
+  Slippage: 0.15% on notional (entry+exit, both legs) | Capital: $1,000/trade
+  Execution: 1-bar delay (signal@close → trade@next open)
+
+  VIX : 20.9  ✓ (threshold 25.0)
+
+  [1/3]     HBAN / NDAQ  —  No signal  (|z| = 0.53)
+  [2/3]      XYZ / TROW  —  No signal  (|z| = 0.90)
+  [3/3]     SMCI / SNPS  ⚡ z=-2.43  LONG  →  FMP earnings raw fetch failed for SMCI: Expecting value: line 1 column 1 (char 0)
+FMP earnings raw fetch failed for SNPS: Expecting value: line 1 column 1 (char 0)
+✗ REJECTED
+
+
+════════════════════════════════════════════════════════════════
+  SCAN COMPLETE
+════════════════════════════════════════════════════════════════
+  Pairs scanned   : 3
+  No live signal  : 2
+  Download errors : 0
+  Signals found   : 1
+    ◆ Diamond     : 0
+    ✗ Rejected    : 1
+════════════════════════════════════════════════════════════════
+
+  No diamond signals today.
+
+
+  ── Rejected Signals (had live z, failed backtest) ──
+
+  SMCI / SNPS:
+    ✗  REJECTED: Unstable Hedge Ratio
+       Live z=-2.43 LONG | BT: 101 trades, WR 42%, PF 0.74x, P&L $-218
+       Gates: WR 41.6% < 55.0% | PF 0.74x < 1.5x | P&L $-217.97 ≤ $50 | Sharpe -0.49 < 1.0 | Max DD $-323 < $-200 | Unstable Beta: CV=1.74 > 0.6 | Sortino -0.65 < 1.0 | Avg P&L $-2.16 < $8.00 | Failed H1 P&L ($-214 < $30) | Failed H2 P&L ($-4 < $30) | Low Recent Cointegration: ADF p=0.723 > 0.1 | Low Recent Correlation: ρ=0.55 < 0.7
+
+
+  ✓ system_log.csv updated (0 diamond, 1 rejected)
+
+  ════════════════════════════════════════════════════════════
+    DAILY RESULTS  (Standard + Split-Half + ADF90 + Momentum)
+  ════════════════════════════════════════════════════════════
+    Pairs scanned   : 3
+    No live signal  : 2
+    Download errors : 0
+    ◆ Diamond       : 0
+    ✗ Rejected      : 1
+
+  No diamond signals today.
+
+  ── Rejected (1 pairs: had live signal, failed regime gates) ──
+    ✗   SMCI/SNPS     LONG  z=-2.43  WR=42%  PF=0.74x  P&L=$-218
+
+  --- PHASE 3 — Momentum Strategy ---
+
+  VIX: 20.9  |  Pairs diamonds: 0  |  Mode: complement
+
+------------------------------------------------------------
+  MOMENTUM SCANNER
+  Run date : 2026-06-10
+------------------------------------------------------------
+
+[STEP 1] Building universe ...
+[STEP 1] Scraped 503 S&P 500 tickers + sectors from Wikipedia.
+[STEP 1b] Scraped 101 Nasdaq-100 tickers + sectors from Wikipedia.
+  [SCAN] Universe: 516 unique tickers (S&P 500 + Nasdaq-100).
+
+[STEP 2] Downloading OHLCV data ...
+  [SCAN] Downloading OHLCV for 516 tickers (2021-06-11 -> 2026-06-10) in batches of 50 ...
+  [DATA] Batch 1/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 2/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 3/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 4/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 5/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 6/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 7/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 8/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 9/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 10/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 11/11 (16 tickers) ... OK (16 cols)
+
+[STEP 3] Cleaning data ...
+[STEP 3] Dropped 10 tickers (>10% missing).  Remaining: 505 tickers.
+
+  [DATA] 505 tickers after cleaning.
+
+[STEP 4] Checking market regime ...
+  [REGIME] Fetching S&P 500 and VIX data ...
+  [REGIME] S&P 500 price=7405.7  EMA50=7256.9  EMA200=6839.2  above_200EMA=Y
+  [REGIME] VIX=20.91  scale=1.00  -> BULL
+  [REGIME] VIX overridden to 20.88
+
+[STEP 5] Computing blended momentum scores ...
+  [SCAN] Momentum scores computed for 505 tickers.
+
+[STEP 6] Computing technical indicators ...
+  [SCAN] Technical indicators computed for 505 tickers.
+
+[STEP 7] Merging candidates ...
+  [SCAN] 505 candidates before entry filters.
+
+[STEP 8] Applying entry filters ...
+  [FILTER] avg_vol_20d >= 500,000: removed 16 (489 remain)
+  [FILTER] top 10% mom_score: removed 440 (49 remain)
+  [FILTER] 52w_high_pct >= 0.9: removed 20 (29 remain)
+  [FILTER] vol_ratio >= 0.9: removed 4 (25 remain)
+  [FILTER] RSI in [50, 80]: removed 3 (22 remain)
+  [FILTER] ADX >= 20: removed 8 (14 remain)
+  [FILTER] 505 -> 14 after all filters.
+
+  [SCAN] Exported 14 candidates -> C:\Users\User\Desktop\adf bot\momentum_candidates.csv
+
+------------------------------------------------------------
+  MOMENTUM SCAN COMPLETE
+  Regime   : BULL
+  VIX      : 20.8799991607666
+  VIX scale: 1.00
+  Candidates passed: 14
+
+  Top 5 momentum candidates:
+  Ticker   Sector                        MomScore    RSI    ADX
+  -------  ---------------------------  --------- ------ ------
+  COHR     Information Technology           1.490   57.5   20.0
+  ON       Information Technology           1.061   56.6   34.7
+  MRVL     Semiconductors                   0.834   69.2   45.4
+  AMAT     Information Technology           0.813   62.7   24.3
+  LRCX     Information Technology           0.787   58.5   24.6
+------------------------------------------------------------
+  [REGIME] Fetching S&P 500 and VIX data ...
+  [REGIME] S&P 500 price=7405.7  EMA50=7256.9  EMA200=6839.2  above_200EMA=Y
+  [REGIME] VIX=20.91  scale=1.00  -> BULL
+  [MOM-SIG] Processing 14 momentum candidates ...
+  ------------------------------------------------------------
+FMP earnings raw fetch failed for GNRC: Expecting value: line 1 column 1 (char 0)
+    [REJECT]    GNRC  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+FMP earnings raw fetch failed for DVA: Expecting value: line 1 column 1 (char 0)
+    [REJECT]     DVA  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+FMP earnings raw fetch failed for NUE: Expecting value: line 1 column 1 (char 0)
+    [REJECT]     NUE  min_trades
+FMP earnings raw fetch failed for STLD: Expecting value: line 1 column 1 (char 0)
+    [REJECT]    STLD  min_trades
+FMP earnings raw fetch failed for FFIV: Expecting value: line 1 column 1 (char 0)
+    [REJECT]    FFIV  min_trades, total_pnl, oos_pnl, oos_sharpe
+  ------------------------------------------------------------
+  [MOM-SIG] Results: 0 diamonds, 5 rejected, 9 no signal, 0 errors
+
+  ============================================================
+    MOMENTUM RESULTS
+  ============================================================
+    Candidates      : 14
+    No live signal  : 9
+    Errors          : 0
+    * Mom Diamond   : 0
+    x Rejected      : 5
+
+  -- Momentum Rejected (5) --
+    x   GNRC  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+    x    DVA  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+    x    NUE  min_trades
+    x   STLD  min_trades
+    x   FFIV  min_trades, total_pnl, oos_pnl, oos_sharpe
+
+
+  Bear module skipped (VIX 20.9 <= 25.0).
+
+  --- PHASE 5 --- Earnings Strategy ---
+
+
+  [Earnings Signal] Scanning for earnings within 5 days ...
+
+  [Earnings Scanner] Fetching calendar 2026-06-10 -> 2026-06-15 ...
+[STEP 1] Scraped 503 S&P 500 tickers + sectors from Wikipedia.
+[STEP 1b] Scraped 101 Nasdaq-100 tickers + sectors from Wikipedia.
+  [Earnings Scanner] 1 calendar entries -> 1 in universe
+  [Earnings Scanner] 1 candidates with quality data.
+    x ADBE     FAIL  earnings too soon (1d < 2d minimum)
+
+  [Earnings Signal] Verified: 0  |  Rejected: 1
+
+
+  ============================================================
+    EARNINGS STRATEGY RESULTS
+  ============================================================
+    Verified signals : 0
+    Rejected         : 1
+
+
+  -- Earnings Rejected (1) --
+    x   ADBE  earnings too soon (1d < 2d minimum)
+
+  --- PHASE 6 --- Policy Shock Bounce ---
+
+
+  [SHOCK] =======================================================
+  [SHOCK] Policy Shock Bounce Signal Engine
+  [SHOCK] 2026-06-10 14:01:20
+  [SHOCK] =======================================================
+
+  [SHOCK] Fetching VIX history ...
+  [SHOCK] VIX: 18.9
+
+  [SHOCK] --------------------------------------------------
+  [SHOCK] Checking SPY for policy shock bounce ...
+  [SHOCK] No signal: no_shock_detected
+
+  [SHOCK] --------------------------------------------------
+  [SHOCK] Checking QQQ for policy shock bounce ...
+  [SHOCK] No signal: no_shock_detected
+
+  [SHOCK] =======================================================
+  [SHOCK] Results: 0 diamond(s), 0 rejected
+  [SHOCK] =======================================================
+
+
+  ============================================================
+    POLICY SHOCK BOUNCE RESULTS
+  ============================================================
+    Verified signals : 0
+    Rejected         : 0
+
+  Log     → C:\Users\User\Desktop\adf bot\logs\2026-06-10_140008.log
+  Journal → C:\Users\User\Desktop\adf bot\system_log.csv
+  Errors  → C:\Users\User\Desktop\adf bot\error.log
+

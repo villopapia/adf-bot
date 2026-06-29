@@ -1,0 +1,246 @@
+
+  ╔══════════════════════════════════════════════════════════════╗
+  ║     ADF TRADING SYSTEM  — Daily Orchestration               ║
+  ║     2026-06-25 16:00:06                                        ║
+  ╚══════════════════════════════════════════════════════════════╝
+
+  ── System Health ──────────────────────────────
+    Data Source      : ● OFFLINE
+    Pairs Loaded     : 0
+    Scanner Age      : N/A
+    System Log       : Exists
+    Error Log        : error.log
+    Strategy         : z_entry=2.0 | z_exit=0.0 | z_stop=3.0 | hold<=20d
+    Quality Gates    : WR>55.0% | PF>1.5x | P&L>$0
+    Regime Gates     : Split-Half | ADF-90d | Recent Momentum
+  ──────────────────────────────────────────────────
+
+  --- PHASE 0b — Momentum Portfolio Update ---
+
+  No momentum positions closed today.
+
+  -- Momentum Portfolio ---------------------------------------
+    Open positions : 4 / 5
+    Realized P&L   : $-44.49
+    Total trades   : 1
+    Live win rate  : 0.0%
+    Consec. losses : 1
+
+    TICKER     DIR    ENTRY     PEAK     STOP   TARGET  DAYS
+    -------- ----- -------- -------- -------- -------- -----
+    AMAT      LONG $ 552.64 $ 640.18 $ 513.34 $ 690.77    13
+    INTC      LONG $ 124.57 $ 140.94 $ 108.85 $ 170.91    12
+    CSCO      LONG $ 119.54 $ 121.89 $ 109.30 $ 139.58     5
+    JBHT      LONG $ 273.48 $ 273.48 $ 244.49 $ 320.47     2
+  -------------------------------------------------------------
+
+  --- PHASE 0d --- Earnings Portfolio Update ---
+
+  No earnings positions closed today.
+
+  -- Earnings Module Portfolio --------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $-37.60
+    Total trades   : 10
+    Live win rate  : 40.0%
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+
+  -- Earnings Performance Report -----------------------------
+    Closed trades      : 10
+    Total net P&L      : $-37.58
+    Live win rate      : 40.0%
+    Hist beat rate avg : 85.0%
+    Live avg P&L       : $-3.76
+    Avg win            : $+42.17
+    Avg loss           : $-34.38
+    Profit factor      : 0.82
+    Avg hold (days)    : 7.7
+    Live Sharpe        : -0.44
+    Best trade         : $+78.20
+    Worst trade        : $-77.17
+    Max consec. losses : 4
+    Max drawdown       : $-167.35
+    Exit breakdown:
+      post_earnings    :  10 trades  P&L=$-37.58
+    Verdict            : Edge degrading -- review
+  -------------------------------------------------------------
+
+  Excel Tracker: updating paper_trades.xlsx ...
+    Open positions: 4  |  Newly closed: 0
+    File: C:\Users\User\Desktop\adf bot\paper_trades.xlsx
+
+  --- Global Risk Assessment ---
+
+
+  -- Global Risk Manager --------------------------------------
+    Status             : [OK]  ALLOW
+    Capital deployed   : $ 1176.50  / $8000
+    Open positions     :   4  / 15
+    Long  exposure     : $ 1176.50  (100.0%)
+    Short exposure     : $    0.00  (0.0%)
+    Realized P&L       : $-82.07
+    Unrealized P&L     : $+0.00  (estimated at cost)
+    Combined drawdown  : $-108.12  (freeze: $-2000, liq: $-3500)
+    Peak combined P&L  : $+26.05
+
+    MODULE        OPEN    CAPITAL     LONG    SHORT
+    ------------ ----- ---------- -------- --------
+    pairs            0 $     0.00 $   0.00 $   0.00
+    momentum         4 $  1176.50 $1176.50 $   0.00
+    bear             0 $     0.00 $   0.00 $   0.00
+    earnings         0 $     0.00 $   0.00 $   0.00
+    shock            0 $     0.00 $   0.00 $   0.00
+  -------------------------------------------------------------
+
+  Pairs module disabled.
+
+  --- PHASE 3 — Momentum Strategy ---
+
+------------------------------------------------------------
+  MOMENTUM SCANNER
+  Run date : 2026-06-25
+------------------------------------------------------------
+
+[STEP 1] Building universe ...
+[STEP 1] Scraped 503 S&P 500 tickers + sectors from Wikipedia.
+[STEP 1b] Scraped 101 Nasdaq-100 tickers + sectors from Wikipedia.
+  [SCAN] Universe: 515 unique tickers (S&P 500 + Nasdaq-100).
+
+[STEP 2] Downloading OHLCV data ...
+  [SCAN] Downloading OHLCV for 515 tickers (2021-06-26 -> 2026-06-25) in batches of 50 ...
+  [DATA] Batch 1/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 2/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 3/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 4/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 5/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 6/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 7/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 8/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 9/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 10/11 (50 tickers) ... OK (50 cols)
+  [DATA] Batch 11/11 (15 tickers) ... OK (15 cols)
+
+[STEP 3] Cleaning data ...
+[STEP 3] Dropped 11 tickers (>10% missing).  Remaining: 503 tickers.
+
+  [DATA] 503 tickers after cleaning.
+
+[STEP 4] Checking market regime ...
+  [REGIME] Fetching S&P 500 and VIX data ...
+  [REGIME] S&P 500 price=7358.2  EMA50=7316.8  EMA200=6900.1  above_200EMA=Y
+  [REGIME] VIX=17.84  scale=1.00  -> BULL
+
+[STEP 5] Computing blended momentum scores ...
+  [SCAN] Momentum scores computed for 503 tickers.
+
+[STEP 6] Computing technical indicators ...
+  [SCAN] Technical indicators computed for 503 tickers.
+
+[STEP 7] Merging candidates ...
+  [SCAN] 503 candidates before entry filters.
+
+[STEP 8] Applying entry filters ...
+  [FILTER] price >= 10.0: removed 1 (502 remain)
+  [FILTER] avg_vol_20d >= 500,000: removed 14 (488 remain)
+  [FILTER] top 10% mom_score: removed 439 (49 remain)
+  [FILTER] 52w_high_pct >= 0.9: removed 21 (28 remain)
+  [FILTER] vol_ratio >= 0.9: removed 3 (25 remain)
+  [FILTER] RSI in [50, 80]: removed 3 (22 remain)
+  [FILTER] ADX >= 20: removed 10 (12 remain)
+  [FILTER] 503 -> 12 after all filters.
+
+  [SCAN] Exported 12 candidates -> C:\Users\User\Desktop\adf bot\momentum_candidates.csv
+
+------------------------------------------------------------
+  MOMENTUM SCAN COMPLETE
+  Regime   : BULL
+  VIX      : 17.84000015258789
+  VIX scale: 1.00
+  Candidates passed: 12
+
+  Top 5 momentum candidates:
+  Ticker   Sector                        MomScore    RSI    ADX
+  -------  ---------------------------  --------- ------ ------
+  INTC     Information Technology           2.413   59.9   24.0
+  STX      Information Technology           2.150   59.7   37.6
+  DELL     Information Technology           1.491   68.6   37.5
+  FLEX     Information Technology           1.272   57.1   28.2
+  LRCX     Information Technology           1.058   59.5   27.8
+------------------------------------------------------------
+  [REGIME] Fetching S&P 500 and VIX data ...
+  [REGIME] S&P 500 price=7358.2  EMA50=7316.8  EMA200=6900.1  above_200EMA=Y
+  [REGIME] VIX=17.84  scale=1.00  -> BULL
+  [MOM-SIG] Processing 12 momentum candidates ...
+  ------------------------------------------------------------
+    [DIAMOND]   INTC  mom=+2.452  WR=43%  PF=1.29x  P&L=$+30  Sharpe=+0.47
+    [DIAMOND]    STX  mom=+2.207  WR=60%  PF=2.81x  P&L=$+198  Sharpe=+1.81
+    [REJECT]    DELL  win_rate, oos_pnl, oos_sharpe
+    [REJECT]    FLEX  min_trades, win_rate, profit_factor, total_pnl, sharpe
+    [REJECT]     TXN  min_trades, oos_pnl, oos_sharpe
+    [DIAMOND]   AMAT  mom=+0.907  WR=56%  PF=1.74x  P&L=$+86  Sharpe=+0.94
+    [REJECT]    FFIV  oos_pnl, oos_sharpe
+    [REJECT]    FTNT  min_trades, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+    [REJECT]     CNC  min_trades, win_rate, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+  ------------------------------------------------------------
+  [MOM-SIG] Results: 3 diamonds, 6 rejected, 3 no signal, 0 errors
+
+  ============================================================
+    MOMENTUM RESULTS
+  ============================================================
+    Candidates      : 12
+    No live signal  : 3
+    Errors          : 0
+    * Mom Diamond   : 3
+    x Rejected      : 6
+
+  -- MOMENTUM DIAMONDS --
+    TICKER        MOM    WR%      PF        P&L   SHARPE
+    -------- -------- ------ ------- ---------- --------
+  * INTC       +2.452  42.9%   1.29x $  +30.09   +0.47
+  * STX        +2.207  60.0%   2.81x $ +198.34   +1.81
+  * AMAT       +0.907  55.6%   1.74x $  +86.06   +0.94
+
+  Momentum trades logged (1):
+    + STX  LONG  [20260625_STX]
+  Skipped 1 — momentum at cap (5 positions)
+  Skipped 1 — correlated with open position(s)
+
+  -- Momentum Rejected (6) --
+    x   DELL  win_rate, oos_pnl, oos_sharpe
+    x   FLEX  min_trades, win_rate, profit_factor, total_pnl, sharpe
+    x    TXN  min_trades, oos_pnl, oos_sharpe
+    x   FFIV  oos_pnl, oos_sharpe
+    x   FTNT  min_trades, profit_factor, total_pnl, sharpe, avg_gain_loss, oos_pnl, oos_sharpe
+    ... and 1 more
+
+  --- PHASE 5 --- Earnings Strategy ---
+
+
+  [Earnings Signal] Scanning for earnings within 5 days ...
+
+  [Earnings Scanner] Fetching calendar 2026-06-25 -> 2026-06-30 ...
+[STEP 1] Scraped 503 S&P 500 tickers + sectors from Wikipedia.
+[STEP 1b] Scraped 101 Nasdaq-100 tickers + sectors from Wikipedia.
+  [Earnings Scanner] 1 calendar entries -> 1 in universe
+  [Earnings Scanner] 1 candidates with quality data.
+    x NKE      FAIL  price $41.82 < SMA200 $57.41
+
+  [Earnings Signal] Verified: 0  |  Rejected: 1
+
+
+  ============================================================
+    EARNINGS STRATEGY RESULTS
+  ============================================================
+    Verified signals : 0
+    Rejected         : 1
+
+
+  -- Earnings Rejected (1) --
+    x    NKE  price $41.82 < SMA200 $57.41
+
+  Log     → C:\Users\User\Desktop\adf bot\logs\2026-06-25_160006.log
+  Journal → C:\Users\User\Desktop\adf bot\system_log.csv
+  Errors  → C:\Users\User\Desktop\adf bot\error.log
+

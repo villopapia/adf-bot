@@ -286,11 +286,17 @@ def log_momentum_entry(signal: dict, vix_scale: float = 1.0) -> str:
     wb = _get_workbook()
     ws = _ensure_sheet(wb, "Momentum", MOM_HEADERS)
 
+    from config import (MOM_CAPITAL_PER_TRADE, MOM_VOL_TARGET_ANN,
+                        MOM_VOL_FLOOR)
     today  = datetime.date.today().strftime("%Y-%m-%d")
     ticker = signal["ticker"]
     live   = signal["live"]
     price  = float(live["price"])
-    capital = 1000.0 * vix_scale
+    vol_6mo = float(live.get("vol_6mo", MOM_VOL_FLOOR))
+    realized = max(vol_6mo, MOM_VOL_FLOOR)
+    vol_scale = MOM_VOL_TARGET_ANN / realized
+    adjusted_scale = min(max(vol_scale * vix_scale, 0.25), 2.0)
+    capital = MOM_CAPITAL_PER_TRADE * adjusted_scale
     shares  = round(capital / price, 4)
     trade_id = f"{today.replace('-', '')}_{ticker}"
 
@@ -738,7 +744,7 @@ def update_summary():
     row += 1
     # Recalculate
     grand_unreal, grand_real = 0.0, 0.0
-    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings"]:
+    for sheet_name in ["Pairs", "Momentum", "Bear", "Earnings", "Shock"]:
         if sheet_name not in wb.sheetnames:
             continue
         src = wb[sheet_name]
@@ -746,6 +752,8 @@ def update_summary():
             status_col, unreal_col, real_col = 11, 14, 18
         elif sheet_name == "Earnings":
             status_col, unreal_col, real_col = 11, 13, 16
+        elif sheet_name == "Shock":
+            status_col, unreal_col, real_col = 10, 12, 15
         else:
             status_col, unreal_col, real_col = 8, 10, 13
         for r in range(2, src.max_row + 1):
@@ -936,25 +944,30 @@ def _sync_mom_csv(wb) -> int:
                 _style_data_row(ws, row_idx, "CLOSED")
                 synced += 1
         else:
-            if csv_status != "closed":
-                continue
             entry_price = float(cr.get("entry_price", 0) or 0)
-            exit_price = float(cr.get("exit_price", 0) or 0)
-            net_pnl = float(cr.get("net_pnl", 0) or 0)
+            is_closed = csv_status == "closed"
+            exit_price = float(cr.get("exit_price", 0) or 0) if is_closed else 0.0
+            net_pnl = float(cr.get("net_pnl", 0) or 0) if is_closed else 0.0
             row_data = [
                 tid, cr.get("date_open", ""), cr.get("ticker", ""),
                 cr.get("direction", "LONG"),
                 round(entry_price, 4),
                 round(float(cr.get("shares", 0) or 0), 4),
                 round(float(cr.get("capital_deployed", 0) or 0), 2),
-                "CLOSED", round(exit_price, 4), "",
-                cr.get("date_close", ""), round(exit_price, 4),
-                round(net_pnl, 2),
-                int(cr.get("hold_days", 0) or 0), "",
+                "CLOSED" if is_closed else "OPEN",
+                round(exit_price, 4) if is_closed else round(entry_price, 4),
+                "" if is_closed else 0.0,
+                cr.get("date_close", "") if is_closed else "",
+                round(exit_price, 4) if is_closed else "",
+                round(net_pnl, 2) if is_closed else "",
+                int(cr.get("hold_days", 0) or 0) if is_closed else 0,
+                "",
             ]
             ws.append(row_data)
-            _style_data_row(ws, ws.max_row, "CLOSED")
-            _color_pnl(ws, ws.max_row, 13, net_pnl)
+            status = "CLOSED" if is_closed else "OPEN"
+            _style_data_row(ws, ws.max_row, status)
+            if is_closed:
+                _color_pnl(ws, ws.max_row, 13, net_pnl)
             synced += 1
 
     return synced

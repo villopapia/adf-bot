@@ -1,0 +1,11 @@
+{
+  "consecutive_losses": 0,
+  "consecutive_wins": 1,
+  "total_realized_pnl": 20.358410516652462,
+  "peak_pnl": 20.358410516652462,
+  "total_trades": 2,
+  "total_wins": 1,
+  "kill_switch": false,
+  "kill_switch_reason": "",
+  "last_updated": "2026-06-29 22:20:06"
+}

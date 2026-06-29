@@ -1,12 +1,12 @@
 
   ╔══════════════════════════════════════════════════════════════╗
   ║     PAIRS TRADING SYSTEM — Daily Orchestration              ║
-  ║     2026-04-07 21:16:26                                        ║
+  ║     2026-06-08 14:00:07                                        ║
   ╚══════════════════════════════════════════════════════════════╝
 
   ── System Health ──────────────────────────────
     Data Source      : ● ONLINE
-    Pairs Loaded     : 150
+    Pairs Loaded     : 3
     Scanner Age      : 0d old
     System Log       : Exists
     Error Log        : error.log
@@ -49,6 +49,77 @@
     Consec. losses : 0
   -------------------------------------------------------------
 
+  --- PHASE 0d --- Earnings Portfolio Update ---
+
+  No earnings positions closed today.
+
+  -- Earnings Module Portfolio --------------------------------
+    Open positions : 0 / 5
+    Realized P&L   : $-37.60
+    Total trades   : 10
+    Live win rate  : 40.0%
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+
+  -- Earnings Performance Report -----------------------------
+    Closed trades      : 10
+    Total net P&L      : $-37.58
+    Live win rate      : 40.0%
+    Hist beat rate avg : 85.0%
+    Live avg P&L       : $-3.76
+    Avg win            : $+42.17
+    Avg loss           : $-34.38
+    Profit factor      : 0.82
+    Avg hold (days)    : 7.7
+    Live Sharpe        : -0.44
+    Best trade         : $+78.20
+    Worst trade        : $-77.17
+    Max consec. losses : 4
+    Max drawdown       : $-167.35
+    Exit breakdown:
+      post_earnings    :  10 trades  P&L=$-37.58
+    Verdict            : Edge degrading -- review
+  -------------------------------------------------------------
+
+  --- PHASE 0e --- Shock Portfolio Update ---
+
+  No shock positions closed today.
+
+  -- Shock Module Portfolio -----------------------------------
+    Open positions : 0 / 3
+    Realized P&L   : $+0.00
+    Total trades   : 0
+    Consec. losses : 0
+  -------------------------------------------------------------
+
+  Excel Tracker: updating paper_trades.xlsx ...
+    Open positions: 0  |  Newly closed: 0
+    File: C:\Users\User\Desktop\adf bot\paper_trades.xlsx
+
+  --- Global Risk Assessment ---
+
+
+  -- Global Risk Manager --------------------------------------
+    Status             : [OK]  ALLOW
+    Capital deployed   : $    0.00  / $8000
+    Open positions     :   0  / 15
+    Long  exposure     : $    0.00  (0.0%)
+    Short exposure     : $    0.00  (0.0%)
+    Realized P&L       : $-37.58
+    Unrealized P&L     : $+0.00  (estimated at cost)
+    Combined drawdown  : $-63.63  (freeze: $-2000, liq: $-3500)
+    Peak combined P&L  : $+26.05
+
+    MODULE        OPEN    CAPITAL     LONG    SHORT
+    ------------ ----- ---------- -------- --------
+    pairs            0 $     0.00 $   0.00 $   0.00
+    momentum         0 $     0.00 $   0.00 $   0.00
+    bear             0 $     0.00 $   0.00 $   0.00
+    earnings         0 $     0.00 $   0.00 $   0.00
+    shock            0 $     0.00 $   0.00 $   0.00
+  -------------------------------------------------------------
+
   Scanner skipped (candidates 0d old, refresh every 3d). Use --scan to force.
 
   ═══ PHASE 2 — Master Signal (live + backtest) ═══
@@ -56,22 +127,15 @@
 
 ╔══════════════════════════════════════════════════════════════╗
 ║  MASTER SIGNAL v3 — Audit-Fixed Verification Engine         ║
-║  Run : 2026-04-07 21:16:28                                  ║
+║  Run : 2026-06-08 14:00:14                                  ║
 ╚══════════════════════════════════════════════════════════════╝
 
-  Loaded 150 pairs from daily_candidates.csv
+  Loaded 3 pairs from daily_candidates.csv
   Strategy: β=60d | z=20d | Entry |z|>2.0 | Exit z→0.0 | Stop |z|>3.0 | Hold≤20d
   Quality gates: WR>55.0% | PF>1.5x | P&L>$0
   Slippage: 0.15% on notional (entry+exit, both legs) | Capital: $1,000/trade
-  Execution: 1-bar delay (signal@close → trade@next close)
+  Execution: 1-bar delay (signal@close → trade@next open)
 
+  VIX : 18.8  ✓ (threshold 25.0)
 
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ⚠  VIX REGIME BLOCK: 26.0 > 25.0
-  Signals shown but flagged BLOCKED. No new entries advised.
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  [1/150]        ALL / GL  —  No signal  (|z| = 1.42)
-  [2/150]       PPL / WEC  
-  ✗ Master signal failed: [Errno 22] Invalid argument
-Exception ignored on flushing sys.stdoutException ignored in sys.unraisablehook: <built-in function unraisablehook>
+  [1/3]     HBAN / NDAQ  
